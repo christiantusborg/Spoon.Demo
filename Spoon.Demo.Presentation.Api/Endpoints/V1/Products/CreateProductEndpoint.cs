@@ -6,6 +6,7 @@ using Mappings;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.AspNetCore.Routing;
 using Spoon.NuGet.EitherCore.Extensions;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
@@ -29,13 +30,14 @@ public static class CreateProductEndpoint
     /// <returns></returns>
     public static IEndpointRouteBuilder MapCreateProduct(this IEndpointRouteBuilder app)
     {
-        app.MapPost(ApiEndpoints.Products.Create,  async ([AsParameters] ProductGetRequest request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPost(ApiEndpoints.Products.Create,  async ([AsParameters] ProductGetRequest request, IOutputCacheStore outputCacheStore, ISender sender, CancellationToken cancellationToken) =>
             {
                 var command = request.MapTo();
 
                 var commandResult = await sender.Send(command, cancellationToken);
                 var contentResult = commandResult.ToResult(typeof(ProductGetResult));
 
+                await outputCacheStore.EvictByTagAsync(ApiEndpoints.Products.Cache.EvictByTag, cancellationToken);
                 return contentResult;
             })
             .WithName(Name)

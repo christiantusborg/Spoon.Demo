@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using NuGet.Core.Domain;
 using NuGet.EitherCore;
 using NuGet.EitherCore.Enums;
@@ -57,7 +58,8 @@ public static class GetAllProductEndpoint
             .WithApiVersionSet(ApiVersioning.VersionSet!)
             .HasApiVersion(1.0)
             .Produces<ProductSearchResult>(StatusCodes.Status200OK)
-            .Produces<Validationfailures>(406);
+            .Produces<Validationfailures>(406)
+            .CacheOutput(ApiEndpoints.Products.Cache.PolicyGetAll);
         return app;
     }
    

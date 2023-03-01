@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Routing;
 using V1.Products;
+using V1.Products.Extensions;
 
 /// <summary>
 /// 

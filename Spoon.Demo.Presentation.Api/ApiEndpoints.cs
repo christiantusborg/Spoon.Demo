@@ -25,5 +25,16 @@ public static class ApiEndpoints
         /// <inheritdoc cref="ApiEndpoints" />
         public const string DeletePermanent = $"{Base}/{{productId:guid}}/permanent";
 
+        /// <inheritdoc cref="ApiEndpoints" />
+        public static class Cache
+        {
+            /// <inheritdoc cref="ApiEndpoints" />
+            public const string EvictByTag = "ProductEvictByTag";
+            /// <inheritdoc cref="ApiEndpoints" />
+            public const string PolicyGetAll = "ProductCacheGetAll";
+            /// <inheritdoc cref="ApiEndpoints" />
+            public const string PolicyGet = "ProductCacheGet";
+        }
+
     }
 }

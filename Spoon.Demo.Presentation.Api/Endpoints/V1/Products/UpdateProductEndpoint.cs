@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.AspNetCore.Routing;
 using Spoon.Demo.Application.V1.Products.Commands.Create;
 using Spoon.NuGet.EitherCore.Extensions;
@@ -31,12 +32,15 @@ public static class UpdateProductEndpoint
     /// <returns></returns>
     public static IEndpointRouteBuilder MapUpdateProduct(this IEndpointRouteBuilder app)
     {
-        app.MapPut(ApiEndpoints.Products.Update, async (Guid productId, [FromBody] ProductUpdateRequest request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPut(ApiEndpoints.Products.Update, async (Guid productId, [FromBody] ProductUpdateRequest request, IOutputCacheStore outputCacheStore, ISender sender, CancellationToken cancellationToken) =>
             {
                 var command = request.Adapt<ProductCreateCommand>();
+                command.ProductId = productId;
+                
                 var commandResult = await sender.Send(command, cancellationToken);
                 var contentResult = commandResult.ToResult(typeof(ProductUpdateResult));
-
+                
+                await outputCacheStore.EvictByTagAsync(ApiEndpoints.Products.Cache.EvictByTag, cancellationToken);
                 return contentResult;
             })
             .WithName(Name)

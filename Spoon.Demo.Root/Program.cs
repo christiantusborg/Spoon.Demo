@@ -14,6 +14,7 @@ using Spoon.Demo.Domain.Repositories;
 using Spoon.Demo.Persistence.Repositories;
 using Spoon.Demo.Presentation.Api;
 using Spoon.Demo.Presentation.Api.Endpoints;
+using Spoon.Demo.Presentation.Api.Endpoints.V1.Products.Extensions;
 using Spoon.Demo.Presentation.Api.Swagger;
 using Spoon.NuGet.Core;
 using Spoon.NuGet.Mediator.PipelineBehaviors.AuditLog;
@@ -72,6 +73,13 @@ builder.Services.AddApiVersioning(x =>
     x.ApiVersionReader = new MediaTypeApiVersionReader("api-version");
 }).AddApiExplorer();
 
+builder.Services.AddOutputCache(x =>
+{
+    x.AddBasePolicy(c => c.Cache());
+    x.AddCacheOptionsProducts();
+});
+
+
 builder.Host
     .ConfigureMetricsWithDefaults(
         builder =>
@@ -81,7 +89,6 @@ builder.Host
         })
     .UseMetricsEndpoints();
 
-//Spoon.Demo..Persistence
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -143,19 +150,12 @@ builder.Services.AddPermissionPipelineBehaviourClaimManagerAlwaysTrueDefault();
 builder.Services.AddValidationPipelineBehaviour();
 
 
-//builder.Services.AddAuditLogPipelineBehaviour();
-//builder.Services.AddPermissionPipelineBehaviourClaimManagerAlwaysTrueDefault();
-
-//builder.Services.AddPermissionPipelineBehaviour();
-//builder.Services.AddPermissionPipelineBehaviourClaimManagerAlwaysTrueDefault();
-
-
 builder.Services.AddMetrics();
     
 builder.Services.AddMetricsEndpoints();
 builder.Services.AddAuditLogPipelineBehaviour();
-    
-//builder.Services.AddCarter(); //Not used anymore
+
+
 
 
 //.AddEndpointFilter<ValidationFilter>();
@@ -183,6 +183,7 @@ app.UseHttpsRedirection();
 //app.UseAuthorization();
 
 app.MapEndpoints();
+
 //app.UseOutputCache();
 //EndpointFiltersMetricCounter
 //var x = app.MapGroup("").AddEndpointFilter<ValidationFilter2>();

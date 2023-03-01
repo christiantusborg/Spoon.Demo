@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using Spoon.Demo.Application.V1.Products.Queries.Get;
 using Spoon.NuGet.EitherCore.Extensions;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
@@ -43,7 +44,8 @@ public static class GetProductEndpoint
             .Produces<ProductGetResult>()
             .Produces<Validationfailures>(406)
             .Produces<PermissionFailed<ProductGetResult>>(403)
-            .WithMetadata(new SwaggerOperationAttribute("Get by ProductId", "Get by ProductId"));
+            .WithMetadata(new SwaggerOperationAttribute("Get by ProductId", "Get by ProductId"))
+            .CacheOutput(ApiEndpoints.Products.Cache.PolicyGet);
         return app;
     }
 }

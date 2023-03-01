@@ -6,6 +6,7 @@ using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.AspNetCore.Routing;
 using Spoon.Demo.Application.V1.Products.Commands.DeletePermanent;
 using Spoon.NuGet.EitherCore.Extensions;
@@ -30,12 +31,13 @@ public static class DeleteProductEndpoint
     /// <returns></returns>
     public static IEndpointRouteBuilder MapDeleteProduct(this IEndpointRouteBuilder app)
     {
-        app.MapDelete(ApiEndpoints.Products.Delete, async ([AsParameters] ProductDeleteRequest request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapDelete(ApiEndpoints.Products.Delete, async ([AsParameters] ProductDeleteRequest request, IOutputCacheStore outputCacheStore, ISender sender, CancellationToken cancellationToken) =>
             {
                 var command = request.Adapt<ProductDeletePermanentCommand>();
                 var commandResult = await sender.Send(command, cancellationToken);
                 var contentResult = commandResult.ToNoContent();
 
+                await outputCacheStore.EvictByTagAsync(ApiEndpoints.Products.Cache.EvictByTag, cancellationToken);
                 return contentResult;
             })
             .WithName(Name)
