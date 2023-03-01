@@ -17,6 +17,7 @@ using NuGet.EitherCore;
 using NuGet.EitherCore.Enums;
 using NuGet.EitherCore.Extensions;
 using NuGet.Mediator.PipelineBehaviors.Validation;
+using Swashbuckle.AspNetCore.Annotations;
 
 /// <summary>
 /// 
@@ -59,7 +60,8 @@ public static class GetAllProductEndpoint
             .HasApiVersion(1.0)
             .Produces<ProductSearchResult>(StatusCodes.Status200OK)
             .Produces<Validationfailures>(406)
-            .CacheOutput(ApiEndpoints.Products.Cache.PolicyGetAll);
+            .CacheOutput(ApiEndpoints.Products.Cache.PolicyGetAll)
+            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.SwaggerOperation.GetAllSummary, ApiEndpoints.Products.SwaggerOperation.GetAllDescription));;
         return app;
     }
    

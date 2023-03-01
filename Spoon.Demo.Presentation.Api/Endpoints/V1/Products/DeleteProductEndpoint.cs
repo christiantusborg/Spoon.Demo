@@ -46,7 +46,7 @@ public static class DeleteProductEndpoint
             .Produces<Validationfailures>(406)
             .WithApiVersionSet(ApiVersioning.VersionSet!)
             .HasApiVersion(1.0)
-            .WithMetadata(new SwaggerOperationAttribute("Delete by ProductId", "Delete by ProductId"));
+            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.SwaggerOperation.DeleteSummary, ApiEndpoints.Products.SwaggerOperation.DeleteDescription));
 
         
         return app;

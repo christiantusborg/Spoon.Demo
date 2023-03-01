@@ -1,8 +1,6 @@
-﻿namespace Spoon.Demo.Presentation.Api.Endpoints;
+﻿namespace Spoon.Demo.Presentation.Api.Endpoints.V1.Products.Extensions;
 
 using Microsoft.AspNetCore.Routing;
-using V1.Products;
-using V1.Products.Extensions;
 
 /// <summary>
 /// 

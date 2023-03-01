@@ -17,13 +17,13 @@ public static class ProductsOutputCacheOptionsExtensions
         outputCacheOptions.AddPolicy(ApiEndpoints.Products.Cache.PolicyGetAll, c => 
             c.Cache()
                 .Expire(TimeSpan.FromMinutes(1))
-                .SetVaryByQuery(new[] { "search", "page", "pageLength" })
+                .SetVaryByQuery(ApiEndpoints.Products.Cache.PolicyGetAllPattern)
                 .Tag(ApiEndpoints.Products.Cache.EvictByTag));
 
         outputCacheOptions.AddPolicy(ApiEndpoints.Products.Cache.PolicyGet, c => 
             c.Cache()
                 .Expire(TimeSpan.FromMinutes(1))
-                .SetVaryByQuery(new[] { "productId" })
+                .SetVaryByQuery(ApiEndpoints.Products.Cache.PolicyGetPattern)
                 .Tag(ApiEndpoints.Products.Cache.EvictByTag));        
         return outputCacheOptions;
     }   

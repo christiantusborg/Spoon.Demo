@@ -49,7 +49,7 @@ public static class UpdateProductEndpoint
             .Produces<Validationfailures>(406)
             .WithApiVersionSet(ApiVersioning.VersionSet!)
             .HasApiVersion(1.0)
-            .WithMetadata(new SwaggerOperationAttribute("Update product by productId", "Update product by productId"));
+            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.SwaggerOperation.UpdateSummary, ApiEndpoints.Products.SwaggerOperation.UpdateDescription));
 
         return app;
     }

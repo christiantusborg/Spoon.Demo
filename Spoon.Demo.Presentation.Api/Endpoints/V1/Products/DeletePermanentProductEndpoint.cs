@@ -44,7 +44,7 @@ public static class DeletePermanentProductEndpoint
             .Produces<Validationfailures>(406)
             .WithApiVersionSet(ApiVersioning.VersionSet!)
             .HasApiVersion(1.0)
-            .WithMetadata(new SwaggerOperationAttribute("Delete permanent by ProductId", "Delete permanent by ProductId"));
+            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.SwaggerOperation.DeletePermanentSummary, ApiEndpoints.Products.SwaggerOperation.DeletePermanentDescription));
 
         return app;
     }

@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Presentation.Api
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Presentation.Api.Contracts", "Spoon.Demo.Presentation.Api.Contracts\Spoon.Demo.Presentation.Api.Contracts.csproj", "{8787158C-B5B7-4146-9CC9-C324102AA9AE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{9DEDF265-8F6C-4694-A861-8AE53C48BFF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +62,11 @@ Global
 		{8787158C-B5B7-4146-9CC9-C324102AA9AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8787158C-B5B7-4146-9CC9-C324102AA9AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8787158C-B5B7-4146-9CC9-C324102AA9AE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7AF98E28-B304-4AF6-9FA3-36E3365BAA5D} = {9DEDF265-8F6C-4694-A861-8AE53C48BFF8}
+		{8787158C-B5B7-4146-9CC9-C324102AA9AE} = {9DEDF265-8F6C-4694-A861-8AE53C48BFF8}
+		{A3500DD8-F95A-423E-90B8-F449F9388710} = {9DEDF265-8F6C-4694-A861-8AE53C48BFF8}
+		{E22D79E9-2CB4-4348-8E8A-F8C34268C1E2} = {9DEDF265-8F6C-4694-A861-8AE53C48BFF8}
 	EndGlobalSection
 EndGlobal

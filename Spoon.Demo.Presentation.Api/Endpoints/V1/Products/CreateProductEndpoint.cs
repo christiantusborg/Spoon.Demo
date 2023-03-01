@@ -46,7 +46,7 @@ public static class CreateProductEndpoint
             .Produces<PermissionFailed<ProductGetResult>>(403)
             .WithApiVersionSet(ApiVersioning.VersionSet!)
             .HasApiVersion(1.0)
-            .WithMetadata(new SwaggerOperationAttribute("Get by ProductId", "Get by ProductId"));
+            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.SwaggerOperation.CreateSummary, ApiEndpoints.Products.SwaggerOperation.CreateSummary));
         
         return app;
     }

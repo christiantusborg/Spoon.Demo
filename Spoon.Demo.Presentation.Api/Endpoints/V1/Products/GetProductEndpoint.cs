@@ -44,7 +44,7 @@ public static class GetProductEndpoint
             .Produces<ProductGetResult>()
             .Produces<Validationfailures>(406)
             .Produces<PermissionFailed<ProductGetResult>>(403)
-            .WithMetadata(new SwaggerOperationAttribute("Get by ProductId", "Get by ProductId"))
+            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.SwaggerOperation.GetSummary, ApiEndpoints.Products.SwaggerOperation.GetDescription))
             .CacheOutput(ApiEndpoints.Products.Cache.PolicyGet);
         return app;
     }
