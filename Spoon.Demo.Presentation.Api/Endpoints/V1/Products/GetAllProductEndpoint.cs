@@ -39,7 +39,7 @@ public static class GetAllProductEndpoint
     public static IEndpointRouteBuilder MapGetAllProducts(this IEndpointRouteBuilder app)
     {
     
-    app.MapGet("/search", async (int? page, int? pageLength, SearchRequest search, [FromServices] ISender sender) =>
+    app.MapGet(ApiEndpoints.Products.GetAll.Endpoint, async (int? page, int? pageLength, SearchRequest search, [FromServices] ISender sender) =>
             {
                 var command = new ProductSearchQuery
                 {
@@ -60,8 +60,8 @@ public static class GetAllProductEndpoint
             .HasApiVersion(1.0)
             .Produces<ProductSearchResult>(StatusCodes.Status200OK)
             .Produces<Validationfailures>(406)
-            .CacheOutput(ApiEndpoints.Products.Cache.PolicyGetAll)
-            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.SwaggerOperation.GetAllSummary, ApiEndpoints.Products.SwaggerOperation.GetAllDescription));;
+            .CacheOutput(ApiEndpoints.Products.GetAll.Policy)
+            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.GetAll.Summary, ApiEndpoints.Products.GetAll.Description));;
         return app;
     }
    

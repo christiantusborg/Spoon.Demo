@@ -9,17 +9,22 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Spoon.Demo.Application;
+using Spoon.Demo.Application.Health;
 using Spoon.Demo.Application.V1.Products.Queries.Get;
 using Spoon.Demo.Domain.Repositories;
 using Spoon.Demo.Persistence.Repositories;
 using Spoon.Demo.Presentation.Api;
 using Spoon.Demo.Presentation.Api.Endpoints;
 using Spoon.Demo.Presentation.Api.Endpoints.V1.Products.Extensions;
+
 using Spoon.Demo.Presentation.Api.Swagger;
 using Spoon.NuGet.Core;
 using Spoon.NuGet.Mediator.PipelineBehaviors.AuditLog;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
+using Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.Extensions;
+using Spoon.NuGet.SecureRemotePassword.Endpoints.User.Extensions;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -64,6 +69,8 @@ builder.Services.AddAuthorization(x =>
 */
 
 //builder.Services.AddScoped<ApiKeyAuthFilter>();
+
+
 
 builder.Services.AddApiVersioning(x =>
 {
@@ -128,34 +135,13 @@ builder.Services.AddDbContext<ReadOnlyContext>(optionsBuilder =>
 );
 */
 
-builder.Services.AddTransient<IWriteRepository, WriteRepository>();
-
-builder.Services.AddTransient<IReadOnlyRepository, ReadOnlyRepository>();
-
-builder.Services.AddCore();
-
-builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
-
-builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
-
-//builder.Services.AddTransient<RouteNameMetadata>();
-
-
-builder.Services.AddAuditLogPipelineBehaviour();
-builder.Services.AddAuditLogPipelineBehaviourDefault();
-
-builder.Services.AddPermissionPipelineBehaviour();
-builder.Services.AddPermissionPipelineBehaviourClaimManagerAlwaysTrueDefault();
-
-builder.Services.AddValidationPipelineBehaviour();
+builder.Services.AddApplication();
 
 
 builder.Services.AddMetrics();
     
 builder.Services.AddMetricsEndpoints();
-builder.Services.AddAuditLogPipelineBehaviour();
-
-
+builder.Services.AddMemoryCache();
 
 
 //.AddEndpointFilter<ValidationFilter>();
@@ -177,11 +163,14 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+//app.MapHealthChecks("_health");
 
+app.UseHttpsRedirection();
 //app.UseAuthentication();
 //app.UseAuthorization();
-
+app.UseOutputCache();
+app.MapAdministrationUserEndpoints();
+app.MapAuthenticationEndpoints();
 app.MapEndpoints();
 
 //app.UseOutputCache();

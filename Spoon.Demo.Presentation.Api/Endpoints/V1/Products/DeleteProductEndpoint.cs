@@ -31,7 +31,7 @@ public static class DeleteProductEndpoint
     /// <returns></returns>
     public static IEndpointRouteBuilder MapDeleteProduct(this IEndpointRouteBuilder app)
     {
-        app.MapDelete(ApiEndpoints.Products.Delete, async ([AsParameters] ProductDeleteRequest request, IOutputCacheStore outputCacheStore, ISender sender, CancellationToken cancellationToken) =>
+        app.MapDelete(ApiEndpoints.Products.Delete.Endpoint, async ([AsParameters] ProductDeleteRequest request, IOutputCacheStore outputCacheStore, ISender sender, CancellationToken cancellationToken) =>
             {
                 var command = request.Adapt<ProductDeletePermanentCommand>();
                 var commandResult = await sender.Send(command, cancellationToken);
@@ -46,7 +46,7 @@ public static class DeleteProductEndpoint
             .Produces<Validationfailures>(406)
             .WithApiVersionSet(ApiVersioning.VersionSet!)
             .HasApiVersion(1.0)
-            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.SwaggerOperation.DeleteSummary, ApiEndpoints.Products.SwaggerOperation.DeleteDescription));
+            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.Delete.Summary, ApiEndpoints.Products.Delete.Description));
 
         
         return app;

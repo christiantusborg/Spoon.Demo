@@ -32,7 +32,7 @@ public static class UpdateProductEndpoint
     /// <returns></returns>
     public static IEndpointRouteBuilder MapUpdateProduct(this IEndpointRouteBuilder app)
     {
-        app.MapPut(ApiEndpoints.Products.Update, async (Guid productId, [FromBody] ProductUpdateRequest request, IOutputCacheStore outputCacheStore, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPut(ApiEndpoints.Products.Update.Endpoint, async (Guid productId, [FromBody] ProductUpdateRequest request, IOutputCacheStore outputCacheStore, ISender sender, CancellationToken cancellationToken) =>
             {
                 var command = request.Adapt<ProductCreateCommand>();
                 command.ProductId = productId;
@@ -49,7 +49,7 @@ public static class UpdateProductEndpoint
             .Produces<Validationfailures>(406)
             .WithApiVersionSet(ApiVersioning.VersionSet!)
             .HasApiVersion(1.0)
-            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.SwaggerOperation.UpdateSummary, ApiEndpoints.Products.SwaggerOperation.UpdateDescription));
+            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.Update.Summary, ApiEndpoints.Products.Update.Description));
 
         return app;
     }

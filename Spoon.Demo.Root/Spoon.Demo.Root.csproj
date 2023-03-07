@@ -30,7 +30,7 @@
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
         <PackageReference Include="Spoon.NuGet.Mediator.PipelineBehaviors.AuditLog" Version="1.0.0" />
-        <PackageReference Include="Spoon.NuGet.Mediator.PipelineBehaviors.Permission" Version="1.0.2" />
+        <PackageReference Include="Spoon.NuGet.Mediator.PipelineBehaviors.Permission" Version="1.0.3" />
         <PackageReference Include="Spoon.NuGet.Mediator.PipelineBehaviors.Validation" Version="1.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />        
         <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
@@ -41,6 +41,7 @@
       <ProjectReference Include="..\Spoon.Demo.Domain\Spoon.Demo.Domain.csproj" />
       <ProjectReference Include="..\Spoon.Demo.Persistence\Spoon.Demo.Persistence.csproj" />
       <ProjectReference Include="..\Spoon.Demo.Presentation.Api\Spoon.Demo.Presentation.Api.csproj" />
+      <ProjectReference Include="..\Spoon.NuGet.SecureRemotePassword\Spoon.NuGet.SecureRemotePassword.csproj" />
     </ItemGroup>
 
 </Project>

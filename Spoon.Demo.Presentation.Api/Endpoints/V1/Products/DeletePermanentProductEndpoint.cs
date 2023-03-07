@@ -29,7 +29,7 @@ public static class DeletePermanentProductEndpoint
     /// <returns></returns>
     public static IEndpointRouteBuilder MapDeletePermanentProduct(this IEndpointRouteBuilder app)
     {
-        app.MapDelete(ApiEndpoints.Products.DeletePermanent, async (Guid productId, IOutputCacheStore outputCacheStore, ISender sender, CancellationToken cancellationToken) =>
+        app.MapDelete(ApiEndpoints.Products.DeletePermanent.Endpoint, async (Guid productId, IOutputCacheStore outputCacheStore, ISender sender, CancellationToken cancellationToken) =>
             {
                 var command = MapProduct.ToDeleteCommand(productId);
                 var commandResult = await sender.Send(command, cancellationToken);
@@ -44,7 +44,7 @@ public static class DeletePermanentProductEndpoint
             .Produces<Validationfailures>(406)
             .WithApiVersionSet(ApiVersioning.VersionSet!)
             .HasApiVersion(1.0)
-            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.SwaggerOperation.DeletePermanentSummary, ApiEndpoints.Products.SwaggerOperation.DeletePermanentDescription));
+            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.DeletePermanent.Summary, ApiEndpoints.Products.DeletePermanent.Description));
 
         return app;
     }

@@ -31,7 +31,7 @@ public static class GetProductEndpoint
     /// <returns></returns>
     public static IEndpointRouteBuilder MapGetProduct(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/get/{productId:guid}", async ([AsParameters] ProductGetRequest request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet(ApiEndpoints.Products.Get.Endpoint, async ([AsParameters] ProductGetRequest request, ISender sender, CancellationToken cancellationToken) =>
             {
                 var command = request.Adapt<ProductGetQuery>();
 
@@ -44,8 +44,8 @@ public static class GetProductEndpoint
             .Produces<ProductGetResult>()
             .Produces<Validationfailures>(406)
             .Produces<PermissionFailed<ProductGetResult>>(403)
-            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.SwaggerOperation.GetSummary, ApiEndpoints.Products.SwaggerOperation.GetDescription))
-            .CacheOutput(ApiEndpoints.Products.Cache.PolicyGet);
+            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.Get.Summary, ApiEndpoints.Products.Get.Description))
+            .CacheOutput(ApiEndpoints.Products.Get.Policy);
         return app;
     }
 }

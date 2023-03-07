@@ -6,6 +6,7 @@ using Mappings;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.AspNetCore.Routing;
 using Spoon.NuGet.EitherCore.Extensions;
@@ -30,7 +31,7 @@ public static class CreateProductEndpoint
     /// <returns></returns>
     public static IEndpointRouteBuilder MapCreateProduct(this IEndpointRouteBuilder app)
     {
-        app.MapPost(ApiEndpoints.Products.Create,  async ([AsParameters] ProductGetRequest request, IOutputCacheStore outputCacheStore, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPost(ApiEndpoints.Products.Create.Endpoint,  async ([FromBody] ProductGetRequest request, IOutputCacheStore outputCacheStore, ISender sender, CancellationToken cancellationToken) =>
             {
                 var command = request.MapTo();
 
@@ -46,7 +47,7 @@ public static class CreateProductEndpoint
             .Produces<PermissionFailed<ProductGetResult>>(403)
             .WithApiVersionSet(ApiVersioning.VersionSet!)
             .HasApiVersion(1.0)
-            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.SwaggerOperation.CreateSummary, ApiEndpoints.Products.SwaggerOperation.CreateSummary));
+            .WithMetadata(new SwaggerOperationAttribute(ApiEndpoints.Products.Create.Summary, ApiEndpoints.Products.Create.Description));
         
         return app;
     }

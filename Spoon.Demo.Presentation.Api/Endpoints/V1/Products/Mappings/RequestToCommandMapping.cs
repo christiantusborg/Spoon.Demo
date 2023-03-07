@@ -12,7 +12,7 @@ using Spoon.Demo.Application.V1.Products.Queries.Search;
 /// <summary>
 /// 
 /// </summary>
-public static class MapProduct
+public static partial class MapProduct
 {
     /// <inheritdoc cref="ApiEndpoints" />
     public static ProductGetQuery MapTo(this ProductGetRequest request)

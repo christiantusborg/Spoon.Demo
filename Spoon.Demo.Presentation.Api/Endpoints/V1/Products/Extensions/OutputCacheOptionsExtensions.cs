@@ -14,16 +14,16 @@ public static class ProductsOutputCacheOptionsExtensions
     /// <returns></returns>
     public static OutputCacheOptions AddCacheOptionsProducts(this OutputCacheOptions outputCacheOptions)
     {
-        outputCacheOptions.AddPolicy(ApiEndpoints.Products.Cache.PolicyGetAll, c => 
+        outputCacheOptions.AddPolicy(ApiEndpoints.Products.GetAll.Policy, c => 
             c.Cache()
                 .Expire(TimeSpan.FromMinutes(1))
-                .SetVaryByQuery(ApiEndpoints.Products.Cache.PolicyGetAllPattern)
+                .SetVaryByQuery(ApiEndpoints.Products.GetAll.PolicyPattern)
                 .Tag(ApiEndpoints.Products.Cache.EvictByTag));
 
-        outputCacheOptions.AddPolicy(ApiEndpoints.Products.Cache.PolicyGet, c => 
+        outputCacheOptions.AddPolicy(ApiEndpoints.Products.Get.Policy, c => 
             c.Cache()
                 .Expire(TimeSpan.FromMinutes(1))
-                .SetVaryByQuery(ApiEndpoints.Products.Cache.PolicyGetPattern)
+                .SetVaryByQuery(ApiEndpoints.Products.Get.PolicyPattern)
                 .Tag(ApiEndpoints.Products.Cache.EvictByTag));        
         return outputCacheOptions;
     }   

@@ -9,10 +9,14 @@
     <ItemGroup>
       <PackageReference Include="Spoon.NuGet.EitherCore" Version="1.0.3" />
       <PackageReference Include="Spoon.NuGet.Mediator" Version="1.0.0" />
+      <PackageReference Include="Spoon.NuGet.Mediator.PipelineBehaviors.AuditLog" Version="1.0.0" />
+      <PackageReference Include="Spoon.NuGet.Mediator.PipelineBehaviors.Permission" Version="1.0.3" />
+      <PackageReference Include="Spoon.NuGet.Mediator.PipelineBehaviors.Validation" Version="1.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Spoon.Demo.Domain\Spoon.Demo.Domain.csproj" />
+      <ProjectReference Include="..\Spoon.Demo.Persistence\Spoon.Demo.Persistence.csproj" />
     </ItemGroup>
 
 </Project>
