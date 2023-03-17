@@ -1,28 +1,34 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Root", "Spoon.Demo.Root\Spoon.Demo.Root.csproj", "{B4CCADCB-3299-4078-B545-74B6FA8A5363}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Root", "src\Spoon.Demo.Root\Spoon.Demo.Root.csproj", "{B4CCADCB-3299-4078-B545-74B6FA8A5363}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.NuGet.SinksSignalR", "Spoon.NuGet.SinksSignalR\Spoon.NuGet.SinksSignalR.csproj", "{D3A960B1-565E-431B-B211-C15DF5000001}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.NuGet.SinksSignalR", "src\Spoon.NuGet.SinksSignalR\Spoon.NuGet.SinksSignalR.csproj", "{D3A960B1-565E-431B-B211-C15DF5000001}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Application", "Spoon.Demo.Application\Spoon.Demo.Application.csproj", "{9684C591-4887-4E32-925B-2451B24156A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Application", "src\Spoon.Demo.Application\Spoon.Demo.Application.csproj", "{9684C591-4887-4E32-925B-2451B24156A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Domain", "Spoon.Demo.Domain\Spoon.Demo.Domain.csproj", "{5656A3D9-928D-4DA7-9FFF-20C6F3C271F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Domain", "src\Spoon.Demo.Domain\Spoon.Demo.Domain.csproj", "{5656A3D9-928D-4DA7-9FFF-20C6F3C271F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Persistence", "Spoon.Demo.Persistence\Spoon.Demo.Persistence.csproj", "{93651323-2AEC-43B2-B3CE-A9F2EA841040}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Persistence", "src\Spoon.Demo.Persistence\Spoon.Demo.Persistence.csproj", "{93651323-2AEC-43B2-B3CE-A9F2EA841040}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Presentation.Api", "Spoon.Demo.Presentation.Api\Spoon.Demo.Presentation.Api.csproj", "{7AF98E28-B304-4AF6-9FA3-36E3365BAA5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Presentation.Api", "src\Spoon.Demo.Presentation.Api\Spoon.Demo.Presentation.Api.csproj", "{7AF98E28-B304-4AF6-9FA3-36E3365BAA5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Presentation.Api.Sdk", "Spoon.Demo.Presentation.Api.Sdk\Spoon.Demo.Presentation.Api.Sdk.csproj", "{A3500DD8-F95A-423E-90B8-F449F9388710}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Presentation.Api.Sdk", "src\Spoon.Demo.Presentation.Api.Sdk\Spoon.Demo.Presentation.Api.Sdk.csproj", "{A3500DD8-F95A-423E-90B8-F449F9388710}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Presentation.Api.Sdk.Consumer", "Spoon.Demo.Presentation.Api.Sdk.Consumer\Spoon.Demo.Presentation.Api.Sdk.Consumer.csproj", "{E22D79E9-2CB4-4348-8E8A-F8C34268C1E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Presentation.Api.Sdk.Consumer", "src\Spoon.Demo.Presentation.Api.Sdk.Consumer\Spoon.Demo.Presentation.Api.Sdk.Consumer.csproj", "{E22D79E9-2CB4-4348-8E8A-F8C34268C1E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Presentation.Api.Contracts", "Spoon.Demo.Presentation.Api.Contracts\Spoon.Demo.Presentation.Api.Contracts.csproj", "{8787158C-B5B7-4146-9CC9-C324102AA9AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Presentation.Api.Contracts", "src\Spoon.Demo.Presentation.Api.Contracts\Spoon.Demo.Presentation.Api.Contracts.csproj", "{8787158C-B5B7-4146-9CC9-C324102AA9AE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{9DEDF265-8F6C-4694-A861-8AE53C48BFF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.NuGet.SecureRemotePassword", "Spoon.NuGet.SecureRemotePassword\Spoon.NuGet.SecureRemotePassword.csproj", "{A627E05E-D6A1-4176-83DF-E38D0ECF7D4E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.NuGet.SecureRemotePassword", "src\Spoon.NuGet.SecureRemotePassword\Spoon.NuGet.SecureRemotePassword.csproj", "{A627E05E-D6A1-4176-83DF-E38D0ECF7D4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.NuGet.SecureRemotePassword.Contracts", "Spoon.NuGet.SecureRemotePassword.Contracts\Spoon.NuGet.SecureRemotePassword.Contracts.csproj", "{240F798A-187C-4781-8E22-4792A365DB93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.NuGet.SecureRemotePassword.Contracts", "src\Spoon.NuGet.SecureRemotePassword.Contracts\Spoon.NuGet.SecureRemotePassword.Contracts.csproj", "{240F798A-187C-4781-8E22-4792A365DB93}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{36D3B591-7B4D-4975-B043-4756D3D05E3A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2E51B842-A6B4-4D44-BE3A-EA83BDB2B08B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spoon.Demo.Application.Tests.Integration", "tests\Spoon.Demo.Application.Tests.Integration\Spoon.Demo.Application.Tests.Integration.csproj", "{AE173291-9748-44DD-B3F0-73A7A47F21F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,11 +80,24 @@ Global
 		{240F798A-187C-4781-8E22-4792A365DB93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{240F798A-187C-4781-8E22-4792A365DB93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{240F798A-187C-4781-8E22-4792A365DB93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE173291-9748-44DD-B3F0-73A7A47F21F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE173291-9748-44DD-B3F0-73A7A47F21F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE173291-9748-44DD-B3F0-73A7A47F21F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE173291-9748-44DD-B3F0-73A7A47F21F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7AF98E28-B304-4AF6-9FA3-36E3365BAA5D} = {9DEDF265-8F6C-4694-A861-8AE53C48BFF8}
 		{8787158C-B5B7-4146-9CC9-C324102AA9AE} = {9DEDF265-8F6C-4694-A861-8AE53C48BFF8}
 		{A3500DD8-F95A-423E-90B8-F449F9388710} = {9DEDF265-8F6C-4694-A861-8AE53C48BFF8}
 		{E22D79E9-2CB4-4348-8E8A-F8C34268C1E2} = {9DEDF265-8F6C-4694-A861-8AE53C48BFF8}
+		{9DEDF265-8F6C-4694-A861-8AE53C48BFF8} = {36D3B591-7B4D-4975-B043-4756D3D05E3A}
+		{9684C591-4887-4E32-925B-2451B24156A3} = {36D3B591-7B4D-4975-B043-4756D3D05E3A}
+		{5656A3D9-928D-4DA7-9FFF-20C6F3C271F5} = {36D3B591-7B4D-4975-B043-4756D3D05E3A}
+		{93651323-2AEC-43B2-B3CE-A9F2EA841040} = {36D3B591-7B4D-4975-B043-4756D3D05E3A}
+		{B4CCADCB-3299-4078-B545-74B6FA8A5363} = {36D3B591-7B4D-4975-B043-4756D3D05E3A}
+		{A627E05E-D6A1-4176-83DF-E38D0ECF7D4E} = {36D3B591-7B4D-4975-B043-4756D3D05E3A}
+		{240F798A-187C-4781-8E22-4792A365DB93} = {36D3B591-7B4D-4975-B043-4756D3D05E3A}
+		{D3A960B1-565E-431B-B211-C15DF5000001} = {36D3B591-7B4D-4975-B043-4756D3D05E3A}
+		{AE173291-9748-44DD-B3F0-73A7A47F21F7} = {2E51B842-A6B4-4D44-BE3A-EA83BDB2B08B}
 	EndGlobalSection
 EndGlobal
