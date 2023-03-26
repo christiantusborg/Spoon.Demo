@@ -1,7 +1,6 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User;
+﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.Refresh;
 
-using Application.User.UserRefresh;
-using Extensions;
+using Application.Users.UserRefresh;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -35,7 +34,7 @@ public static class UserRefreshEndpoint
 
                 return Results.NoContent();
             })
-            .WithName(nameof(ApiUserEndpoints.Refresh))
+            .WithName(ApiUserEndpoints.Refresh.Name)
             .Produces<UserRefreshResult>()
             .Produces<Validationfailures>(406)
             .Produces<PermissionFailed<UserRefreshResult>>(403)

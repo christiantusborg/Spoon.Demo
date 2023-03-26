@@ -1,5 +1,10 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Me.Email.Get
 {
+    using Administration.RemoveUserEmail;
+    using Domain.Entities;
+    using Domain.Repositories;
+    using EitherCore.Helpers;
+    using Helpers;
     using MediatR;
     using Spoon.NuGet.Core;
     using Spoon.NuGet.EitherCore;
@@ -9,16 +14,18 @@
     /// </summary>
     public sealed class MeEmailGetCommandHandler : IRequestHandler<MeEmailGetCommand, Either<MeEmailGetCommandResult>>
     {
+        private readonly ISecureRemotePasswordRepository _repository;
+        private readonly IEncryptionService _encryptionService;
 
-        private readonly IMockbleGuidGenerator _mockbleGuidGenerator;
 
         /// <summary>
         /// </summary>
         /// <param name="writeRepository"></param>
         /// <param name="mockbleGuidGenerator"></param>
-        public MeEmailGetCommandHandler(IMockbleGuidGenerator mockbleGuidGenerator)
+        public MeEmailGetCommandHandler(ISecureRemotePasswordRepository repository,IEncryptionService encryptionService)
         {
-            this._mockbleGuidGenerator = mockbleGuidGenerator;
+            this._repository = repository;
+            this._encryptionService = encryptionService;
         }
 
         /// <summary>
@@ -34,8 +41,30 @@
             MeEmailGetCommand request,
             CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-            return new Either<MeEmailGetCommandResult>(new MeEmailGetCommandResult());
+            var existingUserEmail = await this._repository.UserEmails.Get(new GetUserEmailSpecification(request.UserId, request.EmailId));
+            
+            if(existingUserEmail == null)
+                return EitherHelper<MeEmailGetCommandResult>.EntityNotFound(typeof(UserEmail));
+
+
+            
+            this._repository.UserEmails.Remove(existingUserEmail);
+            
+            await this._repository.SaveChangesAsync(cancellationToken);
+            
+            var emailAddress = this._encryptionService.Decrypt(existingUserEmail.EmailAddressEncrypted);
+            var result = new MeEmailGetCommandResult
+            {
+                UserId = existingUserEmail.UserId,
+                EmailId = existingUserEmail.EmailId,
+                EmailAddress = emailAddress,
+                IsPrimary = existingUserEmail.IsPrimary,
+                EmailAddressVerifiedAt = existingUserEmail.EmailAddressVerifiedAt,
+                CreatedAt = existingUserEmail.CreatedAt,
+                UpdatedAt = existingUserEmail.UpdatedAt,
+                DeletedAt = existingUserEmail.DeletedAt,
+            };
+            return new Either<MeEmailGetCommandResult>(result);
         }
     }
 }

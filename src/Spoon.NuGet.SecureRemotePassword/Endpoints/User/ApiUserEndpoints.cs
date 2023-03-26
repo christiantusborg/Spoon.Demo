@@ -1,4 +1,4 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.Extensions;
+﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User;
 
 /// <summary>
 /// </summary>
@@ -44,7 +44,7 @@ public static class ApiUserEndpoints
             public const string Name = $"{Base}ForgotPasswordRecoverByEmailInit";    
             
             /// <inheritdoc cref="ApiUserEndpoints" />
-            public const string Endpoint = $"{Base}/ForgotPassword/Init";
+            public const string Endpoint = $"{Base}/ForgotPassword/ByEmail";
 
             /// <inheritdoc cref="ApiUserEndpoints" />
             public const string Summary = "Get by ProductId";
@@ -60,7 +60,7 @@ public static class ApiUserEndpoints
             public const string Name = $"{Base}ForgotPasswordSetByEmail"; 
             
             /// <inheritdoc cref="ApiUserEndpoints" />
-            public const string Endpoint = $"{Base}/ForgotPassword";
+            public const string Endpoint = $"{Base}/ForgotPassword/ByEmail";
 
             /// <inheritdoc cref="ApiUserEndpoints" />
             public const string Summary = "Get by ProductId";
@@ -117,6 +117,22 @@ public static class ApiUserEndpoints
     }
 
     /// <inheritdoc cref="ApiUserEndpoints" />
+    public static class LogoutAll
+    {
+        /// <inheritdoc cref="ApiUserEndpoints" />
+        public const string Name = $"{Base}LogoutAll";
+        
+        /// <inheritdoc cref="ApiUserEndpoints" />
+        public const string Endpoint = $"{Base}/Logout/all";
+
+        /// <inheritdoc cref="ApiUserEndpoints" />
+        public const string Summary = "Get by ProductId";
+
+        /// <inheritdoc cref="ApiUserEndpoints" />
+        public const string Description = "Get by ProductId";
+    }
+    
+    /// <inheritdoc cref="ApiUserEndpoints" />
     public static class Refresh
     {
         /// <inheritdoc cref="ApiUserEndpoints" />
@@ -127,6 +143,8 @@ public static class ApiUserEndpoints
 
         /// <inheritdoc cref="ApiUserEndpoints" />
         public const string Description = "Get by ProductId";
+
+        public static string Name = $"{Base}Refresh";
     }
   
     /// <inheritdoc cref="ApiUserEndpoints" />
@@ -146,14 +164,36 @@ public static class ApiUserEndpoints
     /// <inheritdoc cref="ApiUserEndpoints" />
     public static class ForgotPasswordRecoverByRecoveryCode
     {
-        /// <inheritdoc cref="ApiUserEndpoints" />
-        public const string Endpoint = $"{Base}/ForgotPasswordRecoverByRecoveryCode";
+        public static class ChallengeGet
+        {
+            /// <inheritdoc cref="ApiUserEndpoints" />
+            public static string Name = $"{Base}ForgotPasswordRecoverByRecoveryCodeChallengeGet";
+            
+            /// <inheritdoc cref="ApiUserEndpoints" />
+            public const string Endpoint = $"{Base}/ForgotPassword/ByRecoveryCode/ChallengeGet";
 
-        /// <inheritdoc cref="ApiUserEndpoints" />
-        public const string Summary = "Get by ProductId";
+            /// <inheritdoc cref="ApiUserEndpoints" />
+            public const string Summary = "Get by ProductId";
 
-        /// <inheritdoc cref="ApiUserEndpoints" />
-        public const string Description = "Get by ProductId";        
+            /// <inheritdoc cref="ApiUserEndpoints" />
+            public const string Description = "Get by ProductId";            
+        }
+
+        public static class Set
+        {
+            /// <inheritdoc cref="ApiUserEndpoints" />
+            public static string Name = $"{Base}ForgotPasswordRecoverByRecoveryCodeSet";
+
+            
+            /// <inheritdoc cref="ApiUserEndpoints" />
+            public const string Endpoint = $"{Base}/ForgotPassword/ByRecoveryCode/Set";
+
+            /// <inheritdoc cref="ApiUserEndpoints" />
+            public const string Summary = "Get by ProductId";
+
+            /// <inheritdoc cref="ApiUserEndpoints" />
+            public const string Description = "Get by ProductId";            
+        }        
     }
 
 }

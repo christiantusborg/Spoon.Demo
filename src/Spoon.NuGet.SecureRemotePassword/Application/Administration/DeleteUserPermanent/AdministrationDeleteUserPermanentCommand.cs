@@ -21,8 +21,7 @@ public sealed class AdministrationDeleteUserPermanentCommand : MediatorBaseComma
     }
 
     /// <inheritdoc cref="AdministrationDeleteUserPermanentCommand" />
-    public 
-        Guid UserId { get; init; }
+    public Guid UserId { get; init; }
 
-
+    public Guid CurrentUserId { get; set; }
 }

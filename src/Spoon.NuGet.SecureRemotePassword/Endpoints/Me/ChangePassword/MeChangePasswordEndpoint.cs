@@ -57,7 +57,7 @@ public static class MeChangePasswordEndpoint
         return command;
     }
 
-    internal static async Task<IResult> ChangePasswordAsync([FromBody] MeChangePasswordRequest request, [FromHeader(Name = "verifyProof")] string verifyProof, ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
+    internal static async Task<IResult> ChangePasswordAsync([FromBody] MeChangePasswordRequest request, ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
     {
         var command = request.MapToCommand(claimsPrincipal.GetUserId());
         var commandResult = await sender.Send(command, cancellationToken);

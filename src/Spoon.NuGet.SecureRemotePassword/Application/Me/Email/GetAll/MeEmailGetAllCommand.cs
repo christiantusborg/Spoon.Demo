@@ -23,6 +23,5 @@ public sealed class MeEmailGetAllCommand : MediatorBaseCommand, IHandleableReque
     }
 
     /// <inheritdoc cref="MeEmailGetAllCommand" />
-    public 
-        Guid UserId { get; init; }
+    public Guid UserId { get; init; }
 }

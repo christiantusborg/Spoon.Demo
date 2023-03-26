@@ -5,11 +5,6 @@
     /// </summary>
     public sealed class AdministrationSetUserAllowedLoginCommandResult
     {
-        /// <inheritdoc cref="AdministrationSetUserAllowedLoginCommandResult" />
-        public Guid UserId { get; internal set; }
-        /// <inheritdoc cref="AdministrationSetUserAllowedLoginCommandResult" />
-        public string? Email { get; internal set; }        
-        /// <inheritdoc cref="AdministrationSetUserAllowedLoginCommandResult" />
-        public string? ServerSessionProof { get; internal set; }
+        public bool Success { get; set; } = true;
     }
 }

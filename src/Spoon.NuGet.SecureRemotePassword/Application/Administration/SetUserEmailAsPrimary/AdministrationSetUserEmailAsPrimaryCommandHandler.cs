@@ -1,6 +1,10 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Administration.SetUserEmailAsPrimary
 {
+    using Domain.Entities;
+    using Domain.Repositories;
+    using EitherCore.Helpers;
     using MediatR;
+    using RemoveUserEmail;
     using Spoon.NuGet.Core;
     using Spoon.NuGet.EitherCore;
 
@@ -9,16 +13,16 @@
     /// </summary>
     public sealed class AdministrationSetUserEmailAsPrimaryCommandHandler : IRequestHandler<AdministrationSetUserEmailAsPrimaryCommand, Either<AdministrationSetUserEmailAsPrimaryCommandResult>>
     {
+        private readonly ISecureRemotePasswordRepository _repository;
 
-        private readonly IMockbleGuidGenerator _mockbleGuidGenerator;
 
         /// <summary>
         /// </summary>
         /// <param name="writeRepository"></param>
         /// <param name="mockbleGuidGenerator"></param>
-        public AdministrationSetUserEmailAsPrimaryCommandHandler(IMockbleGuidGenerator mockbleGuidGenerator)
+        public AdministrationSetUserEmailAsPrimaryCommandHandler(ISecureRemotePasswordRepository repository)
         {
-            this._mockbleGuidGenerator = mockbleGuidGenerator;
+            this._repository = repository;
         }
 
         /// <summary>
@@ -34,7 +38,25 @@
             AdministrationSetUserEmailAsPrimaryCommand request,
             CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var existingUserEmails = await this._repository.UserEmails.Search(new GetSetUserEmailAsPrimarySpecification(request.UserId), cancellationToken);
+
+            var newPrimaryUserEmail = existingUserEmails.FirstOrDefault(x => x.EmailId == request.EmailId);
+            
+            if (newPrimaryUserEmail == null)
+            {
+                return EitherHelper<AdministrationSetUserEmailAsPrimaryCommandResult>.EntityNotFound(typeof(UserEmail));
+            }
+            
+            
+            foreach (var userEmail in existingUserEmails)
+            {
+                userEmail.IsPrimary = 0;
+            }
+            
+            existingUserEmails.First(x => x.EmailId == request.EmailId).IsPrimary = 1;
+            
+            await this._repository.SaveChangesAsync(cancellationToken);
+            
             return new Either<AdministrationSetUserEmailAsPrimaryCommandResult>(new AdministrationSetUserEmailAsPrimaryCommandResult());
         }
     }

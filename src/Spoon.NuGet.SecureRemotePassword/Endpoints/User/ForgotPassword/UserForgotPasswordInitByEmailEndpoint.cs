@@ -2,6 +2,7 @@
 // ReSharper disable MemberCanBePrivate.Global
 namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.ForgotPassword;
 
+using Application.Users.UserForgotPasswordRecoverByEmailInit;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -10,9 +11,7 @@ using Microsoft.AspNetCore.Routing;
 using Spoon.NuGet.EitherCore.Extensions;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Application.User.UserForgotPasswordRecoverByEmailInit;
 using Spoon.NuGet.SecureRemotePassword.Contracts;
-using Spoon.NuGet.SecureRemotePassword.Endpoints.User.Extensions;
 using Swashbuckle.AspNetCore.Annotations;
 
 //public static class GetChallengeAuthentication
@@ -53,7 +52,7 @@ public static class UserForgotPasswordInitByEmailEndpoint
 
         var commandResult = await sender.Send(command, cancellationToken);
 
-        var result = commandResult.ToResult(typeof(ForgotPasswordInitByEmail));
+        var result = commandResult.ToNoContent();
         return result;
     }
 }

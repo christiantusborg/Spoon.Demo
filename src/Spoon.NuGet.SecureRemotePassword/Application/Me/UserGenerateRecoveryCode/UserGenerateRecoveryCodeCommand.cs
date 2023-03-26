@@ -19,4 +19,6 @@ public sealed class UserGenerateRecoveryCodeCommand : MediatorBaseCommand, IHand
         : base(typeof(UserGenerateRecoveryCodeCommand))
     {
     }
+
+    public Guid UserId { get; set; }
 }

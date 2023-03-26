@@ -22,5 +22,5 @@ public sealed class MeVerifyChallengeGetCommand : MediatorBaseCommand, IHandleab
     {
     }
     /// <inheritdoc cref="MeVerifyChallengeGetCommand" />
-    public Guid UserId { get; set; }
+    public string Email { get; set; }
 }

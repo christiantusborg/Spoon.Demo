@@ -23,4 +23,8 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Spoon.NuGet.SecureRemotePassword\Spoon.NuGet.SecureRemotePassword.csproj" />
+    </ItemGroup>
+
 </Project>

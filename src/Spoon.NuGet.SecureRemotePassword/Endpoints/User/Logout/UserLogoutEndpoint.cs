@@ -1,21 +1,17 @@
 ﻿// ReSharper disable HeapView.ObjectAllocation
 // ReSharper disable MemberCanBePrivate.Global
-namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User;
+namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.Logout;
 
 using System.Security.Claims;
-using Application.User.UserLogout;
-using EitherCore.Extensions;
-using Extensions;
+using Application.Users.UserLogout;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.AspNetCore.Routing;
-using SecureRemotePassword.Extensions;
+using Spoon.NuGet.EitherCore.Extensions;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Contracts;
+using Spoon.NuGet.SecureRemotePassword.Extensions;
 using Swashbuckle.AspNetCore.Annotations;
 
 //public static class GetChallengeAuthentication
@@ -46,11 +42,13 @@ public static class UserLogoutEndpoint
         return app;
     }
     
-    private static UserLogoutCommand MapToCommand(Guid userId)
+    private static UserLogoutCommand MapToCommand(Guid userId, Guid sessionId)
     {
+        
         var command = new UserLogoutCommand
         {
-            userId = userId,
+            UserId = userId,
+            Session = sessionId, 
         };
         
         return command;
@@ -58,7 +56,7 @@ public static class UserLogoutEndpoint
     
     internal static async Task<IResult> Logout(ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
     {
-        var command = MapToCommand(claimsPrincipal.GetUserId());
+        var command = MapToCommand(claimsPrincipal.GetUserId(),claimsPrincipal.GetSessionId());
 
         var commandResult = await sender.Send(command, cancellationToken);
 

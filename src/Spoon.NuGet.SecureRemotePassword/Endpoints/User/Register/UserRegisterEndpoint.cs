@@ -1,19 +1,17 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User;
+﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.Register;
 
 using System.Security.Claims;
-using Application.User.UserRegister;
-using EitherCore.Extensions;
-using Extensions;
+using Application.Users.UserRegister;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.AspNetCore.Routing;
-using SecureRemotePassword.Extensions;
+using Spoon.NuGet.EitherCore.Extensions;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
 using Spoon.NuGet.SecureRemotePassword.Contracts;
+using Spoon.NuGet.SecureRemotePassword.Extensions;
 using Swashbuckle.AspNetCore.Annotations;
 
 public static class UserRegisterEndpoint

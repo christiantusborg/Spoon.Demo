@@ -1,5 +1,9 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Administration.SetUserFailedLockout
 {
+    using Core.Application;
+    using Domain.Entities;
+    using Domain.Repositories;
+    using EitherCore.Helpers;
     using MediatR;
     using Spoon.NuGet.Core;
     using Spoon.NuGet.EitherCore;
@@ -9,16 +13,18 @@
     /// </summary>
     public sealed class AdministrationSetUserFailedLockoutCommandHandler : IRequestHandler<AdministrationSetUserFailedLockoutCommand, Either<AdministrationSetUserFailedLockoutCommandResult>>
     {
-
-        private readonly IMockbleGuidGenerator _mockbleGuidGenerator;
+        private readonly IMockbleDateTime _mockbleDateTime;
+        private readonly ISecureRemotePasswordRepository _repository;
 
         /// <summary>
         /// </summary>
         /// <param name="writeRepository"></param>
         /// <param name="mockbleGuidGenerator"></param>
-        public AdministrationSetUserFailedLockoutCommandHandler(IMockbleGuidGenerator mockbleGuidGenerator)
+        /// <param name="mockbleDateTime"></param>
+        public AdministrationSetUserFailedLockoutCommandHandler(IMockbleDateTime mockbleDateTime, ISecureRemotePasswordRepository repository)
         {
-            this._mockbleGuidGenerator = mockbleGuidGenerator;
+            this._mockbleDateTime = mockbleDateTime;
+            this._repository = repository;
         }
 
         /// <summary>
@@ -34,7 +40,14 @@
             AdministrationSetUserFailedLockoutCommand request,
             CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var existingUser = await this._repository.Users.Get(new DefaultGetSpecification<User>(request.UserId));
+            if (existingUser == null)
+                return EitherHelper<AdministrationSetUserFailedLockoutCommandResult>.EntityNotFound(typeof(User));
+            
+            existingUser.LockoutEnd = request.Value ? null : this._mockbleDateTime.UtcNow;
+            existingUser.LockoutCount = 0;
+            existingUser.UpdatedAt = this._mockbleDateTime.UtcNow;
+            
             return new Either<AdministrationSetUserFailedLockoutCommandResult>(new AdministrationSetUserFailedLockoutCommandResult());
         }
     }

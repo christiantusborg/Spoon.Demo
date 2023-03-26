@@ -30,7 +30,7 @@ public static class MeDeleteSoftEndpoint
     public static IEndpointRouteBuilder MapMeDeleteSoft(this IEndpointRouteBuilder app)
     {
         app.MapDelete(ApiMeEndpoints.Delete.Soft.Endpoint, DeleteSoftAsync)
-            .WithName(nameof(ApiMeEndpoints.Delete.Soft))
+            .WithName(ApiMeEndpoints.Delete.Soft.Name)
             .WithTags(ApiMeEndpoints.Tag)
             .Produces(204)
             .Produces<PermissionFailed<UserDeleteSoftRequest>>(403)

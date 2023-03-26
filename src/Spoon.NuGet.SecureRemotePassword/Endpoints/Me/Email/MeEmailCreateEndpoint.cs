@@ -15,9 +15,9 @@ using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
 using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Spoon.NuGet.SecureRemotePassword.EndpointFilters;
-using Spoon.NuGet.SecureRemotePassword.Endpoints.User.Extensions;
 using Spoon.NuGet.SecureRemotePassword.Extensions;
 using Swashbuckle.AspNetCore.Annotations;
+using User;
 
 //public static class GetChallengeAuthentication
 /// <summary>

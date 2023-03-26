@@ -36,6 +36,7 @@ public static class MeEndpointExtensions
 
         //VerifyChallenge
         app.MapMeVerifyChallengeGet();
+        
         return app;
     }
 }

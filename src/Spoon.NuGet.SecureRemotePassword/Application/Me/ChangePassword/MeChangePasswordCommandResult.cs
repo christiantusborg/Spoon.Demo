@@ -5,9 +5,6 @@
     /// </summary>
     public sealed class MeChangePasswordCommandResult
     {
-        /// <inheritdoc cref="MeChangePasswordCommandResult" />
-        public Guid UserId { get; internal set; }
-        /// <inheritdoc cref="MeChangePasswordCommandResult" />
-        public string? ServerSessionProof { get; internal set; }
+        public bool Success { get; set; } = true;
     }
 }

@@ -5,11 +5,6 @@
     /// </summary>
     public sealed class AdministrationAddUserEmailCommandResult
     {
-        /// <inheritdoc cref="AdministrationAddUserEmailCommandResult" />
-        public Guid UserId { get; internal set; }
-        /// <inheritdoc cref="AdministrationAddUserEmailCommandResult" />
-        public string? Email { get; internal set; }        
-        /// <inheritdoc cref="AdministrationAddUserEmailCommandResult" />
-        public string? ServerSessionProof { get; internal set; }
+        public Guid EmailId { get; set; }
     }
 }

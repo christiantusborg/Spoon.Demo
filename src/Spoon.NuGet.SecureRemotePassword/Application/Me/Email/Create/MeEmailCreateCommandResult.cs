@@ -5,9 +5,6 @@
     /// </summary>
     public sealed class MeEmailCreateCommandResult
     {
-        /// <inheritdoc cref="MeEmailCreateCommandResult" />
-        public Guid UserId { get; internal set; }
-        /// <inheritdoc cref="MeEmailCreateCommandResult" />
-        public string? Email { get; internal set; }        
+       public Guid EmailId { get; set; }
     }
 }

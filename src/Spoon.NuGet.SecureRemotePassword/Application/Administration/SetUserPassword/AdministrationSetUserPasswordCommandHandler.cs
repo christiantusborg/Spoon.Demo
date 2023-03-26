@@ -1,5 +1,9 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Administration.SetUserPassword
 {
+    using Core.Application;
+    using Domain.Entities;
+    using Domain.Repositories;
+    using EitherCore.Helpers;
     using MediatR;
     using Spoon.NuGet.Core;
     using Spoon.NuGet.EitherCore;
@@ -9,16 +13,17 @@
     /// </summary>
     public sealed class AdministrationSetUserPasswordCommandHandler : IRequestHandler<AdministrationSetUserPasswordCommand, Either<AdministrationSetUserPasswordCommandResult>>
     {
-
-        private readonly IMockbleGuidGenerator _mockbleGuidGenerator;
+        private readonly IMockbleDateTime _mockbleDateTime;
+        private readonly ISecureRemotePasswordRepository _repository;
 
         /// <summary>
         /// </summary>
         /// <param name="writeRepository"></param>
         /// <param name="mockbleGuidGenerator"></param>
-        public AdministrationSetUserPasswordCommandHandler(IMockbleGuidGenerator mockbleGuidGenerator)
+        public AdministrationSetUserPasswordCommandHandler(IMockbleDateTime mockbleDateTime, ISecureRemotePasswordRepository repository)
         {
-            this._mockbleGuidGenerator = mockbleGuidGenerator;
+            this._mockbleDateTime = mockbleDateTime;
+            this._repository = repository;
         }
 
         /// <summary>
@@ -34,7 +39,22 @@
             AdministrationSetUserPasswordCommand request,
             CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var existingUser = await this._repository.Users.Get(new DefaultGetSpecification<User>(request.UserId));
+            if (existingUser == null)
+                return EitherHelper<AdministrationSetUserPasswordCommandResult>.EntityNotFound(typeof(User));            
+            
+            var existingUserSecureRemotePasswordLogins = await this._repository.SecureRemotePasswordLogins.Get(new DefaultGetSpecification<SecureRemotePasswordLogin>(request.UserId));
+            if (existingUserSecureRemotePasswordLogins == null)
+                return EitherHelper<AdministrationSetUserPasswordCommandResult>.EntityNotFound(typeof(SecureRemotePasswordLogin));
+            
+            existingUserSecureRemotePasswordLogins.Verifier = request.Verifier;
+            existingUserSecureRemotePasswordLogins.Salt = request.Salt;
+            
+            existingUser.LockoutEnd = null;
+            existingUser.LockoutCount = 0;
+            
+            existingUserSecureRemotePasswordLogins.UpdatedAt = this._mockbleDateTime.UtcNow;
+            
             return new Either<AdministrationSetUserPasswordCommandResult>(new AdministrationSetUserPasswordCommandResult());
         }
     }

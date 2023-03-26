@@ -5,11 +5,6 @@
     /// </summary>
     public sealed class AdministrationSetUserEmailAsPrimaryCommandResult
     {
-        /// <inheritdoc cref="AdministrationSetUserEmailAsPrimaryCommandResult" />
-        public Guid UserId { get; internal set; }
-        /// <inheritdoc cref="AdministrationSetUserEmailAsPrimaryCommandResult" />
-        public string? Email { get; internal set; }        
-        /// <inheritdoc cref="AdministrationSetUserEmailAsPrimaryCommandResult" />
-        public string? ServerSessionProof { get; internal set; }
+        public bool Success { get; set; } = true;
     }
 }

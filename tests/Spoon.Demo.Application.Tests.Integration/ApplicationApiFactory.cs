@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using NuGet.SecureRemotePassword.Endpoints;
 
 public class ApplicationApiFactory : WebApplicationFactory<IApiMarker>
 {
@@ -11,9 +12,9 @@ public class ApplicationApiFactory : WebApplicationFactory<IApiMarker>
     {
         builder.ConfigureServices(collection =>
         {
-            collection.RemoveAll(typeof(IDbConnectionFactory));
-            ServiceCollectionServiceExtensions.AddSingleton<IDbConnectionFactory>(collection, _ =>
-                new SqliteConnectionFactory("DataSource=file:inmem?mode=memory&cache=shared"));
+        //   collection.RemoveAll(typeof(IDbConnectionFactory));
+        //    ServiceCollectionServiceExtensions.AddSingleton<IDbConnectionFactory>(collection, _ =>
+        //        new SqliteConnectionFactory("DataSource=file:inmem?mode=memory&cache=shared"));
 
         });
     }

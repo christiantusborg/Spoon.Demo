@@ -10,15 +10,12 @@
     public sealed class AdministrationGetAllUserCommandHandler : IRequestHandler<AdministrationGetAllUserCommand, Either<AdministrationGetAllUserCommandResult>>
     {
 
-        private readonly IMockbleGuidGenerator _mockbleGuidGenerator;
-
         /// <summary>
         /// </summary>
         /// <param name="writeRepository"></param>
         /// <param name="mockbleGuidGenerator"></param>
-        public AdministrationGetAllUserCommandHandler(IMockbleGuidGenerator mockbleGuidGenerator)
+        public AdministrationGetAllUserCommandHandler()
         {
-            this._mockbleGuidGenerator = mockbleGuidGenerator;
         }
 
         /// <summary>

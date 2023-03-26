@@ -1,5 +1,10 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Administration.DeleteUserPermanent
 {
+    using Core.Application;
+    using Domain.Entities;
+    using Domain.Repositories;
+    using EitherCore.Enums;
+    using EitherCore.Helpers;
     using MediatR;
     using Spoon.NuGet.Core;
     using Spoon.NuGet.EitherCore;
@@ -9,6 +14,7 @@
     /// </summary>
     public sealed class AdministrationDeleteUserPermanentCommandHandler : IRequestHandler<AdministrationDeleteUserPermanentCommand, Either<AdministrationDeleteUserPermanentCommandResult>>
     {
+        private readonly ISecureRemotePasswordRepository _repository;
 
         private readonly IMockbleGuidGenerator _mockbleGuidGenerator;
 
@@ -16,9 +22,9 @@
         /// </summary>
         /// <param name="writeRepository"></param>
         /// <param name="mockbleGuidGenerator"></param>
-        public AdministrationDeleteUserPermanentCommandHandler(IMockbleGuidGenerator mockbleGuidGenerator)
+        public AdministrationDeleteUserPermanentCommandHandler(ISecureRemotePasswordRepository repository)
         {
-            this._mockbleGuidGenerator = mockbleGuidGenerator;
+            this._repository = repository;
         }
 
         /// <summary>
@@ -34,7 +40,18 @@
             AdministrationDeleteUserPermanentCommand request,
             CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var existingUser = await this._repository.Users.Get(new DefaultGetSpecification<User>(request.UserId));
+            if (existingUser == null)
+                return EitherHelper<AdministrationDeleteUserPermanentCommandResult>.EntityNotFound(typeof(User)); 
+            
+            if(request.UserId == request.CurrentUserId)
+                return EitherHelper<AdministrationDeleteUserPermanentCommandResult>.Create("BadPermissions_CannotDeleteYourself",BaseHttpStatusCodes.Status403Forbidden);
+            
+            
+            this._repository.Users.Remove(existingUser);
+            
+            await this._repository.SaveChangesAsync(cancellationToken);
+            
             return new Either<AdministrationDeleteUserPermanentCommandResult>(new AdministrationDeleteUserPermanentCommandResult());
         }
     }

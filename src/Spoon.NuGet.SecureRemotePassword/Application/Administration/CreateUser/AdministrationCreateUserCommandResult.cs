@@ -7,9 +7,8 @@
     {
         /// <inheritdoc cref="AdministrationCreateUserCommandResult" />
         public Guid UserId { get; internal set; }
-        /// <inheritdoc cref="AdministrationCreateUserCommandResult" />
-        public string? Email { get; internal set; }        
-        /// <inheritdoc cref="AdministrationCreateUserCommandResult" />
-        public string? ServerSessionProof { get; internal set; }
+
+        public Guid RecoveryToken { get; set; }
+        public string EmailAddressHash { get; set; }
     }
 }

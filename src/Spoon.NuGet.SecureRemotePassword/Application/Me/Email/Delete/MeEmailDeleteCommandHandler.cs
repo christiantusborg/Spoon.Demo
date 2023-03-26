@@ -1,5 +1,10 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Me.Email.Delete
 {
+    using Administration.RemoveUserEmail;
+    using Domain.Entities;
+    using Domain.Repositories;
+    using EitherCore.Enums;
+    using EitherCore.Helpers;
     using MediatR;
     using Spoon.NuGet.Core;
     using Spoon.NuGet.EitherCore;
@@ -9,16 +14,16 @@
     /// </summary>
     public sealed class MeEmailDeleteCommandHandler : IRequestHandler<MeEmailDeleteCommand, Either<MeEmailDeleteCommandResult>>
     {
+        private readonly ISecureRemotePasswordRepository _repository;
 
-        private readonly IMockbleGuidGenerator _mockbleGuidGenerator;
 
         /// <summary>
         /// </summary>
         /// <param name="writeRepository"></param>
         /// <param name="mockbleGuidGenerator"></param>
-        public MeEmailDeleteCommandHandler(IMockbleGuidGenerator mockbleGuidGenerator)
+        public MeEmailDeleteCommandHandler(ISecureRemotePasswordRepository repository)
         {
-            this._mockbleGuidGenerator = mockbleGuidGenerator;
+            this._repository = repository;
         }
 
         /// <summary>
@@ -34,7 +39,21 @@
             MeEmailDeleteCommand request,
             CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var existingUserEmail = await this._repository.UserEmails.Get(new GetUserEmailSpecification(request.UserId, request.EmailId));
+            
+            if(existingUserEmail == null)
+                return EitherHelper<MeEmailDeleteCommandResult>.EntityNotFound(typeof(UserEmail));
+
+            if (existingUserEmail.IsPrimary == 1)
+            {
+                return EitherHelper<MeEmailDeleteCommandResult>.Create("BadPermissions_CannotRemovePrimary",BaseHttpStatusCodes.Status423Locked);
+            }
+            
+            
+            this._repository.UserEmails.Remove(existingUserEmail);
+            
+            await this._repository.SaveChangesAsync(cancellationToken);
+            
             return new Either<MeEmailDeleteCommandResult>(new MeEmailDeleteCommandResult());
         }
     }

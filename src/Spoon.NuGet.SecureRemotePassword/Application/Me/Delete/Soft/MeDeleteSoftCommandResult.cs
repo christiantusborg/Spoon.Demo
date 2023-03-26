@@ -5,9 +5,6 @@
     /// </summary>
     public sealed class MeDeleteSoftCommandResult
     {
-        /// <inheritdoc cref="MeDeleteSoftCommandResult" />
-        public Guid UserId { get; internal set; }
-        /// <inheritdoc cref="MeDeleteSoftCommandResult" />
-        public string? Email { get; internal set; }        
+        public bool Success { get; set; } = true;    
     }
 }

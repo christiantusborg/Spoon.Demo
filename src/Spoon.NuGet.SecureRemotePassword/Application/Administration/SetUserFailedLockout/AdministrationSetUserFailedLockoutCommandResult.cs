@@ -5,11 +5,6 @@
     /// </summary>
     public sealed class AdministrationSetUserFailedLockoutCommandResult
     {
-        /// <inheritdoc cref="AdministrationSetUserFailedLockoutCommandResult" />
-        public Guid UserId { get; internal set; }
-        /// <inheritdoc cref="AdministrationSetUserFailedLockoutCommandResult" />
-        public string? Email { get; internal set; }        
-        /// <inheritdoc cref="AdministrationSetUserFailedLockoutCommandResult" />
-        public string? ServerSessionProof { get; internal set; }
+        public bool Success { get; set; } = true;
     }
 }

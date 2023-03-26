@@ -2,11 +2,10 @@
 
 namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.ForgotPassword;
 
-using Application.User.UserForgotPasswordRecoverByEmailSet;
+using Application.Users.UserForgotPasswordRecoverByRecoveryCodeSet;
 using Contracts;
 using EitherCore.Extensions;
 using EndpointFilters;
-using Extensions;
 using Mediator.PipelineBehaviors.Permission;
 using Mediator.PipelineBehaviors.Validation;
 using MediatR;
@@ -40,11 +39,11 @@ public static class UserForgotPasswordSetByEmailEndpoint
         return app;
     }
 
-    private static UserForgotPasswordSetByEmailCommand MapToCommand(this UserForgotPasswordSetByEmailRequest request)
+    private static UserForgotPasswordRecoverByRecoveryCodeSetCommand MapToCommand(this UserForgotPasswordSetByEmailRequest request)
     {
-        var command = new UserForgotPasswordSetByEmailCommand
+        var command = new UserForgotPasswordRecoverByRecoveryCodeSetCommand
         {
-            Email = request.Email,
+            UserId = request.UserId,
             Proof = request.Proof,
             Salt = request.Salt,
             Verifier = request.Verifier,
@@ -57,7 +56,7 @@ public static class UserForgotPasswordSetByEmailEndpoint
         var command = request.MapToCommand();
         var commandResult = await sender.Send(command, cancellationToken);
 
-        var result = commandResult.ToResult(typeof(ForgotPasswordInitByEmail));
+        var result = commandResult.ToNoContent();
         return result;
     }
 }

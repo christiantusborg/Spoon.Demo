@@ -1,5 +1,10 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Administration.SetUserAllowedLogin
 {
+    using Core.Application;
+    using DeleteUserPermanent;
+    using Domain.Entities;
+    using Domain.Repositories;
+    using EitherCore.Helpers;
     using MediatR;
     using Spoon.NuGet.Core;
     using Spoon.NuGet.EitherCore;
@@ -10,15 +15,17 @@
     public sealed class AdministrationSetUserAllowedLoginCommandHandler : IRequestHandler<AdministrationSetUserAllowedLoginCommand, Either<AdministrationSetUserAllowedLoginCommandResult>>
     {
 
-        private readonly IMockbleGuidGenerator _mockbleGuidGenerator;
+        private readonly ISecureRemotePasswordRepository _repository;
+        private readonly IMockbleDateTime _mockbleDateTime;
 
         /// <summary>
         /// </summary>
         /// <param name="writeRepository"></param>
         /// <param name="mockbleGuidGenerator"></param>
-        public AdministrationSetUserAllowedLoginCommandHandler(IMockbleGuidGenerator mockbleGuidGenerator)
+        public AdministrationSetUserAllowedLoginCommandHandler(ISecureRemotePasswordRepository repository, IMockbleDateTime mockbleDateTime)
         {
-            this._mockbleGuidGenerator = mockbleGuidGenerator;
+            this._repository = repository;
+            this._mockbleDateTime = mockbleDateTime;
         }
 
         /// <summary>
@@ -34,7 +41,14 @@
             AdministrationSetUserAllowedLoginCommand request,
             CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var existingUser = await this._repository.Users.Get(new DefaultGetSpecification<User>(request.UserId));
+            if (existingUser == null)
+                return EitherHelper<AdministrationSetUserAllowedLoginCommandResult>.EntityNotFound(typeof(User));
+            
+            
+            existingUser.DisabledAt = request.Value ? null : this._mockbleDateTime.UtcNow;
+            existingUser.UpdatedAt = this._mockbleDateTime.UtcNow;
+            
             return new Either<AdministrationSetUserAllowedLoginCommandResult>(new AdministrationSetUserAllowedLoginCommandResult());
         }
     }

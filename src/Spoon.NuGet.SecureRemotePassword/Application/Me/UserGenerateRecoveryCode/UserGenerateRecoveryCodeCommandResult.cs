@@ -5,5 +5,6 @@
     /// </summary>
     public sealed class UserGenerateRecoveryCodeCommandResult
     {
+        public string RecoveryCode { get; set; }
     }
 }

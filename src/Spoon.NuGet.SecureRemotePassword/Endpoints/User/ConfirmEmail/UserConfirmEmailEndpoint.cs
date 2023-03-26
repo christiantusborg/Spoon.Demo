@@ -1,19 +1,18 @@
 ﻿// ReSharper disable HeapView.ObjectAllocation
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User;
+namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.ConfirmEmail;
 
-using Application.User.ConfirmEmail;
-using Contracts;
-using EndpointFilters;
-using Extensions;
-using Mediator.PipelineBehaviors.Permission;
-using Mediator.PipelineBehaviors.Validation;
+using Application.Users.ConfirmEmail;
+using EitherCore.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
+using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
+using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Swashbuckle.AspNetCore.Annotations;
 
 //public static class GetChallengeAuthentication
@@ -55,8 +54,9 @@ public static class UserConfirmEmailEndpoint
     {
         var command = request.MapToCommand();
 
-        await sender.Send(command, cancellationToken);
+        var commandResult = await sender.Send(command, cancellationToken);
 
-        return Results.NoContent();
+        var result = commandResult.ToNoContent();
+        return result;
     }
 }
