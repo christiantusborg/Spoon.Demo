@@ -3,7 +3,7 @@
 using FluentValidation;
 
 /// <summary>
-///     Class ProductCreateQueryValidator. This class cannot be inherited.
+///     Validator for <see cref="AdministrationAddUserEmailCommand" />.
 /// </summary>
 public sealed class AdministrationAddUserEmailValidator : AbstractValidator<AdministrationAddUserEmailCommand>
 {
@@ -14,8 +14,14 @@ public sealed class AdministrationAddUserEmailValidator : AbstractValidator<Admi
     {
         this.RuleFor(x => x.UserId)
             .NotEmpty()
-            .WithMessage(this.GetType().Name + "_" + "IsEmpty" + "_" + "UserId")
+            .WithMessage($"{this.GetType().Name}_IsEmpty_UserId")
             .NotEqual(Guid.Empty)
-            .WithMessage(this.GetType().Name + "_" + "IsGuidEmpty" + "_" + "UserId");
+            .WithMessage($"{this.GetType().Name}_InvalidGuid_UserId");
+
+        this.RuleFor(x => x.Email)
+            .NotEmpty()
+            .WithMessage($"{this.GetType().Name}_IsEmpty_Email")
+            .EmailAddress()
+            .WithMessage($"{this.GetType().Name}_InvalidEmailFormat_Email");
     }
 }
