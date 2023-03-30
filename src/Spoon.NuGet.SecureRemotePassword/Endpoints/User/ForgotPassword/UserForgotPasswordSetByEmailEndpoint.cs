@@ -4,6 +4,7 @@ namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.ForgotPassword;
 
 using Application.Users.UserForgotPasswordRecoverByRecoveryCodeSet;
 using Contracts;
+using Core.Presentation;
 using EitherCore.Extensions;
 using EndpointFilters;
 using Mediator.PipelineBehaviors.Permission;
@@ -18,14 +19,14 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 ///     Spoon.NuGet.SecureRemotePassword.Api
 /// </summary>
-public static class UserForgotPasswordSetByEmailEndpoint
+public class UserForgotPasswordSetByEmailEndpoint : IEndpointMarker
 {
     /// <summary>
     ///     Spoon.NuGet.SecureRemotePassword.Contracts
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapUserForgotPasswordSetByEmail(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapPost(ApiUserEndpoints.ForgotPassword.SetByEmail.Endpoint, UserForgotPasswordSetRecoverByEmail)
             .WithName(nameof(ApiUserEndpoints.ForgotPassword.SetByEmail.Name))
@@ -39,7 +40,7 @@ public static class UserForgotPasswordSetByEmailEndpoint
         return app;
     }
 
-    private static UserForgotPasswordRecoverByRecoveryCodeSetCommand MapToCommand(this UserForgotPasswordSetByEmailRequest request)
+    private UserForgotPasswordRecoverByRecoveryCodeSetCommand MapToCommand(UserForgotPasswordSetByEmailRequest request)
     {
         var command = new UserForgotPasswordRecoverByRecoveryCodeSetCommand
         {
@@ -51,9 +52,9 @@ public static class UserForgotPasswordSetByEmailEndpoint
         return command;
     }
 
-    internal static async Task<IResult> UserForgotPasswordSetRecoverByEmail(this UserForgotPasswordSetByEmailRequest request, ISender sender, CancellationToken cancellationToken)
+    internal async Task<IResult> UserForgotPasswordSetRecoverByEmail(UserForgotPasswordSetByEmailRequest request, ISender sender, CancellationToken cancellationToken)
     {
-        var command = request.MapToCommand();
+        var command = MapToCommand(request);
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

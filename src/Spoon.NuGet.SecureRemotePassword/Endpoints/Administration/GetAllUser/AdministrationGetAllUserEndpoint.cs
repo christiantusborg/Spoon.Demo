@@ -1,5 +1,6 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.GetAllUser;
 
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,14 +16,14 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 /// 
 /// </summary>
-public static class AdministrationGetAllUserEndpoint
+public class AdministrationGetAllUserEndpoint : IEndpointMarker
 {
     /// <summary>
     /// 
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapAdministrationGetAllUser(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapGet(ApiAdministrationEndpoints.GetAllUser.Endpoint, GetAllUser)
             .WithName(ApiAdministrationEndpoints.GetAllUser.Name)

@@ -20,9 +20,11 @@ using Spoon.Demo.Presentation.Api.Endpoints.V1.Products.Extensions;
 
 using Spoon.Demo.Presentation.Api.Swagger;
 using Spoon.NuGet.Core;
+using Spoon.NuGet.Core.Presentation;
 using Spoon.NuGet.Mediator.PipelineBehaviors.AuditLog;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
+using Spoon.NuGet.SecureRemotePassword;
 using Spoon.NuGet.SecureRemotePassword.Endpoints.Me;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -116,7 +118,7 @@ builder.Services.AddSwaggerGen(x =>
 
 
 builder.Services.AddMediatR(typeof(ProductGetQuery));
-builder.Services.AddValidationPipelineBehaviour();
+//builder.Services.AddValidationPipelineBehaviour();
 
 
 builder.Services.AddDbContext<DbContext>(optionsBuilder =>
@@ -134,7 +136,6 @@ builder.Services.AddDbContext<ReadOnlyContext>(optionsBuilder =>
     }
 );
 */
-
 
 builder.Services.AddApplication();
 
@@ -171,9 +172,9 @@ app.UseHttpsRedirection();
 //app.UseAuthorization();
 app.UseOutputCache();
 
-app.MapMeEndpoints();
+//app.MapMeEndpoints();
 //app.MapUserEndpoints();
-app.MapEndpoints();
+//app.MapEndpoints(typeof(IAssemblyMarkerSecureRemotePassword));
 
 //app.UseOutputCache();
 //EndpointFiltersMetricCounter

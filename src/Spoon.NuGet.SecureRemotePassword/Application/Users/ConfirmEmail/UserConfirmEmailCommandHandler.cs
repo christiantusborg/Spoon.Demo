@@ -35,7 +35,7 @@
             CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
-            return new Either<UserConfirmEmailCommandResult>(new UserConfirmEmailCommandResult());
+
         }
     }
 }

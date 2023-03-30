@@ -35,7 +35,7 @@ public static class GetProductEndpoint
             {
                 var command = request.Adapt<ProductGetQuery>();
 
-                var commandResult = await sender.Send(command);
+                var commandResult = await sender.Send(command, cancellationToken);
                 var contentResult = commandResult.ToResult(typeof(ProductGetResult));
 
                 return contentResult;

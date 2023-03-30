@@ -41,7 +41,7 @@
             ClaimGetAllCommand request,
             CancellationToken cancellationToken)
         {
-            var claims = await this._repository.Claims.Search(new DefaultSearchSpecification<Claim>());
+            var claims = await this._repository.Claims.GetAllAsync(new DefaultSearchSpecification<Claim>(), cancellationToken);
 
             if (claims.Count == 0)
                 return EitherHelper<ClaimGetAllCommandUserCommandResult>.EntityNotFound(typeof(Claim)); 

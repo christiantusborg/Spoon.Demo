@@ -1,5 +1,6 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.CreateUser
 {
+    using Core.Presentation;
     using MediatR;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
@@ -15,13 +16,13 @@
     //public static class GetChallengeAuthentication
     /// <summary>
     /// </summary>
-    public static class AdministrationCreateUserEndpoint
+    public class AdministrationCreateUserEndpoint : IEndpointMarker
     {
         /// <summary>
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IEndpointRouteBuilder MapAdministrationCreateUser(this IEndpointRouteBuilder app)
+        public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
         {
             app.MapPost(ApiAdministrationEndpoints.CreateUser.Endpoint, CreateUser)
                 .WithName(ApiAdministrationEndpoints.CreateUser.Name)
@@ -33,7 +34,7 @@
             return app;
         }
 
-        private static AdministrationCreateUserCommand MapToCommand(this AdministrationCreateUserRequest request)
+        public static AdministrationCreateUserCommand MapToCommand(AdministrationCreateUserRequest request)
         {
             var command = new AdministrationCreateUserCommand
             {
@@ -44,9 +45,9 @@
             return command;
         }
         
-        private static async Task<IResult> CreateUser([FromBody] AdministrationCreateUserRequest request, ISender sender, CancellationToken cancellationToken)
+        public static async Task<IResult> CreateUser([FromBody] AdministrationCreateUserRequest request, ISender sender, CancellationToken cancellationToken)
         {
-            var command = request.MapToCommand();
+            var command = MapToCommand(request);
             var commandResult = await sender.Send(command, cancellationToken);
 
             var result = commandResult.ToNoContent();

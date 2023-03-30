@@ -3,10 +3,10 @@
 using Core.Domain;
 using Helpers;
 
-public class SecureRemotePasswordByRecoveryCode : SignedEntity<SecureRemotePasswordByRecoveryCode>
+public class SecureRemotePasswordByRecoveryCode : Entity
 {
     public Guid UserId { get; set; }
-    public string Verifier { get; set; }
-    public string Salt { get; set; }
+    public string VerifierEncrypted { get; set; }
+    public string SaltEncrypted { get; set; }
     public DateTime CreatedAt { get; set; }
 }

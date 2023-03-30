@@ -2,6 +2,7 @@
 
 using Application.Administration.SetUserEmailAsPrimary;
 using Contracts;
+using Core.Presentation;
 using EitherCore.Extensions;
 using Extensions;
 using Mediator.PipelineBehaviors.Permission;
@@ -16,13 +17,13 @@ using Swashbuckle.AspNetCore.Annotations;
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public static class AdministrationSetUserEmailAsPrimaryEndpoint
+public class AdministrationSetUserEmailAsPrimaryEndpoint  : IEndpointMarker
 {
     /// <summary>
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapAdministrationSetUserEmailAsPrimary(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map( IEndpointRouteBuilder app)
     {
         app.MapPut(ApiAdministrationEndpoints.SetUserEmailAsPrimary.Endpoint,SetUserEmailAsPrimary)
             .WithName(ApiAdministrationEndpoints.SetUserEmailAsPrimary.Name)
@@ -34,7 +35,7 @@ public static class AdministrationSetUserEmailAsPrimaryEndpoint
         return app;
     }
 
-    private static AdministrationSetUserEmailAsPrimaryCommand MapToCommand(this AdministrationSetUserEmailAsPrimaryRequest request)
+    private static AdministrationSetUserEmailAsPrimaryCommand MapToCommand(AdministrationSetUserEmailAsPrimaryRequest request)
     {
         var command = new AdministrationSetUserEmailAsPrimaryCommand
         {
@@ -47,7 +48,7 @@ public static class AdministrationSetUserEmailAsPrimaryEndpoint
     
     private static async Task<IResult> SetUserEmailAsPrimary([FromRoute] Guid userId, [FromBody] AdministrationSetUserEmailAsPrimaryRequest request, ISender sender, CancellationToken cancellationToken)
     {
-        var command = request.MapToCommand();
+        var command = MapToCommand(request);
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

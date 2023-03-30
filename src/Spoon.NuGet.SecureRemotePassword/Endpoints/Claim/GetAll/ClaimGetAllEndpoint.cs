@@ -2,6 +2,7 @@
 
 using Administration;
 using Application.Claim.GetAll;
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -17,14 +18,14 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 /// 
 /// </summary>
-public static class ClaimGetAllEndpoint
+public class ClaimGetAllEndpoint  : IEndpointMarker
 {
     /// <summary>
     /// 
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapClaimGetAll(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapGet(ApiClaimEndpoints.GetAll.Endpoint, GetAll)
             .WithName(ApiClaimEndpoints.GetAll.Name)

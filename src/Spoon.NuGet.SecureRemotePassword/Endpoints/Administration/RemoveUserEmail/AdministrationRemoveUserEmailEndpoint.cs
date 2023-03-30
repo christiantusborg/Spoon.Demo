@@ -1,5 +1,6 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.RemoveUserEmail;
 
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,13 +16,13 @@ using Swashbuckle.AspNetCore.Annotations;
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public static class AdministrationRemoveUserEmailEndpoint
+public class AdministrationRemoveUserEmailEndpoint : IEndpointMarker
 {
     /// <summary>
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapAdministrationRemoveUserEmail(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapPut(ApiAdministrationEndpoints.RemoveUserEmail.Endpoint,RemoveUserEmail)
             .WithName(ApiAdministrationEndpoints.RemoveUserEmail.Name)
@@ -33,7 +34,7 @@ public static class AdministrationRemoveUserEmailEndpoint
         return app;
     }
 
-    private static AdministrationRemoveUserEmailCommand MapToCommand(this AdministrationRemoveUserEmailRequest request)
+    private static AdministrationRemoveUserEmailCommand MapToCommand(AdministrationRemoveUserEmailRequest request)
     {
         var command = new AdministrationRemoveUserEmailCommand
         {
@@ -46,7 +47,7 @@ public static class AdministrationRemoveUserEmailEndpoint
     
     private static async Task<IResult> RemoveUserEmail([FromRoute] Guid userId, [FromBody] AdministrationRemoveUserEmailRequest request, ISender sender, CancellationToken cancellationToken)
     {
-        var command = request.MapToCommand();
+        var command = MapToCommand(request);
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

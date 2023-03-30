@@ -2,6 +2,7 @@
 
 using Application.UserClaim.AddBulk;
 using Contracts;
+using Core.Presentation;
 using EitherCore.Extensions;
 using Mediator.PipelineBehaviors.Permission;
 using Mediator.PipelineBehaviors.Validation;
@@ -15,13 +16,13 @@ using Swashbuckle.AspNetCore.Annotations;
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public static class UserClaimAddBulkEndpoint
+public class UserClaimAddBulkEndpoint: IEndpointMarker
 {
     /// <summary>
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapUserClaimAddBulk(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapPut(ApiUserClaimEndpoints.AddBulk.Endpoint, AddBulk)
             .WithName(ApiUserClaimEndpoints.AddBulk.Name)
@@ -33,7 +34,7 @@ public static class UserClaimAddBulkEndpoint
         return app;
     }
 
-    private static UserClaimAddBulkCommand MapToCommand(this UserClaimAddBulkCommandRequest request, Guid userId)
+    private UserClaimAddBulkCommand MapToCommand(UserClaimAddBulkCommandRequest request, Guid userId)
     {
         var command = new UserClaimAddBulkCommand
         {
@@ -45,9 +46,9 @@ public static class UserClaimAddBulkEndpoint
         return command;
     }
 
-    private static async Task<IResult> AddBulk([FromRoute] Guid userId, [FromBody] UserClaimAddBulkCommandRequest request, ISender sender, CancellationToken cancellationToken)
+    private async Task<IResult> AddBulk([FromRoute] Guid userId, [FromBody] UserClaimAddBulkCommandRequest request, ISender sender, CancellationToken cancellationToken)
     {
-        var command = request.MapToCommand(userId);
+        var command = MapToCommand(request,userId);
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

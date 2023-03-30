@@ -1,6 +1,7 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.UserRole.AddBulk;
 
 using Application.UserRole.AddBulk;
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -16,13 +17,13 @@ using Swashbuckle.AspNetCore.Annotations;
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public static class UserRoleAddBulkEndpoint
+public class UserRoleAddBulkEndpoint: IEndpointMarker
 {
     /// <summary>
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapUserRoleAddBulk(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapPut(ApiUserRoleEndpoints.AddBulk.Endpoint,AddBulk)
             .WithName(ApiUserRoleEndpoints.AddBulk.Name)
@@ -34,7 +35,7 @@ public static class UserRoleAddBulkEndpoint
         return app;
     }
 
-    private static UserRoleAddBulkCommand MapToCommand(this UserRoleAddBulkCommandRequest request, Guid userId)
+    private UserRoleAddBulkCommand MapToCommand(UserRoleAddBulkCommandRequest request, Guid userId)
     {
         var command = new UserRoleAddBulkCommand
         {
@@ -45,9 +46,9 @@ public static class UserRoleAddBulkEndpoint
         return command;
     }
 
-    private static async Task<IResult> AddBulk([FromRoute] Guid userId, [FromBody] UserRoleAddBulkCommandRequest request, ISender sender, CancellationToken cancellationToken)
+    private async Task<IResult> AddBulk([FromRoute] Guid userId, [FromBody] UserRoleAddBulkCommandRequest request, ISender sender, CancellationToken cancellationToken)
     {
-        var command = request.MapToCommand(userId);
+        var command = MapToCommand(request,userId);
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

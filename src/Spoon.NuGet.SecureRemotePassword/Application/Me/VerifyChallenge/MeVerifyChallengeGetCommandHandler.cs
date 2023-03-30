@@ -3,6 +3,7 @@
     using Core.Application;
     using Domain.Entities;
     using Domain.Repositories;
+    using EitherCore.Enums;
     using EitherCore.Helpers;
     using Helpers;
     using MediatR;
@@ -49,17 +50,25 @@
             CancellationToken cancellationToken)
         {
             
-            var emailHash = this._hashService.Hash(request.Email);
+            var existingSecureRemotePasswordLogin = await this._repository.SecureRemotePasswordLogins.GetAsync(new DefaultGetSpecification<SecureRemotePasswordLogin>(request.UserId), cancellationToken);
             
-            var existingUser = await this._repository.UserEmails.Get(new DefaultGetSpecification<U>(request.UserId));
+            if (existingSecureRemotePasswordLogin == null)
+                return EitherHelper<MeVerifyChallengeGetCommandResult>.EntityNotFound(typeof(SecureRemotePasswordLogin));
+
             
-            if (existingUser == null)
-                return EitherHelper<MeVerifyChallengeGetCommandResult>.EntityNotFound(typeof(UserEmail));
+            var verifierDecrypted = this._encryptionService.Decrypt(existingSecureRemotePasswordLogin.VerifierEncrypted);
             
+            var challenge = this._secureRemotePasswordService.GenerateChallenge(request.UserId, verifierDecrypted);
+         
+            var saltDecrypted = this._encryptionService.Decrypt(existingSecureRemotePasswordLogin.SaltEncrypted);
             
-            
-            
-            var challenge = this._secureRemotePasswordService.GenerateChallenge(existingUser);
+            var result = new MeVerifyChallengeGetCommandResult
+            {
+                Challenge = challenge,
+                UserId = request.UserId,
+                Salt = saltDecrypted,
+            };
+            return new Either<MeVerifyChallengeGetCommandResult>(result);
         }
     }
 }

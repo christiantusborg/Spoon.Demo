@@ -56,7 +56,7 @@ public sealed class AdministrationAddUserEmailCommandHandler : IRequestHandler<A
         CancellationToken cancellationToken)
     {
         // Get the user by their ID from the repository
-        var user = await this._repository.Users.Get(new DefaultGetSpecification<User>(request.UserId), cancellationToken);
+        var user = await this._repository.Users.GetAsync(new DefaultGetSpecification<User>(request.UserId), cancellationToken);
         if (user == null)
             return EitherHelper<AdministrationAddUserEmailCommandResult>.EntityNotFound(typeof(User));
 
@@ -64,7 +64,7 @@ public sealed class AdministrationAddUserEmailCommandHandler : IRequestHandler<A
         var emailAddressHash = this._hashService.Hash(request.Email);
 
         // Check if the email address already exists. If it does, return an error.
-        var emailExists = await this._repository.UserEmails.Get(new GetEmailByHashSpecification(emailAddressHash), cancellationToken);
+        var emailExists = await this._repository.UserEmails.GetAsync(new GetEmailByHashSpecification(emailAddressHash), cancellationToken);
         if (emailExists != null)
             return EitherHelper<AdministrationAddUserEmailCommandResult>.EntityAlreadyExists(typeof(UserEmail));
 

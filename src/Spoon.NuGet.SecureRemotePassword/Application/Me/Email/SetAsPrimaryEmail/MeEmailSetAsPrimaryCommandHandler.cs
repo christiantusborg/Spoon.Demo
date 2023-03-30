@@ -3,7 +3,9 @@
     using Administration.SetUserEmailAsPrimary;
     using Domain.Entities;
     using Domain.Repositories;
+    using EitherCore.Enums;
     using EitherCore.Helpers;
+    using Helpers;
     using MediatR;
     using Spoon.NuGet.Core;
     using Spoon.NuGet.EitherCore;
@@ -38,7 +40,8 @@
             MeEmailSetAsPrimaryCommand request,
             CancellationToken cancellationToken)
         {
-            var existingUserEmails = await this._repository.UserEmails.Search(new MeEmailSetAsPrimaryCommandSpecification(request.UserId), cancellationToken);
+            var existingUserEmails = await this._repository.UserEmails.GetAllAsync(new MeEmailSetAsPrimaryCommandSpecification(request.UserId), cancellationToken);
+            
 
             var newPrimaryUserEmail = existingUserEmails.FirstOrDefault(x => x.EmailId == request.EmailId);
             
@@ -49,7 +52,7 @@
             
             foreach (var userEmail in existingUserEmails)
             {
-                userEmail.IsPrimary = 0;
+                userEmail.IsPrimary = 0; 
             }
             
             existingUserEmails.First(x => x.EmailId == request.EmailId).IsPrimary = 1;

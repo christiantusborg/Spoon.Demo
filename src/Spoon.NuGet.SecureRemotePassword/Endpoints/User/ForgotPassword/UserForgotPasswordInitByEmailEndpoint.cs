@@ -3,6 +3,7 @@
 namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.ForgotPassword;
 
 using Application.Users.UserForgotPasswordRecoverByEmailInit;
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -18,14 +19,14 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 ///     Spoon.NuGet.SecureRemotePassword.Api
 /// </summary>
-public static class UserForgotPasswordInitByEmailEndpoint
+public class UserForgotPasswordInitByEmailEndpoint : IEndpointMarker
 {
     /// <summary>
     ///     Spoon.NuGet.SecureRemotePassword.Contracts
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapUserForgotPasswordInitByEmail(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapGet(ApiUserEndpoints.ForgotPassword.InitByEmail.Endpoint,ForgotPasswordInitByEmail)
             .WithName(nameof(ApiUserEndpoints.ForgotPassword.InitByEmail.Name))

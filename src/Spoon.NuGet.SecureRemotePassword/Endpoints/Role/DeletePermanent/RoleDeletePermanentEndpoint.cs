@@ -1,5 +1,7 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Role.DeletePermanent
 {
+    using Application.Roles.DeletePermanent;
+    using Core.Presentation;
     using MediatR;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
@@ -8,20 +10,19 @@
     using Spoon.NuGet.EitherCore.Extensions;
     using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
     using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-    using Spoon.NuGet.SecureRemotePassword.Application.Role.DeletePermanent;
     using Spoon.NuGet.SecureRemotePassword.Contracts;
     using Swashbuckle.AspNetCore.Annotations;
 
     //public static class GetChallengeAuthentication
     /// <summary>
     /// </summary>
-    public static class RoleDeletePermanentEndpoint
+    public class RoleDeletePermanentEndpoint: IEndpointMarker
     {
         /// <summary>
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IEndpointRouteBuilder MapRoleDeletePermanent(this IEndpointRouteBuilder app)
+        public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
         {
             app.MapDelete(ApiRoleEndpoints.DeletePermanent.Endpoint, DeletePermanentUser)
                 .WithName(ApiRoleEndpoints.DeletePermanent.Name)

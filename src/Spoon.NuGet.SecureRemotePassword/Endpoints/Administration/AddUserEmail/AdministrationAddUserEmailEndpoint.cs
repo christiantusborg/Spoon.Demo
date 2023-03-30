@@ -1,5 +1,6 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.AddUserEmail;
 
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -12,16 +13,18 @@ using Spoon.NuGet.SecureRemotePassword.Application.Administration.AddUserEmail;
 using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Swashbuckle.AspNetCore.Annotations;
 
+
+
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public static class AdministrationAddUserEmailEndpoint
+public class AdministrationAddUserEmailEndpoint : IEndpointMarker
 {
     /// <summary>
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapAdministrationAddUserEmail(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapPut(ApiAdministrationEndpoints.AddUserEmail.Endpoint,AddUserEmail)
             .WithName(ApiAdministrationEndpoints.AddUserEmail.Name)
@@ -33,7 +36,7 @@ public static class AdministrationAddUserEmailEndpoint
         return app;
     }
 
-    private static AdministrationAddUserEmailCommand MapToCommand(this AdministrationAddUserEmailRequest request, Guid userId)
+    private AdministrationAddUserEmailCommand MapToCommand(AdministrationAddUserEmailRequest request, Guid userId)
     {
         var command = new AdministrationAddUserEmailCommand
         {
@@ -44,9 +47,9 @@ public static class AdministrationAddUserEmailEndpoint
         return command;
     }
 
-    private static async Task<IResult> AddUserEmail([FromRoute] Guid userId, [FromBody] AdministrationAddUserEmailRequest request, ISender sender, CancellationToken cancellationToken)
+    private async Task<IResult> AddUserEmail([FromRoute] Guid userId, [FromBody] AdministrationAddUserEmailRequest request, ISender sender, CancellationToken cancellationToken)
     {
-        var command = request.MapToCommand(userId);
+        var command = MapToCommand(request,userId);
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

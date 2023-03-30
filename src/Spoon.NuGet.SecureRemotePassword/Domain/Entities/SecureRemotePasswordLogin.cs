@@ -1,12 +1,13 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Domain.Entities;
 
 using Core.Domain;
+using Helpers;
 
 public class SecureRemotePasswordLogin : Entity
 {
     public Guid UserId { get; set; }
-    public string Verifier { get; set; }
-    public string Salt { get; set; }
-    public string SignedHash { get; set; }
+    public string VerifierEncrypted { get; set; }
+    public string SaltEncrypted { get; set; }
+    
     public DateTime UpdatedAt { get; set; }
 }

@@ -1,6 +1,7 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.Login;
 
 using Application.Users.UserGetLoginChallenge;
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -16,14 +17,14 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 /// 
 /// </summary>
-public static class UserLoginChallengeGetEndpoint
+public class UserLoginChallengeGetEndpoint: IEndpointMarker
 {
      /// <summary>
     /// 
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapUserLoginChallengeGet(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapPost(ApiUserEndpoints.GetLoginChallenge.Endpoint,  async ([FromBody] UserGetLoginChallengeRequest request ,ISender sender, CancellationToken cancellationToken) =>
             {
@@ -44,7 +45,7 @@ public static class UserLoginChallengeGetEndpoint
         return app;
     }
 
-     private static UserGetLoginChallengeCommand MapToCommand(UserGetLoginChallengeRequest request)
+     private UserGetLoginChallengeCommand MapToCommand(UserGetLoginChallengeRequest request)
      {
          var command = new UserGetLoginChallengeCommand
          {

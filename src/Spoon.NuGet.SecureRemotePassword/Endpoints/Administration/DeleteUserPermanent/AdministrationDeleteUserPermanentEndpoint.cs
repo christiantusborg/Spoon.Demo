@@ -3,8 +3,8 @@
 using System.Security.Claims;
 using Application.Administration.DeleteUserPermanent;
 using Contracts;
+using Core.Presentation;
 using EitherCore.Extensions;
-using Extensions;
 using Mediator.PipelineBehaviors.Permission;
 using Mediator.PipelineBehaviors.Validation;
 using MediatR;
@@ -13,17 +13,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Swashbuckle.AspNetCore.Annotations;
+using ClaimsPrincipalExtensions = Extensions.ClaimsPrincipalExtensions;
 
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public static class AdministrationDeleteUserPermanentEndpoint
+public class AdministrationDeleteUserPermanentEndpoint : IEndpointMarker
 {
     /// <summary>
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapAdministrationDeleteUserPermanent(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapDelete(ApiAdministrationEndpoints.DeleteUserPermanent.Endpoint, DeleteUserPermanent)
             .WithName(ApiAdministrationEndpoints.DeleteUserPermanent.Name)
@@ -48,7 +49,7 @@ public static class AdministrationDeleteUserPermanentEndpoint
 
     private static async Task<IResult> DeleteUserPermanent([FromRoute] Guid userId, ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
     {
-        var command = MapToCommand(userId, claimsPrincipal.GetUserId());
+        var command = MapToCommand(userId, ClaimsPrincipalExtensions.GetUserId(claimsPrincipal));
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

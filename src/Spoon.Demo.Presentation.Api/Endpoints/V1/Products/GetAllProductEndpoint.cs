@@ -34,8 +34,6 @@ public static class GetAllProductEndpoint
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    
-    
     public static IEndpointRouteBuilder MapGetAllProducts(this IEndpointRouteBuilder app)
     {
     

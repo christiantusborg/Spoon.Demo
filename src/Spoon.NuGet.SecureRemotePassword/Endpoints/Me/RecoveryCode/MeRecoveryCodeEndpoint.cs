@@ -5,6 +5,7 @@ namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Me.RecoveryCode;
 
 using Application.Me.UserGenerateRecoveryCode;
 using Contracts;
+using Core.Presentation;
 using EitherCore.Extensions;
 using EndpointFilters;
 using Mediator.PipelineBehaviors.Permission;
@@ -20,14 +21,14 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 ///     Spoon.NuGet.SecureRemotePassword.Api
 /// </summary>
-public static class MeRecoveryCodeEndpoint
+public class MeRecoveryCodeEndpoint : IEndpointMarker
 {
     /// <summary>
     ///     Spoon.NuGet.SecureRemotePassword.Contracts
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapMeRecoveryCode(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapGet(ApiMeEndpoints.RecoveryCode.Get.Endpoint, MeRecoveryCodeAsync)
             .WithName(ApiMeEndpoints.RecoveryCode.Get.Name)

@@ -3,10 +3,10 @@
 using Core.Domain;
 using Helpers;
 
-public class SecureRemotePasswordByRecoveryEmail : SignedEntity<SecureRemotePasswordByRecoveryEmail>
+public class SecureRemotePasswordByRecoveryEmail : Entity
 {
     public Guid UserId { get; set; }
     public string EmailAddressHash { get; set; }
-    public Guid RecoveryToken { get; set; }
+    public string RecoveryTokenHash { get; set; }
     public DateTime CreatedAt { get; set; }
 }

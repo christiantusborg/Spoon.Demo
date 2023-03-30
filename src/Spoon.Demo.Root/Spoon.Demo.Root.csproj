@@ -21,14 +21,13 @@
         <PackageReference Include="App.Metrics.Formatters.Prometheus" Version="4.3.0" />
         <PackageReference Include="Asp.Versioning.Http" Version="7.0.0" />
         <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="7.0.0" />
-        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.3" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2" />
-        <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.0">
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.4" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
+        <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
         <PackageReference Include="Spoon.NuGet.Mediator.PipelineBehaviors.AuditLog" Version="1.0.0" />
         <PackageReference Include="Spoon.NuGet.Mediator.PipelineBehaviors.Permission" Version="1.0.3" />
         <PackageReference Include="Spoon.NuGet.Mediator.PipelineBehaviors.Validation" Version="1.0.0" />

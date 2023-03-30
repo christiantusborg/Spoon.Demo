@@ -14,18 +14,18 @@ using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Spoon.NuGet.SecureRemotePassword.Extensions;
 using Swashbuckle.AspNetCore.Annotations;
 
-public static class UserRegisterEndpoint
+public class UserRegisterEndpoint
 {
      /// <summary>
     /// 
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapUserRegister(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapPost(ApiUserEndpoints.Register.Endpoint,  async ([FromBody] UserRegisterRequest request, ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken) =>
             {
-                var command = request.MapToCommand(claimsPrincipal.GetUserId());
+                var command = MapToCommand(request,claimsPrincipal.GetUserId());
 
                 var commandResult = await sender.Send(command, cancellationToken);
                 var result = commandResult.ToResult(typeof(UserSetAsPrimaryEmailResult));
@@ -41,7 +41,7 @@ public static class UserRegisterEndpoint
         return app;
     }
      
-     private static UserRegisterCommand MapToCommand(this UserRegisterRequest request, Guid userId)
+     private UserRegisterCommand MapToCommand(UserRegisterRequest request, Guid userId)
      {
          var command = new UserRegisterCommand
          {

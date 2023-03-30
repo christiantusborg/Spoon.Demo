@@ -1,5 +1,6 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.SetUserMustChangePassword;
 
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,13 +16,13 @@ using Swashbuckle.AspNetCore.Annotations;
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public static class AdministrationSetUserMustChangePasswordEndpoint
+public class AdministrationSetUserMustChangePasswordEndpoint  : IEndpointMarker
 {
     /// <summary>
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapAdministrationSetUserMustChangePassword(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapGet(ApiAdministrationEndpoints.SetUserMustChangePassword.Endpoint, SetUserMustChangePassword)
             .WithName(ApiAdministrationEndpoints.SetUserMustChangePassword.Name)

@@ -31,7 +31,7 @@ public sealed class ProductDeletePermanentCommandHandler : IRequestHandler<Produ
         ProductDeletePermanentCommand request,
         CancellationToken cancellationToken)
     {        
-        var product = await this._writeRepository.Products.Get(new DefaultGetSpecification<Product>(request.ProductId), cancellationToken);
+        var product = await this._writeRepository.Products.GetAsync(new DefaultGetSpecification<Product>(request.ProductId), cancellationToken);
         
         if (product is null)
         {

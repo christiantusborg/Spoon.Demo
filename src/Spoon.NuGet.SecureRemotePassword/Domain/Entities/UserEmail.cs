@@ -3,7 +3,7 @@
 using Core.Domain;
 using Helpers;
 
-public class UserEmail : SignedEntity<UserEmail>
+public class UserEmail : Entity
 {
     public Guid UserId { get; set; }
     public Guid EmailId { get; set; }
@@ -16,5 +16,7 @@ public class UserEmail : SignedEntity<UserEmail>
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
+    
+    public virtual User User { get; set; }
 
 }

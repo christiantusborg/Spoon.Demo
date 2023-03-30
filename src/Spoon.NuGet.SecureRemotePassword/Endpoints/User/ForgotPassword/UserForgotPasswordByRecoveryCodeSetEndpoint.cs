@@ -1,6 +1,7 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.ForgotPassword;
 
 using Application.Users.UserForgotPasswordRecoverByRecoveryCodeChallengeGet;
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -16,19 +17,19 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 ///     Spoon.NuGet.SecureRemotePassword.Api
 /// </summary>
-public static class UserForgotPasswordByRecoveryCodeSetEndpoint
+public class UserForgotPasswordByRecoveryCodeSetEndpoint : IEndpointMarker
 {
     /// <summary>
     ///     Spoon.NuGet.SecureRemotePassword.Contracts
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapUserForgotPasswordByRecoveryCodeSet(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapPost(ApiUserEndpoints.ForgotPasswordRecoverByRecoveryCode.ChallengeGet.Endpoint,
                 async ([FromBody] UserForgotPasswordRecoverByRecoveryCodeRequest request, ISender sender, CancellationToken cancellationToken) =>
                 {
-                    var command = request.MapToCommand();
+                    var command = MapToCommand(request);
                     var commandResult = await sender.Send(command, cancellationToken);
                     var result = commandResult.ToNoContent();
 
@@ -44,7 +45,7 @@ public static class UserForgotPasswordByRecoveryCodeSetEndpoint
         return app;
     }
 
-    private static UserForgotPasswordRecoverByRecoveryCodeChallengeGetCommand MapToCommand(this UserForgotPasswordRecoverByRecoveryCodeRequest request)
+    private UserForgotPasswordRecoverByRecoveryCodeChallengeGetCommand MapToCommand(UserForgotPasswordRecoverByRecoveryCodeRequest request)
     {
         var command = new UserForgotPasswordRecoverByRecoveryCodeChallengeGetCommand
         {

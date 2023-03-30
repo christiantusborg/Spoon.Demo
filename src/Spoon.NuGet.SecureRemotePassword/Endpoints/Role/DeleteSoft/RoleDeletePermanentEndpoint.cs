@@ -1,24 +1,25 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Role.DeleteSoft
 {
+    using Application.Roles.DeleteSoft;
+    using Core.Presentation;
     using MediatR;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
     using Spoon.NuGet.EitherCore.Extensions;
     using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-    using Spoon.NuGet.SecureRemotePassword.Application.Role.DeleteSoft;
     using Swashbuckle.AspNetCore.Annotations;
 
     //public static class GetChallengeAuthentication
     /// <summary>
     /// </summary>
-    public static class RoleDeleteSoftEndpoint
+    public class RoleDeleteSoftEndpoint: IEndpointMarker
     {
         /// <summary>
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IEndpointRouteBuilder MapRoleDeleteSoft(this IEndpointRouteBuilder app)
+        public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
         {
             app.MapDelete(ApiRoleEndpoints.DeleteSoft.Endpoint, DeleteSoftUser)
                 .WithName(ApiRoleEndpoints.DeleteSoft.Name)

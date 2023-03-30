@@ -34,7 +34,7 @@
         /// <returns>Task&lt;Either&lt;ProductGetQueryResult&gt;&gt;.</returns>
         public async Task<Either<ProductGetQueryResult>> Handle(ProductGetQuery request, CancellationToken cancellationToken)
         {
-            var product = await this._readOnlyRepository.Products.Get(new DefaultGetSpecification<Product>(request.ProductId), cancellationToken);
+            var product = await this._readOnlyRepository.Products.GetAsync(new DefaultGetSpecification<Product>(request.ProductId), cancellationToken);
 
             if (product is null)
             {

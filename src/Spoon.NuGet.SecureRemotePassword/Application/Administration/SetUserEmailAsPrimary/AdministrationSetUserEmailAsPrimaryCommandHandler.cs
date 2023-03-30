@@ -38,7 +38,7 @@
             AdministrationSetUserEmailAsPrimaryCommand request,
             CancellationToken cancellationToken)
         {
-            var existingUserEmails = await this._repository.UserEmails.Search(new GetSetUserEmailAsPrimarySpecification(request.UserId), cancellationToken);
+            var existingUserEmails = await this._repository.UserEmails.GetAllAsync(new GetSetUserEmailAsPrimarySpecification(request.UserId), cancellationToken);
 
             var newPrimaryUserEmail = existingUserEmails.FirstOrDefault(x => x.EmailId == request.EmailId);
             

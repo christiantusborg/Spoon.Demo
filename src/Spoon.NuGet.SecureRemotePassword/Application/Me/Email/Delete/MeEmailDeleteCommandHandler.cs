@@ -39,7 +39,7 @@
             MeEmailDeleteCommand request,
             CancellationToken cancellationToken)
         {
-            var existingUserEmail = await this._repository.UserEmails.Get(new GetUserEmailSpecification(request.UserId, request.EmailId));
+            var existingUserEmail = await this._repository.UserEmails.GetAsync(new GetUserEmailSpecification(request.UserId, request.EmailId), cancellationToken);
             
             if(existingUserEmail == null)
                 return EitherHelper<MeEmailDeleteCommandResult>.EntityNotFound(typeof(UserEmail));

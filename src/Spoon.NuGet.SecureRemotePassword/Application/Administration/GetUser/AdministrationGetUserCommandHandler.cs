@@ -39,7 +39,7 @@
             AdministrationGetUserCommand request,
             CancellationToken cancellationToken)
         {
-            var existingUser = await this._repository.Users.Get(new GetUserSpecification(request.UserId));
+            var existingUser = await this._repository.Users.GetAsync(new GetUserSpecification(request.UserId), cancellationToken);
             
             if(existingUser == null)
                 return EitherHelper<AdministrationGetUserCommandResult>.EntityNotFound(typeof(User));
@@ -49,6 +49,9 @@
             var getUserRoles = this.GetUserRoles(existingUser);
             var getUserClaims = GetUserClaims(existingUser);
             var hashBuildInAdministator = this.HashBuildInAdministrator(existingUser);
+            
+            
+            
             
             var result = new AdministrationGetUserCommandResult
             {

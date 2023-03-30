@@ -10,9 +10,6 @@
     using Spoon.NuGet.Core;
     using Spoon.NuGet.EitherCore;
 
-    /// <summary>
-    ///     Class ProductCreateQueryHandler. This class cannot be inherited.
-    /// </summary>
     public sealed class AdministrationCreateUserCommandHandler : IRequestHandler<AdministrationCreateUserCommand, Either<AdministrationCreateUserCommandResult>>
     {
 
@@ -22,10 +19,6 @@
         private readonly IEncryptionService _encryptionService;
         private readonly IHashService _hashService;
 
-        /// <summary>
-        /// </summary>
-        /// <param name="writeRepository"></param>
-        /// <param name="mockbleGuidGenerator"></param>
         public AdministrationCreateUserCommandHandler(IMockbleGuidGenerator mockbleGuidGenerator,
             IMockbleDateTime mockbleDateTime,
             ISecureRemotePasswordRepository repository,
@@ -39,22 +32,14 @@
             this._hashService = hashService;
         }
 
-        /// <summary>
-        ///     Handles the specified request.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <param name="cancellationToken">
-        ///     The cancellation token that can be used by other objects or threads to receive notice
-        ///     of cancellation.
-        /// </param>
-        /// <returns>Task&lt;Either&lt;ProductCreateQueryResult&gt;&gt;.</returns>
+
         public async Task<Either<AdministrationCreateUserCommandResult>> Handle(
             AdministrationCreateUserCommand request,
             CancellationToken cancellationToken)
         {
             var emailAddressHash = this._hashService.Hash(request.Email);
             
-            var emailExists = await this._repository.UserEmails.Get(new GetEmailByHashSpecification(emailAddressHash));
+            var emailExists = await this._repository.UserEmails.GetAsync(new GetEmailByHashSpecification(emailAddressHash), cancellationToken);
             if(emailExists != null)
                 return EitherHelper<AdministrationCreateUserCommandResult>.EntityAlreadyExists(typeof(UserEmail));
 
@@ -92,16 +77,20 @@
                 DeletedAt = null,
             };
 
+            
             this._repository.UserEmails.Add(email);
             await this._repository.SaveChangesAsync(cancellationToken);
 
             var recoveryToken = this._mockbleGuidGenerator.NewGuid();
+            var recoveryTokenHash = this._hashService.Hash(recoveryToken.ToString());
+            
             var byRecoveryEmail = new SecureRemotePasswordByRecoveryEmail
             {
                 UserId = userId,
                 EmailAddressHash = emailAddressHash,
-                RecoveryToken = recoveryToken,
+                RecoveryTokenHash = recoveryTokenHash,
                 CreatedAt = this._mockbleDateTime.UtcNow,
+
             };
 
             this._repository.SecureRemotePasswordByRecoveryEmails.Add(byRecoveryEmail);

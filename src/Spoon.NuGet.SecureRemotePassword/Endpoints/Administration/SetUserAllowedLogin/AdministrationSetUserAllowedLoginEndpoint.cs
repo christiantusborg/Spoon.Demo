@@ -1,6 +1,7 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration;
 
 using Application.Administration.SetUserAllowedLogin;
+using Core.Presentation;
 using EitherCore.Extensions;
 using Extensions;
 using MediatR;
@@ -18,14 +19,14 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 /// 
 /// </summary>
-public static class AdministrationSetUserAllowedLoginEndpoint
+public class AdministrationSetUserAllowedLoginEndpoint : IEndpointMarker
 {
     /// <summary>
     /// 
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapAdministrationSetUserAllowedLogin(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapGet(ApiAdministrationEndpoints.SetUserAllowedLogin.Endpoint, SetUserAllowedLogin)
             .WithName(ApiAdministrationEndpoints.SetUserAllowedLogin.Name)

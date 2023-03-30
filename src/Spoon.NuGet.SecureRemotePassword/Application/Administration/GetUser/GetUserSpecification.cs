@@ -24,7 +24,8 @@
 
                 this.AddInclude(x => x.Claims);
                 this.AddInclude(x => x.Roles);
-                    .ThenInclude(x => x.Roles);
+                //TODO : Add this to the specification (ThenInclude)    
+                //.ThenInclude(x => x.Claims);
 
                 this.AddSkip(0);
 

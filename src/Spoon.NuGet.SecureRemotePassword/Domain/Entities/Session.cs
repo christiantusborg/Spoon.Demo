@@ -1,6 +1,7 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Domain.Entities;
 
 using Core.Domain;
+using Helpers;
 
 public class Session : Entity
 {
@@ -9,6 +10,5 @@ public class Session : Entity
     public string RefreshTokenHash { get; set; }
     public string IpAddressHash { get; set; }
     public string UserAgentHash { get; set; }
-    public string SignedHash { get; set; }
     public DateTime CreatedAt { get; set; }
 }

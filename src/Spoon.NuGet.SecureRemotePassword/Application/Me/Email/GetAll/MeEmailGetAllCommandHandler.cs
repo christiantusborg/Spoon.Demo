@@ -42,7 +42,7 @@
             MeEmailGetAllCommand request,
             CancellationToken cancellationToken)
         {
-            var existingUserEmail = await this._repository.UserEmails.Search(new MeEmailGetAllCommandSpecification(request.UserId),cancellationToken);
+            var existingUserEmail = await this._repository.UserEmails.GetAllAsync(new MeEmailGetAllCommandSpecification(request.UserId),cancellationToken);
             
             if(existingUserEmail.Count == 0)
                 return EitherHelper<MeEmailGetAllCommandResult>.EntityNotFound(typeof(UserEmail));

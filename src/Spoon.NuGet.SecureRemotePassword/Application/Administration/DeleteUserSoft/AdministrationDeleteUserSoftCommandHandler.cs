@@ -42,7 +42,7 @@
             AdministrationDeleteUserSoftCommand request,
             CancellationToken cancellationToken)
         {
-            var existingUser = await this._repository.Users.Get(new DefaultGetSpecification<User>(request.UserId));
+            var existingUser = await this._repository.Users.GetAsync(new DefaultGetSpecification<User>(request.UserId), cancellationToken);
             if (existingUser == null)
                 return EitherHelper<AdministrationDeleteUserSoftCommandResult>.EntityNotFound(typeof(User)); 
             

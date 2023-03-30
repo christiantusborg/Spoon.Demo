@@ -1,6 +1,7 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.Refresh;
 
 using Application.Users.UserRefresh;
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,7 +16,7 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 /// 
 /// </summary>
-public static class UserRefreshEndpoint
+public class UserRefreshEndpoint: IEndpointMarker
 {
    
 
@@ -24,11 +25,11 @@ public static class UserRefreshEndpoint
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapUserRefresh(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapPost(ApiUserEndpoints.Refresh.Endpoint,  async ([AsParameters] UserRefreshRequest request, IOutputCacheStore outputCacheStore, ISender sender, CancellationToken cancellationToken) =>
             {
-                var command = request.MapToCommand();
+                var command = MapToCommand(request);
 
                 var commandResult = await sender.Send(command, cancellationToken);
 
@@ -43,7 +44,7 @@ public static class UserRefreshEndpoint
         return app;
     }
     
-    private static UserRefreshCommand MapToCommand(this UserRefreshRequest request)
+    private UserRefreshCommand MapToCommand(UserRefreshRequest request)
     {
         var command = new UserRefreshCommand
         {

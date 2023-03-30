@@ -5,7 +5,9 @@
     using CrypticWizard.RandomWordGenerator;
     using Domain.Entities;
     using Domain.Repositories;
+    using EitherCore.Enums;
     using EitherCore.Helpers;
+    using Helpers;
     using MediatR;
     using Services;
     using Spoon.NuGet.Core;
@@ -19,17 +21,19 @@
         private readonly ISecureRemotePasswordRepository _repository;
         private readonly IMockbleDateTime _mockbleDateTime;
         private readonly ISecureRemotePasswordService _secureRemotePasswordService;
+        private readonly IEncryptionService _encryptionService;
 
 
         /// <summary>
         /// </summary>
         /// <param name="writeRepository"></param>
         /// <param name="mockbleGuidGenerator"></param>
-        public UserGenerateRecoveryCodeCommandHandler(ISecureRemotePasswordRepository repository, IMockbleDateTime mockbleDateTime, ISecureRemotePasswordService secureRemotePasswordService)
+        public UserGenerateRecoveryCodeCommandHandler(ISecureRemotePasswordRepository repository, IMockbleDateTime mockbleDateTime, ISecureRemotePasswordService secureRemotePasswordService,IEncryptionService encryptionService)
         {
             this._repository = repository;
             this._mockbleDateTime = mockbleDateTime;
             this._secureRemotePasswordService = secureRemotePasswordService;
+            this._encryptionService = encryptionService;
         }
 
         /// <summary>
@@ -45,11 +49,12 @@
             UserGenerateRecoveryCodeCommand request,
             CancellationToken cancellationToken)
         {
-            var existingUser = await this._repository.Users.Get(new DefaultGetSpecification<User>(request.UserId));
+            var existingUser = await this._repository.Users.GetAsync(new DefaultGetSpecification<User>(request.UserId), cancellationToken);
             if (existingUser == null)
                 return EitherHelper<UserGenerateRecoveryCodeCommandResult>.EntityNotFound(typeof(User));            
             
-            var existingUserSecureRemotePasswordLogins = await this._repository.SecureRemotePasswordByRecoveryCodes.Get(new DefaultGetSpecification<SecureRemotePasswordByRecoveryCode>(request.UserId));
+            var existingUserSecureRemotePasswordLogins = await this._repository.SecureRemotePasswordByRecoveryCodes.GetAsync(new DefaultGetSpecification<SecureRemotePasswordByRecoveryCode>(request.UserId), cancellationToken);
+
             
             WordGenerator myWordGenerator = new WordGenerator();
             List<string> advs = myWordGenerator.GetWords(WordGenerator.PartOfSpeech.adv, 7);
@@ -58,12 +63,15 @@
 
             var verifierAndSalt = this._secureRemotePasswordService.GenerateVerifierAndSalt(recoveryCode, request.UserId);
             
+            var verifierEncrypted = this._encryptionService.Encrypt(verifierAndSalt.Verifier);
+            var saltEncrypted = this._encryptionService.Encrypt(verifierAndSalt.Salt);
+            
             if (existingUserSecureRemotePasswordLogins != null)
             {
                 existingUserSecureRemotePasswordLogins = new SecureRemotePasswordByRecoveryCode
                 {
-                    Verifier = verifierAndSalt.Verifier,
-                    Salt = verifierAndSalt.Salt,
+                    VerifierEncrypted = verifierEncrypted,
+                    SaltEncrypted = saltEncrypted,
                     CreatedAt = this._mockbleDateTime.UtcNow,
                 };
             }
@@ -74,9 +82,10 @@
                 {
                     UserId = request.UserId,
                     CreatedAt = this._mockbleDateTime.UtcNow,
-                    Verifier = verifierAndSalt.Verifier,
-                    Salt = verifierAndSalt.Salt,
+                    VerifierEncrypted = verifierEncrypted,
+                    SaltEncrypted = saltEncrypted,
                 };
+
                 this._repository.SecureRemotePasswordByRecoveryCodes.Add(existingUserSecureRemotePasswordLogins);
             }
 

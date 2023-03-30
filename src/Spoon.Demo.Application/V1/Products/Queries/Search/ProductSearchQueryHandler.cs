@@ -53,7 +53,7 @@ public sealed class ProductSearchQueryHandler : IRequestHandler<ProductSearchQue
         };
         
            
- var product = await this._readOnlyRepository.Products.Search(new SearchSpecification(request.Filters,request.Skip,request.Take), cancellationToken);
+ var product = await this._readOnlyRepository.Products.GetAllAsync(new SearchSpecification(request.Filters,request.Skip,request.Take), cancellationToken);
 
         if (product is null)
             return EitherHelper<ProductSearchQueryResult>.EntityNotFound(typeof(ProductSearchQuery));

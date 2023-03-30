@@ -1,6 +1,7 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.ForgotPassword;
 
 using Application.Users.UserForgotPasswordRecoverByRecoveryCodeChallengeGet;
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -16,14 +17,14 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 ///     Spoon.NuGet.SecureRemotePassword.Api
 /// </summary>
-public static class UserForgotPasswordByRecoveryCodeChallengeGetEndpoint
+public class UserForgotPasswordByRecoveryCodeChallengeGetEndpoint : IEndpointMarker
 {
     /// <summary>
     ///     Spoon.NuGet.SecureRemotePassword.Contracts
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapUserForgotPasswordByRecoveryCodeChallengeGet(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapPost(ApiUserEndpoints.ForgotPasswordRecoverByRecoveryCode.ChallengeGet.Endpoint,ForgotPasswordByRecoveryCodeChallengeGetAsync)
             .WithName(ApiUserEndpoints.ForgotPasswordRecoverByRecoveryCode.ChallengeGet.Name)
@@ -36,7 +37,7 @@ public static class UserForgotPasswordByRecoveryCodeChallengeGetEndpoint
         return app;
     }
 
-    private static UserForgotPasswordRecoverByRecoveryCodeChallengeGetCommand MapToCommand(string email)
+    private UserForgotPasswordRecoverByRecoveryCodeChallengeGetCommand MapToCommand(string email)
     {
         var command = new UserForgotPasswordRecoverByRecoveryCodeChallengeGetCommand
         {
@@ -45,7 +46,7 @@ public static class UserForgotPasswordByRecoveryCodeChallengeGetEndpoint
         return command;
     }
 
-    private static async Task<IResult> ForgotPasswordByRecoveryCodeChallengeGetAsync(string email, ISender sender, CancellationToken cancellationToken)
+    private async Task<IResult> ForgotPasswordByRecoveryCodeChallengeGetAsync(string email, ISender sender, CancellationToken cancellationToken)
     {
         var command = MapToCommand(email);
 

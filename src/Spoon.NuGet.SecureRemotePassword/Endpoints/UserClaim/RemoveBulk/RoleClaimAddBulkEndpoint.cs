@@ -1,5 +1,6 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.UserClaim.RemoveBulk;
 
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,13 +16,13 @@ using Swashbuckle.AspNetCore.Annotations;
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public static class UserClaimRemoveBulkEndpoint
+public class UserClaimRemoveBulkEndpoint : IEndpointMarker
 {
     /// <summary>
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapUserClaimRemoveBulk(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapPut(ApiUserClaimEndpoints.RemoveBulk.Endpoint,RemoveBulk)
             .WithName(ApiUserClaimEndpoints.RemoveBulk.Name)
@@ -33,7 +34,7 @@ public static class UserClaimRemoveBulkEndpoint
         return app;
     }
 
-    private static UserClaimRemoveBulkCommand MapToCommand(this UserClaimRemoveBulkCommandRequest request, Guid userId)
+    private UserClaimRemoveBulkCommand MapToCommand( UserClaimRemoveBulkCommandRequest request, Guid userId)
     {
         var command = new UserClaimRemoveBulkCommand
         {
@@ -44,9 +45,9 @@ public static class UserClaimRemoveBulkEndpoint
         return command;
     }
 
-    private static async Task<IResult> RemoveBulk([FromRoute] Guid userId, [FromBody] UserClaimRemoveBulkCommandRequest request, ISender sender, CancellationToken cancellationToken)
+    private async Task<IResult> RemoveBulk([FromRoute] Guid userId, [FromBody] UserClaimRemoveBulkCommandRequest request, ISender sender, CancellationToken cancellationToken)
     {
-        var command = request.MapToCommand(userId);
+        var command = MapToCommand(request,userId);
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

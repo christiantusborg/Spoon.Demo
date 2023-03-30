@@ -4,6 +4,7 @@
     using Domain.Entities;
     using Domain.Repositories;
     using EitherCore.Helpers;
+    using Helpers;
     using MediatR;
     using Spoon.NuGet.Core;
     using Spoon.NuGet.EitherCore;
@@ -15,16 +16,18 @@
     {
         private readonly IMockbleDateTime _mockbleDateTime;
         private readonly ISecureRemotePasswordRepository _repository;
+        private readonly IEncryptionService _encryptionService;
 
 
         /// <summary>
         /// </summary>
         /// <param name="writeRepository"></param>
         /// <param name="mockbleGuidGenerator"></param>
-        public MeChangePasswordCommandHandler(IMockbleDateTime mockbleDateTime, ISecureRemotePasswordRepository repository)
+        public MeChangePasswordCommandHandler(IMockbleDateTime mockbleDateTime, ISecureRemotePasswordRepository repository, IEncryptionService encryptionService)
         {
             this._mockbleDateTime = mockbleDateTime;
             this._repository = repository;
+            this._encryptionService = encryptionService;
         }
 
         /// <summary>
@@ -40,16 +43,19 @@
             MeChangePasswordCommand request,
             CancellationToken cancellationToken)
         {
-            var existingUser = await this._repository.Users.Get(new DefaultGetSpecification<User>(request.UserId));
+            var existingUser = await this._repository.Users.GetAsync(new DefaultGetSpecification<User>(request.UserId), cancellationToken);
             if (existingUser == null)
                 return EitherHelper<MeChangePasswordCommandResult>.EntityNotFound(typeof(User));            
             
-            var existingUserSecureRemotePasswordLogins = await this._repository.SecureRemotePasswordLogins.Get(new DefaultGetSpecification<SecureRemotePasswordLogin>(request.UserId));
+            var existingUserSecureRemotePasswordLogins = await this._repository.SecureRemotePasswordLogins.GetAsync(new DefaultGetSpecification<SecureRemotePasswordLogin>(request.UserId), cancellationToken);
             if (existingUserSecureRemotePasswordLogins == null)
                 return EitherHelper<MeChangePasswordCommandResult>.EntityNotFound(typeof(SecureRemotePasswordLogin));
             
-            existingUserSecureRemotePasswordLogins.Verifier = request.Verifier;
-            existingUserSecureRemotePasswordLogins.Salt = request.Salt;
+            var verifierEncrypted = this._encryptionService.Encrypt(request.Verifier);
+            existingUserSecureRemotePasswordLogins.VerifierEncrypted = verifierEncrypted;
+            
+            var saltEncrypted = this._encryptionService.Encrypt(request.Salt);
+            existingUserSecureRemotePasswordLogins.SaltEncrypted = saltEncrypted;
             
             existingUserSecureRemotePasswordLogins.UpdatedAt = this._mockbleDateTime.UtcNow;
             

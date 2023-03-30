@@ -2,7 +2,8 @@
 {
     using Administration;
     using Administration.CreateUser;
-    using Application.Role.Create;
+    using Application.Roles.Create;
+    using Core.Presentation;
     using MediatR;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
@@ -20,13 +21,13 @@
     //public static class GetChallengeAuthentication
     /// <summary>
     /// </summary>
-    public static class RoleCreateEndpoint
+    public class RoleCreateEndpoint : IEndpointMarker
     {
         /// <summary>
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IEndpointRouteBuilder MapRoleCreate(this IEndpointRouteBuilder app)
+        public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
         {
             app.MapPost(ApiRoleEndpoints.Create.Endpoint, CreateUser)
                 .WithName(ApiRoleEndpoints.Create.Name)
@@ -38,7 +39,7 @@
             return app;
         }
 
-        private static RoleCreateCommand MapToCommand(this RoleCreateRequest request)
+        private static RoleCreateCommand MapToCommand(RoleCreateRequest request)
         {
             var command = new RoleCreateCommand
             {
@@ -49,7 +50,7 @@
         
         private static async Task<IResult> CreateUser([FromBody] RoleCreateRequest request, ISender sender, CancellationToken cancellationToken)
         {
-            var command = request.MapToCommand();
+            var command = MapToCommand(request);
             var commandResult = await sender.Send(command, cancellationToken);
 
             var result = commandResult.ToNoContent();

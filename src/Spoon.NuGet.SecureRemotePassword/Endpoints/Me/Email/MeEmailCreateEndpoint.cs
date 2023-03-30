@@ -5,6 +5,7 @@ namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Me.Email;
 
 using System.Security.Claims;
 using Application.Me.Email.Create;
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,22 +16,22 @@ using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
 using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Spoon.NuGet.SecureRemotePassword.EndpointFilters;
-using Spoon.NuGet.SecureRemotePassword.Extensions;
 using Swashbuckle.AspNetCore.Annotations;
 using User;
+using ClaimsPrincipalExtensions = Extensions.ClaimsPrincipalExtensions;
 
 //public static class GetChallengeAuthentication
 /// <summary>
 ///     Spoon.NuGet.SecureRemotePassword.Api
 /// </summary>
-public static class MeEmailCreateEndpoint
+public class MeEmailCreateEndpoint : IEndpointMarker
 {
     /// <summary>
     ///     Map user add email endpoint.
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapMeEmailCreate(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapPost(ApiMeEndpoints.Email.Create.Endpoint, MeEmailCreateAsync)
             .WithName(ApiMeEndpoints.Email.Create.Name)
@@ -48,7 +49,7 @@ public static class MeEmailCreateEndpoint
         return app;
     }
 
-    private static MeEmailCreateCommand MapToCommand(this MeEmailCreateRequest request, Guid userId)
+    private static MeEmailCreateCommand MapToCommand(MeEmailCreateRequest request, Guid userId)
     {
         var command = new MeEmailCreateCommand
         {
@@ -60,7 +61,7 @@ public static class MeEmailCreateEndpoint
    
     internal static async Task<IResult> MeEmailCreateAsync([FromBody] MeEmailCreateRequest request,[FromHeader(Name = "verifyProof")] string verifyProof, ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
     {
-        var command = request.MapToCommand(claimsPrincipal.GetUserId());
+        var command = MapToCommand(request, ClaimsPrincipalExtensions.GetUserId(claimsPrincipal));
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

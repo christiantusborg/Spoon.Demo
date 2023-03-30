@@ -4,6 +4,7 @@ namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.Logout;
 
 using System.Security.Claims;
 using Application.Users.UserLogout;
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -13,12 +14,13 @@ using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
 using Spoon.NuGet.SecureRemotePassword.Extensions;
 using Swashbuckle.AspNetCore.Annotations;
+using ClaimsPrincipalExtensions = Extensions.ClaimsPrincipalExtensions;
 
 //public static class GetChallengeAuthentication
 /// <summary>
 /// 
 /// </summary>
-public static class UserLogoutEndpoint
+public class UserLogoutEndpoint: IEndpointMarker
 {
     /// <summary>
     /// 
@@ -30,7 +32,7 @@ public static class UserLogoutEndpoint
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapUserLogout(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapGet(ApiUserEndpoints.Logout.Endpoint, Logout)
             .WithName(nameof(ApiUserEndpoints.Logout.Name))
@@ -42,7 +44,7 @@ public static class UserLogoutEndpoint
         return app;
     }
     
-    private static UserLogoutCommand MapToCommand(Guid userId, Guid sessionId)
+    private UserLogoutCommand MapToCommand(Guid userId, Guid sessionId)
     {
         
         var command = new UserLogoutCommand
@@ -54,9 +56,9 @@ public static class UserLogoutEndpoint
         return command;
     }
     
-    internal static async Task<IResult> Logout(ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
+    internal async Task<IResult> Logout(ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
     {
-        var command = MapToCommand(claimsPrincipal.GetUserId(),claimsPrincipal.GetSessionId());
+        var command = MapToCommand(ClaimsPrincipalExtensions.GetUserId(claimsPrincipal),claimsPrincipal.GetSessionId());
 
         var commandResult = await sender.Send(command, cancellationToken);
 

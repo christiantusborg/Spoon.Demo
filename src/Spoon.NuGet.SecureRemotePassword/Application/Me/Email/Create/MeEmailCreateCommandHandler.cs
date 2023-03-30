@@ -52,21 +52,21 @@
             MeEmailCreateCommand request,
             CancellationToken cancellationToken)
         {
-            var user = await this._repository.Users.Get(new DefaultGetSpecification<User>(request.UserId));
+            var user = await this._repository.Users.GetAsync(new DefaultGetSpecification<User>(request.UserId), cancellationToken);
             if (user == null)
                 return EitherHelper<MeEmailCreateCommandResult>.EntityNotFound(typeof(User));
         
             
             var emailAddressHash = this._hashService.Hash(request.Email);
             
-            var emailExists = await this._repository.UserEmails.Get(new GetEmailByHashSpecification(emailAddressHash));
+            var emailExists = await this._repository.UserEmails.GetAsync(new GetEmailByHashSpecification(emailAddressHash), cancellationToken);
             if(emailExists != null)
                 return EitherHelper<MeEmailCreateCommandResult>.EntityAlreadyExists(typeof(UserEmail));
 
             var emailId = this._mockbleGuidGenerator.NewGuid();
             var emailAddressEncrypted = this._encryptionService.Encrypt(request.Email);
 
-            var email = new UserEmail
+            var userEmail = new UserEmail
             {
                 EmailId = emailId,
                 IsPrimary = 0,
@@ -79,7 +79,7 @@
                 DeletedAt = null,
             };
             
-            this._repository.UserEmails.Add(email);
+            this._repository.UserEmails.Add(userEmail);
             await this._repository.SaveChangesAsync(cancellationToken);
             
             return new Either<MeEmailCreateCommandResult>(new MeEmailCreateCommandResult

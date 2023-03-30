@@ -1,6 +1,8 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration;
 
+using System.Net;
 using Application.Administration.SetUserPassword;
+using Core.Presentation;
 using EitherCore.Extensions;
 using Extensions;
 using MediatR;
@@ -16,13 +18,13 @@ using Swashbuckle.AspNetCore.Annotations;
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public static class AdministrationSetUserPasswordEndpoint
+public class AdministrationSetUserPasswordEndpoint  : IEndpointMarker
 {
     /// <summary>
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapAdministrationSetUserPassword(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapPut(ApiAdministrationEndpoints.SetUserPassword.Endpoint, SetUserPassword)
             .WithName(ApiAdministrationEndpoints.SetUserPassword.Name)
@@ -33,7 +35,7 @@ public static class AdministrationSetUserPasswordEndpoint
 
         return app;
     }
-    private static AdministrationSetUserPasswordCommand MapToCommand(this AdministrationSetUserPasswordRequest request)
+    private static AdministrationSetUserPasswordCommand MapToCommand(AdministrationSetUserPasswordRequest request)
     {
         var command = new AdministrationSetUserPasswordCommand
         {
@@ -47,7 +49,7 @@ public static class AdministrationSetUserPasswordEndpoint
     
     private static async Task<IResult> SetUserPassword([FromRoute] Guid userId,[FromBody] AdministrationSetUserPasswordRequest request, ISender sender, CancellationToken cancellationToken)
     {
-        var command = request.MapToCommand();
+        var command = MapToCommand(request);
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

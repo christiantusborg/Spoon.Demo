@@ -5,9 +5,9 @@ namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Me.VerifyChallenge;
 
 using System.Security.Claims;
 using Application.Me.VerifyChallenge;
+using Core.Presentation;
 using EitherCore.Extensions;
 using EndpointFilters;
-using Extensions;
 using Mediator.PipelineBehaviors.Permission;
 using Mediator.PipelineBehaviors.Validation;
 using MediatR;
@@ -15,19 +15,20 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Swashbuckle.AspNetCore.Annotations;
+using ClaimsPrincipalExtensions = Extensions.ClaimsPrincipalExtensions;
 
 //public static class GetChallengeAuthentication
 /// <summary>
 ///     Spoon.NuGet.SecureRemotePassword.Api
 /// </summary>
-public static class MeVerifyChallengeGetEndpoint
+public class MeVerifyChallengeGetEndpoint : IEndpointMarker
 {
     /// <summary>
     ///     Map user add VerifyChallenge endpoint.
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapMeVerifyChallengeGet(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapGet(ApiMeEndpoints.VerifyChallenge.Get.Endpoint, MeVerifyChallengeGetAsync)
             .WithName(ApiMeEndpoints.VerifyChallenge.Get.Name)
@@ -55,7 +56,7 @@ public static class MeVerifyChallengeGetEndpoint
 
     internal static async Task<IResult> MeVerifyChallengeGetAsync(ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
     {
-        var command = MapToCommand(claimsPrincipal.GetUserId());
+        var command = MapToCommand(ClaimsPrincipalExtensions.GetUserId(claimsPrincipal));
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

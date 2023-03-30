@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NuGet.SecureRemotePassword.Endpoints;
 
+/*
 public class ApplicationApiFactory : WebApplicationFactory<IApiMarker>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -19,3 +20,4 @@ public class ApplicationApiFactory : WebApplicationFactory<IApiMarker>
         });
     }
 }
+*/

@@ -1,25 +1,25 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Role.Get
 {
-    using Application.Role.Get;
+    using Application.Roles.Get;
+    using Core.Presentation;
     using MediatR;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
     using Spoon.NuGet.EitherCore.Extensions;
     using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-    using Spoon.NuGet.SecureRemotePassword.Application.Role.DeleteSoft;
     using Swashbuckle.AspNetCore.Annotations;
 
     //public static class GetChallengeAuthentication
     /// <summary>
     /// </summary>
-    public static class RoleGetEndpoint
+    public class RoleGetEndpoint: IEndpointMarker
     {
         /// <summary>
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IEndpointRouteBuilder MapRoleGet(this IEndpointRouteBuilder app)
+        public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
         {
             app.MapGet(ApiRoleEndpoints.DeleteSoft.Endpoint, Get)
                 .WithName(ApiRoleEndpoints.DeleteSoft.Name)

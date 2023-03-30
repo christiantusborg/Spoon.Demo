@@ -2,6 +2,7 @@
 
 using Application.Administration.SetUserFailedLockout;
 using Contracts;
+using Core.Presentation;
 using EitherCore.Extensions;
 using Extensions;
 using Mediator.PipelineBehaviors.Permission;
@@ -16,13 +17,13 @@ using Swashbuckle.AspNetCore.Annotations;
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public static class AdministrationSetUserFailedLockoutEndpoint
+public class AdministrationSetUserFailedLockoutEndpoint  : IEndpointMarker
 {
     /// <summary>
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapAdministrationSetUserFailedLockout(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapGet(ApiAdministrationEndpoints.SetUserFailedLockout.Endpoint,SetUserFailedLockout)
             .WithName(ApiAdministrationEndpoints.SetUserFailedLockout.Name)

@@ -5,6 +5,7 @@ namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.Logout;
 using System.Security.Claims;
 using Application.Users.UserLogout;
 using Application.Users.UserLogoutAll;
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -12,14 +13,14 @@ using Microsoft.AspNetCore.Routing;
 using Spoon.NuGet.EitherCore.Extensions;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Extensions;
 using Swashbuckle.AspNetCore.Annotations;
+using ClaimsPrincipalExtensions = Extensions.ClaimsPrincipalExtensions;
 
 //public static class GetChallengeAuthentication
 /// <summary>
 /// 
 /// </summary>
-public static class UserLogoutAllEndpoint
+public class UserLogoutAllEndpoint: IEndpointMarker
 {
 
 
@@ -28,7 +29,7 @@ public static class UserLogoutAllEndpoint
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapUserLogoutAll(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapGet(ApiUserEndpoints.LogoutAll.Endpoint, Logout)
             .WithName(nameof(ApiUserEndpoints.LogoutAll.Name))
@@ -40,7 +41,7 @@ public static class UserLogoutAllEndpoint
         return app;
     }
     
-    private static UserLogoutAllCommand MapToCommand(Guid userId)
+    private UserLogoutAllCommand MapToCommand(Guid userId)
     {
         
         var command = new UserLogoutAllCommand
@@ -51,9 +52,9 @@ public static class UserLogoutAllEndpoint
         return command;
     }
     
-    internal static async Task<IResult> Logout(ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
+    internal async Task<IResult> Logout(ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
     {
-        var command = MapToCommand(claimsPrincipal.GetUserId());
+        var command = MapToCommand(ClaimsPrincipalExtensions.GetUserId(claimsPrincipal));
 
         var commandResult = await sender.Send(command, cancellationToken);
 

@@ -5,9 +5,9 @@ namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Me.Email;
 using System.Security.Claims;
 using Application.Me.Email.SetAsPrimaryEmail;
 using Contracts;
+using Core.Presentation;
 using EitherCore.Extensions;
 using EndpointFilters;
-using Extensions;
 using Mediator.PipelineBehaviors.Permission;
 using Mediator.PipelineBehaviors.Validation;
 using MediatR;
@@ -16,19 +16,20 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Swashbuckle.AspNetCore.Annotations;
+using ClaimsPrincipalExtensions = Extensions.ClaimsPrincipalExtensions;
 
 //public static class GetChallengeAuthentication
 /// <summary>
 ///     Spoon.NuGet.SecureRemotePassword.Api
 /// </summary>
-public static class MeEmailSetAsPrimaryEndpoint
+public class MeEmailSetAsPrimaryEndpoint : IEndpointMarker
 {
     /// <summary>
     ///     Spoon.NuGet.SecureRemotePassword.Contracts
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapMeEmailSetAsPrimary(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapGet(ApiMeEndpoints.Email.SetAsPrimaryEmail.Endpoint, MeEmailSetAsPrimaryAsync)
             .WithName(ApiMeEndpoints.Email.SetAsPrimaryEmail.Name)
@@ -58,7 +59,7 @@ public static class MeEmailSetAsPrimaryEndpoint
 
     internal static async Task<IResult> MeEmailSetAsPrimaryAsync(Guid emailId, [FromHeader(Name = "verifyProof")] string verifyProof, ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
     {
-        var command = MapToCommand(emailId, claimsPrincipal.GetUserId());
+        var command = MapToCommand(emailId, ClaimsPrincipalExtensions.GetUserId(claimsPrincipal));
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

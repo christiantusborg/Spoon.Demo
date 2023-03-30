@@ -4,6 +4,7 @@
 namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Me.Delete;
 
 using System.Security.Claims;
+using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,19 +16,19 @@ using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
 using Spoon.NuGet.SecureRemotePassword.Application.Me.Delete.Soft;
 using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Spoon.NuGet.SecureRemotePassword.EndpointFilters;
-using Spoon.NuGet.SecureRemotePassword.Extensions;
 using Swashbuckle.AspNetCore.Annotations;
+using ClaimsPrincipalExtensions = Extensions.ClaimsPrincipalExtensions;
 
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public static class MeDeleteSoftEndpoint
+public class MeDeleteSoftEndpoint : IEndpointMarker
 {
     /// <summary>
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IEndpointRouteBuilder MapMeDeleteSoft(this IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapDelete(ApiMeEndpoints.Delete.Soft.Endpoint, DeleteSoftAsync)
             .WithName(ApiMeEndpoints.Delete.Soft.Name)
@@ -56,7 +57,7 @@ public static class MeDeleteSoftEndpoint
 
     internal static async Task<IResult> DeleteSoftAsync([FromHeader(Name = "verifyProof")] string verifyProof, ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
     {
-        var command = MapToCommand(claimsPrincipal.GetUserId());
+        var command = MapToCommand(ClaimsPrincipalExtensions.GetUserId(claimsPrincipal));
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

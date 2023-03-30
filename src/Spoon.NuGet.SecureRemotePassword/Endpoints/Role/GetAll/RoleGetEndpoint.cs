@@ -4,22 +4,24 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
+    using NuGet.Core.Presentation;
     using NuGet.EitherCore.Extensions;
     using NuGet.Mediator.PipelineBehaviors.Validation;
-    using NuGet.SecureRemotePassword.Application.Role.GetAll;
+    using NuGet.SecureRemotePassword.Application.Roles.GetAll;
+    using NuGet.SecureRemotePassword.Endpoints;
     using NuGet.SecureRemotePassword.Endpoints.Role;
     using Swashbuckle.AspNetCore.Annotations;
 
     //public static class GetAllChallengeAuthentication
     /// <summary>
     /// </summary>
-    public static class RoleGetAllEndpoint
+    public class RoleGetAllEndpoint : IEndpointMarker
     {
         /// <summary>
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IEndpointRouteBuilder MapRoleGetAll(this IEndpointRouteBuilder app)
+        public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
         {
             app.MapGet(ApiRoleEndpoints.DeleteSoft.Endpoint, GetAll)
                 .WithName(ApiRoleEndpoints.DeleteSoft.Name)
