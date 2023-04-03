@@ -16,7 +16,7 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 /// 
 /// </summary>
-public class UserRefreshEndpoint: IEndpointMarker
+public class UserRefreshEndpoint //: IEndpointMarker
 {
    
 

@@ -10,6 +10,9 @@
     using Spoon.NuGet.Core;
     using Spoon.NuGet.EitherCore;
 
+    /// <summary>
+    /// Handles the creation of a new user.
+    /// </summary>
     public sealed class AdministrationCreateUserCommandHandler : IRequestHandler<AdministrationCreateUserCommand, Either<AdministrationCreateUserCommandResult>>
     {
 
@@ -19,6 +22,14 @@
         private readonly IEncryptionService _encryptionService;
         private readonly IHashService _hashService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdministrationCreateUserCommandHandler"/> class.
+        /// </summary>
+        /// <param name="mockbleGuidGenerator">A mockable GUID generator.</param>
+        /// <param name="mockbleDateTime">A mockable date/time service.</param>
+        /// <param name="repository">The repository for secure remote password data.</param>
+        /// <param name="encryptionService">The encryption service.</param>
+        /// <param name="hashService">The hash service.</param>
         public AdministrationCreateUserCommandHandler(IMockbleGuidGenerator mockbleGuidGenerator,
             IMockbleDateTime mockbleDateTime,
             ISecureRemotePasswordRepository repository,
@@ -32,7 +43,15 @@
             this._hashService = hashService;
         }
 
-
+        /// <summary>
+        /// Handles the request to create a new user.
+        /// </summary>
+        /// <param name="request">The request to create a new user.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>An <see>
+        ///         <cref>Either{TLeft, TRight}</cref>
+        ///     </see>
+        ///     containing either the result of the user creation or an error.</returns>
         public async Task<Either<AdministrationCreateUserCommandResult>> Handle(
             AdministrationCreateUserCommand request,
             CancellationToken cancellationToken)
@@ -44,6 +63,7 @@
                 return EitherHelper<AdministrationCreateUserCommandResult>.EntityAlreadyExists(typeof(UserEmail));
 
             var userId = this._mockbleGuidGenerator.NewGuid();
+            
             var user = new User
             {
                 UserId = userId,
@@ -61,6 +81,7 @@
             await this._repository.SaveChangesAsync(cancellationToken);
             
             
+
             var emailId = this._mockbleGuidGenerator.NewGuid();
             var emailAddressEncrypted = this._encryptionService.Encrypt(request.Email);
             

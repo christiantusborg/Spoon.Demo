@@ -16,7 +16,7 @@ using Swashbuckle.AspNetCore.Annotations;
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public class RoleClaimRemoveBulkEndpoint : IEndpointMarker
+public class RoleClaimRemoveBulkEndpoint // : IEndpointMarker
 {
     /// <summary>
     /// </summary>

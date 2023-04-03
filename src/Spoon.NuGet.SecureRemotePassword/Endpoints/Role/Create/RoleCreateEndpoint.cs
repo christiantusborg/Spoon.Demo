@@ -21,7 +21,7 @@
     //public static class GetChallengeAuthentication
     /// <summary>
     /// </summary>
-    public class RoleCreateEndpoint : IEndpointMarker
+    public class RoleCreateEndpoint  //: IEndpointMarker
     {
         /// <summary>
         /// </summary>

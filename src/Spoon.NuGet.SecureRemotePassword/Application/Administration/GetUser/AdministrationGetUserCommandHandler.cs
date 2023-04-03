@@ -110,7 +110,7 @@
 
         private List<AdministrationGetUserEmailCommandResult> GetEmailsDecrypted(User user)
         {
-            var result = user.Emails.Select(userEmail => new AdministrationGetUserEmailCommandResult
+            var result = user.UserEmails.Select(userEmail => new AdministrationGetUserEmailCommandResult
                 {
                     EmailId = userEmail.EmailId,
                     Email = this._encryptionService.Decrypt(userEmail.EmailAddressEncrypted),
@@ -123,7 +123,7 @@
 
         private string GetPrimaryEmailDecrypted(User user)
         {
-            var result = user.Emails.Where(x => x.IsPrimary == 1).Select(userEmail => this._encryptionService.Decrypt(userEmail.EmailAddressEncrypted)).First();
+            var result = user.UserEmails.Where(x => x.IsPrimary == 1).Select(userEmail => this._encryptionService.Decrypt(userEmail.EmailAddressEncrypted)).First();
             
             return result;
         }

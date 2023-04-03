@@ -15,14 +15,16 @@
     public sealed class RoleUpdateCommandHandler : IRequestHandler<RoleUpdateCommand, Either<RoleUpdateCommandResult>>
     {
         private readonly ISecureRemotePasswordRepository _repository;
+        private readonly IMockbleDateTime _mockbleDateTime;
 
         /// <summary>
         /// </summary>
         /// <param name="writeRepository"></param>
         /// <param name="mockbleGuidGenerator"></param>
-        public RoleUpdateCommandHandler(ISecureRemotePasswordRepository repository)
+        public RoleUpdateCommandHandler(ISecureRemotePasswordRepository repository, IMockbleDateTime mockbleDateTime)
         {
             this._repository = repository;
+            this._mockbleDateTime = mockbleDateTime;
         }
 
         /// <summary>
@@ -46,6 +48,7 @@
                 return EitherHelper<RoleUpdateCommandResult>.EntityAlreadyExists(typeof(Role));
 
             existingRole.Name = request.Name;
+            existingRole.UpdatedAt = this._mockbleDateTime.UtcNow;
 
             // Save changes to the repository.
             await this._repository.SaveChangesAsync(cancellationToken);

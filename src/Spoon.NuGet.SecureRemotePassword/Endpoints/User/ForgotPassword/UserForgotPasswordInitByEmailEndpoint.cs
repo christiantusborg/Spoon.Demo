@@ -19,7 +19,7 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 ///     Spoon.NuGet.SecureRemotePassword.Api
 /// </summary>
-public class UserForgotPasswordInitByEmailEndpoint : IEndpointMarker
+public class UserForgotPasswordInitByEmailEndpoint //: IEndpointMarker
 {
     /// <summary>
     ///     Spoon.NuGet.SecureRemotePassword.Contracts

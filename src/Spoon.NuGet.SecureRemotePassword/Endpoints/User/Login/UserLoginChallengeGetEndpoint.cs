@@ -17,7 +17,7 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 /// 
 /// </summary>
-public class UserLoginChallengeGetEndpoint: IEndpointMarker
+public class UserLoginChallengeGetEndpoint //: IEndpointMarker
 {
      /// <summary>
     /// 

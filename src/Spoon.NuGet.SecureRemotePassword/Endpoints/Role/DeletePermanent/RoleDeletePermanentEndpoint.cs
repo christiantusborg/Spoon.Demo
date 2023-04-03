@@ -16,7 +16,7 @@
     //public static class GetChallengeAuthentication
     /// <summary>
     /// </summary>
-    public class RoleDeletePermanentEndpoint: IEndpointMarker
+    public class RoleDeletePermanentEndpoint //: IEndpointMarker
     {
         /// <summary>
         /// </summary>

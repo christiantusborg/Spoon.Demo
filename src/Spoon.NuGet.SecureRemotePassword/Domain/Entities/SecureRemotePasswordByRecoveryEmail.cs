@@ -9,4 +9,5 @@ public class SecureRemotePasswordByRecoveryEmail : Entity
     public string EmailAddressHash { get; set; }
     public string RecoveryTokenHash { get; set; }
     public DateTime CreatedAt { get; set; }
+    public virtual User? User { get; set; }
 }

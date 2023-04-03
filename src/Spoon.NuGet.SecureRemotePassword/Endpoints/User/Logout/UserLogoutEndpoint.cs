@@ -20,7 +20,7 @@ using ClaimsPrincipalExtensions = Extensions.ClaimsPrincipalExtensions;
 /// <summary>
 /// 
 /// </summary>
-public class UserLogoutEndpoint: IEndpointMarker
+public class UserLogoutEndpoint //: IEndpointMarker
 {
     /// <summary>
     /// 

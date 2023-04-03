@@ -10,4 +10,6 @@ public class Claim : SignedEntity
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
+    public virtual IEnumerable<User>? Users { get; set; }
+    public virtual IEnumerable<Role>? Roles { get; set; }
 }

@@ -13,7 +13,7 @@
     //public static class GetChallengeAuthentication
     /// <summary>
     /// </summary>
-    public class RoleDeleteSoftEndpoint: IEndpointMarker
+    public class RoleDeleteSoftEndpoint //: IEndpointMarker
     {
         /// <summary>
         /// </summary>

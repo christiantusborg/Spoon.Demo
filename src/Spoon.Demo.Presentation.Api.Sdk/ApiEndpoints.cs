@@ -1,4 +1,5 @@
-﻿namespace Spoon.Demo.Presentation.Api.Sdk;
+﻿/*
+namespace Spoon.Demo.Presentation.Api.Sdk;
 
 public static class ApiEndpoints
 {
@@ -23,3 +24,4 @@ public static class ApiEndpoints
     }
 
 }
+*/

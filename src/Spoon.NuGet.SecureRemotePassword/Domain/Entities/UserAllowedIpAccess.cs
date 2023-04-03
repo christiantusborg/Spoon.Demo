@@ -9,4 +9,5 @@ public class UserAllowedIpAccess : Entity
     public string IpAddressHash { get; set; }
     public string IpAddressEncrypted { get; set; }
     public DateTime CreatedAt { get; set; }
+    public virtual IEnumerable<User> Users { get; set;}
 }

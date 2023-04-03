@@ -9,4 +9,5 @@ public class SecureRemotePasswordByRecoveryCode : Entity
     public string VerifierEncrypted { get; set; }
     public string SaltEncrypted { get; set; }
     public DateTime CreatedAt { get; set; }
+    public virtual User User { get; set; }
 }

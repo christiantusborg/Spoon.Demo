@@ -10,4 +10,5 @@ public class SecureRemotePasswordLogin : Entity
     public string SaltEncrypted { get; set; }
     
     public DateTime UpdatedAt { get; set; }
+    public virtual User? User { get; set; }
 }

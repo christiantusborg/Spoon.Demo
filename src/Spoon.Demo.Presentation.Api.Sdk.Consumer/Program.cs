@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿
+using Microsoft.Extensions.DependencyInjection;
 using Refit;
 using Spoon.Demo.Presentation.Api.Contracts.Products.Requests;
 using Spoon.Demo.Presentation.Api.Sdk;
@@ -7,7 +8,7 @@ using Spoon.NuGet.Core.Domain;
 
 
 var services = new ServiceCollection();
-
+/*
 services.AddHttpClient()
     .AddSingleton<AuthTokenProvider>()
     .AddRefitClient<IProductApi>(s => new RefitSettings
@@ -20,7 +21,7 @@ services.AddHttpClient()
 var provider = services.BuildServiceProvider();
 
 var productApi = provider.GetRequiredService<IProductApi>();
-
+*
 
 
 var product = await productApi.GetProductAsync("nick-the-greek-2022");
@@ -45,5 +46,5 @@ var request = new ProductSearchRequest
     Page = 1,
     PageLength = 10,
 };
-
+*/
 //Spoon.Demo.Presentation.Api.Contracts

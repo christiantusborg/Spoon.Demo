@@ -1,17 +1,15 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration;
+﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.SetUserPassword;
 
-using System.Net;
-using Application.Administration.SetUserPassword;
-using Core.Presentation;
-using EitherCore.Extensions;
-using Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Spoon.NuGet.Core.Presentation;
+using Spoon.NuGet.EitherCore.Extensions;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
 using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
+using Spoon.NuGet.SecureRemotePassword.Application.Administration.SetUserPassword;
 using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Swashbuckle.AspNetCore.Annotations;
 

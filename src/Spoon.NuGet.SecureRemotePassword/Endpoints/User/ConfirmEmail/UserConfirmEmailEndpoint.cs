@@ -20,7 +20,7 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 ///     Spoon.NuGet.SecureRemotePassword.Api
 /// </summary>
-public class UserConfirmEmailEndpoint : IEndpointMarker
+public class UserConfirmEmailEndpoint // : IEndpointMarker
 {
     /// <summary>
     ///     Spoon.NuGet.SecureRemotePassword.Contracts

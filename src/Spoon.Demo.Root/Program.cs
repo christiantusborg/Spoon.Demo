@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Spoon.Demo.Application;
 using Spoon.Demo.Application.Health;
+using Spoon.Demo.Application.V1.Products.Commands.Create;
 using Spoon.Demo.Application.V1.Products.Queries.Get;
 using Spoon.Demo.Domain.Repositories;
 using Spoon.Demo.Persistence.Repositories;
@@ -117,7 +118,16 @@ builder.Services.AddSwaggerGen(x =>
 //builder.Services.AddSqlite<GetingeDb>(connectionString);
 
 
-builder.Services.AddMediatR(typeof(ProductGetQuery));
+builder.Services
+    .AddMediatR(cfg =>
+
+        {
+           // cfg.RegisterServicesFromAssembly(typeof(IAssemblyMarkerSecureRemotePassword).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(ProductCreateCommand).Assembly);
+        }
+        );
+
+
 //builder.Services.AddValidationPipelineBehaviour();
 
 
@@ -174,7 +184,7 @@ app.UseOutputCache();
 
 //app.MapMeEndpoints();
 //app.MapUserEndpoints();
-//app.MapEndpoints(typeof(IAssemblyMarkerSecureRemotePassword));
+app.MapEndpoints(typeof(IAssemblyMarkerSecureRemotePassword));
 
 //app.UseOutputCache();
 //EndpointFiltersMetricCounter

@@ -17,7 +17,7 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <summary>
 ///     Spoon.NuGet.SecureRemotePassword.Api
 /// </summary>
-public class UserForgotPasswordByRecoveryCodeSetEndpoint : IEndpointMarker
+public class UserForgotPasswordByRecoveryCodeSetEndpoint  // : IEndpointMarker
 {
     /// <summary>
     ///     Spoon.NuGet.SecureRemotePassword.Contracts

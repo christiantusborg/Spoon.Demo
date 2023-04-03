@@ -1,21 +1,19 @@
-﻿namespace Spoon.NuGetAll.SecureRemotePassword.Endpoints.Role.GetAllAll
+﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Role.GetAll
 {
     using MediatR;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
-    using NuGet.Core.Presentation;
-    using NuGet.EitherCore.Extensions;
-    using NuGet.Mediator.PipelineBehaviors.Validation;
-    using NuGet.SecureRemotePassword.Application.Roles.GetAll;
-    using NuGet.SecureRemotePassword.Endpoints;
-    using NuGet.SecureRemotePassword.Endpoints.Role;
+    using Spoon.NuGet.EitherCore.Extensions;
+    using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
+    using Spoon.NuGet.SecureRemotePassword.Application.Roles.GetAll;
+    using Spoon.NuGet.SecureRemotePassword.Endpoints.Role;
     using Swashbuckle.AspNetCore.Annotations;
 
     //public static class GetAllChallengeAuthentication
     /// <summary>
     /// </summary>
-    public class RoleGetAllEndpoint : IEndpointMarker
+    public class RoleGetAllEndpoint //: IEndpointMarker
     {
         /// <summary>
         /// </summary>

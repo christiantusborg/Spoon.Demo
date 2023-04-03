@@ -1,4 +1,5 @@
-﻿namespace Spoon.Demo.Presentation.Api.Sdk;
+﻿/*
+namespace Spoon.Demo.Presentation.Api.Sdk;
 
 using Contracts;
 using Contracts.Products.Requests;
@@ -26,3 +27,4 @@ public interface IProductApi
     [Delete(ApiEndpoints.Products.DeletePermanent)]
     Task DeletePermanentProductAsync(Guid id);    
 }
+*/

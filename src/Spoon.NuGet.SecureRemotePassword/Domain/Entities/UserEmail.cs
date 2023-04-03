@@ -18,5 +18,5 @@ public class UserEmail : Entity
     public DateTime? DeletedAt { get; set; }
     
     public virtual User User { get; set; }
-
+    public IEnumerable<UserEmailConfirm> UserEmailConfirms { get; set; }
 }
