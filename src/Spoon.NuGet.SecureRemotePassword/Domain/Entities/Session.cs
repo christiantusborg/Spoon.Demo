@@ -10,6 +10,8 @@ public class Session : Entity
     public string RefreshTokenHash { get; set; }
     public string IpAddressHash { get; set; }
     public string UserAgentHash { get; set; }
+    public DateTime ActionAt { get; set; }
     public DateTime CreatedAt { get; set; }
     public virtual User User { get; set; }
+    
 }
