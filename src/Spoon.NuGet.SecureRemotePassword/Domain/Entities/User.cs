@@ -20,7 +20,7 @@ public class User : Entity
     public virtual  IEnumerable<SecureRemotePasswordByRecoveryEmail> SecureRemotePasswordByRecoveryEmails { get; set; }
     public virtual  IEnumerable<SecureRemotePasswordLogin> SecureRemotePasswordLogins { get; set; }
     public virtual IEnumerable<Session>? Sessions { get; set; }
-    public virtual IEnumerable<TwoFactorAuthenticationTOTP> TwoFactorAuthenticationTOTPs { get; set;}
+    public virtual IEnumerable<TwoFactorAuthenticationTotp> TwoFactorAuthenticationTOTPs { get; set;}
     public virtual IEnumerable<UserAllowedIpAccess> UserAllowedIpAccesss { get; set;}
     public IEnumerable<UserLoginHistory> UserLoginHistories { get; set; }
 }

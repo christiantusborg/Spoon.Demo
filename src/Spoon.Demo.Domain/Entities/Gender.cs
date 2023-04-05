@@ -12,8 +12,10 @@ public partial class Gender
     public string Name { get; set; } = null!;
 
     /// <inheritdoc cref="Gender" />
-    public virtual ICollection<ColorToProduct> ColorToProducts { get; } = new List<ColorToProduct>();
+    public virtual ICollection<Color> Colors { get; set; }
 
     /// <inheritdoc cref="Gender" />
-    public virtual ICollection<SizeToProduct> SizeToProducts { get; } = new List<SizeToProduct>();
+    public virtual ICollection<Size> Sizes { get; set;}
+    
+    public virtual ICollection<Product> Products { get; set;}
 }

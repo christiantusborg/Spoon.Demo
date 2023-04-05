@@ -27,5 +27,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Spoon.Demo.Domain\Spoon.Demo.Domain.csproj" />
+      <ProjectReference Include="..\Spoon.NuGet.SecureRemotePassword\Spoon.NuGet.SecureRemotePassword.csproj" />
     </ItemGroup>    
 </Project>

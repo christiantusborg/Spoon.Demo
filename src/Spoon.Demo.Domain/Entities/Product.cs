@@ -12,7 +12,7 @@ using Spoon.NuGet.Core.Domain.Primitives;
 /// <seealso cref="ISoftDeletableEntity" />
 /// <seealso cref="Entity" />
 /// <seealso cref="IAuditableEntity" />
-public class Product : Entity, IAuditableEntity, ISoftDeletableEntity
+public class Product : Entity
 {
     /// <inheritdoc cref="Product" />
     public Guid ProductId { get; set; }
@@ -45,14 +45,9 @@ public class Product : Entity, IAuditableEntity, ISoftDeletableEntity
     public DateTime? DeletedAt { get; set; }
 
     /// <inheritdoc cref="Product" />
-    public virtual Supplier? Supplier { get; set; }
+    public virtual Supplier Supplier { get; set; }
     
+    public virtual Gender Gender { get; set; }
     /// <inheritdoc cref="Product" />
-    public virtual ICollection<ColorToProduct> ColorToProducts { get; } = new List<ColorToProduct>();
-    
-    /// <inheritdoc cref="Product" />
-    public virtual ICollection<SizeToProduct> SizeToProducts { get; } = new List<SizeToProduct>();
-
-    /// <inheritdoc cref="Product" />
-    public virtual ICollection<Feature> Features { get; } = new List<Feature>();    
+    public virtual ICollection<Feature> Features { get; set; }    
 }
