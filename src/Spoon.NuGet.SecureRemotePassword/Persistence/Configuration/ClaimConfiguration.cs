@@ -23,7 +23,6 @@ public class ClaimConfiguration  : IEntityTypeConfiguration<Claim>
             .IsRequired();
 
         builder.Property(c => c.DeletedAt);
-       //     .HasColumnType("datetime");
 
        builder.HasMany(x => x.Users)
            .WithMany(x => x.Claims)
