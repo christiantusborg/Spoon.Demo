@@ -5,7 +5,7 @@ using Domain.Entities;
 using Domain.Entities.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-public class ClaimRepository : RootDbContext<Claim>, IClaimRepository
+public class ClaimRepository : RootRepository<Claim>, IClaimRepository
 {
     // No need to implement anything here as ClaimRepository
     // already inherits all the required methods and properties from RootRepository.
