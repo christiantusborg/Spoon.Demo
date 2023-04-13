@@ -5,6 +5,7 @@
     /// </summary>
     public sealed class MeDeleteSoftCommandResult
     {
+        /// <inheritdoc cref="MeDeleteSoftCommandResult" />
         public bool Success { get; set; } = true;    
     }
 }

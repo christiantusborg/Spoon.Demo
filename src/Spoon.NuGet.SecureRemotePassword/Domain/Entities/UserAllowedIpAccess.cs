@@ -3,11 +3,19 @@
 using Core.Domain;
 using Helpers;
 
-public class UserAllowedIpAccess : Entity
+/// <summary>
+///   Class UserAllowedIpAccess. This class cannot be inherited.
+/// </summary>
+public sealed class UserAllowedIpAccess : Entity
 {
+    /// <inheritdoc cref="UserAllowedIpAccess" />
     public Guid UserId { get; set; }
-    public string IpAddressHash { get; set; }
-    public string IpAddressEncrypted { get; set; }
+    /// <inheritdoc cref="UserAllowedIpAccess" />
+    public required string IpAddressHash { get; set; }
+    /// <inheritdoc cref="UserAllowedIpAccess" />
+    public required string IpAddressEncrypted { get; set; }
+    /// <inheritdoc cref="UserAllowedIpAccess" />
     public DateTime CreatedAt { get; set; }
-    public virtual IEnumerable<User> Users { get; set;}
+    /// <inheritdoc cref="UserAllowedIpAccess" />
+    public IEnumerable<User> Users { get; set;} = null!;
 }

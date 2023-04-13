@@ -3,6 +3,9 @@
 using Core.Domain;
 using Domain.Entities;
 
+/// <summary>
+///   Class GetEmailByHashSpecification. This class cannot be inherited.
+/// </summary>
 public class GetEmailByHashSpecification :  Specification<UserEmail>
 {
 /// <inheritdoc />

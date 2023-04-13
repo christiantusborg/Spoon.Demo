@@ -22,7 +22,7 @@ public sealed class UserRoleRemoveBulkCommand : MediatorBaseCommand, IHandleable
     }
 
     /// <inheritdoc cref="UserRoleRemoveBulkCommand" />
-    public Guid UserId { get; init; }
+    public required Guid UserId { get; init; }
     /// <inheritdoc cref="UserRoleRemoveBulkCommand" />
-    public List<Guid> Claims { get; set; }
+    public List<Guid> Roles { get; set; } = new List<Guid>();
 }

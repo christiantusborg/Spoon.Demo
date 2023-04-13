@@ -4,6 +4,7 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+/*
 public class GenderConfiguration : IEntityTypeConfiguration<Gender>
 {
     public void Configure(EntityTypeBuilder<Gender> builder)
@@ -29,3 +30,4 @@ public class GenderConfiguration : IEntityTypeConfiguration<Gender>
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
+*/

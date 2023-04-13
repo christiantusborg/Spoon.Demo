@@ -3,7 +3,7 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
+/*
 public class FeatureConfiguration : IEntityTypeConfiguration<Feature>
 {
     public void Configure(EntityTypeBuilder<Feature> builder)
@@ -26,3 +26,4 @@ public class FeatureConfiguration : IEntityTypeConfiguration<Feature>
             .UsingEntity(j => j.ToTable("ProductFeature"));
     }
 }
+*/

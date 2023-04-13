@@ -1,8 +1,9 @@
+// ReSharper disable PropertyCanBeMadeInitOnly.Global
 namespace Spoon.NuGet.SecureRemotePassword.Application.Administration.SetUserFailedLockout;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -22,10 +23,7 @@ public sealed class AdministrationSetUserFailedLockoutCommand : MediatorBaseComm
 
     /// <inheritdoc cref="AdministrationSetUserFailedLockoutCommand" />
     public Guid UserId { get; init; }
+
     /// <inheritdoc cref="AdministrationSetUserFailedLockoutCommand" />
     public bool Value { get; set; }
-
- 
-
-
 }

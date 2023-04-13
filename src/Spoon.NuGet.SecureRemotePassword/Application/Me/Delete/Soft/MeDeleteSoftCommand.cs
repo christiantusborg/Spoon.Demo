@@ -1,9 +1,9 @@
 namespace Spoon.NuGet.SecureRemotePassword.Application.Me.Delete.Soft;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
+using Mediator.PipelineBehaviors.Permission;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -23,6 +23,6 @@ public sealed class MeDeleteSoftCommand : MediatorBaseCommand, IHandleableReques
     }
 
     /// <inheritdoc cref="MeDeleteSoftCommand" />
-    public 
+    public
         Guid UserId { get; init; }
 }

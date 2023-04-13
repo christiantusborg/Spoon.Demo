@@ -9,7 +9,5 @@
         public Guid UserId { get; internal set; }
         /// <inheritdoc cref="RoleDeletePermanentCommandResult" />
         public string? Email { get; internal set; }        
-        /// <inheritdoc cref="RoleDeletePermanentCommandResult" />
-        public string? ServerSessionProof { get; internal set; }
     }
 }

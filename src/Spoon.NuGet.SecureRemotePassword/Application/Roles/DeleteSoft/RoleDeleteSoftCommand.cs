@@ -1,9 +1,8 @@
-
 namespace Spoon.NuGet.SecureRemotePassword.Application.Roles.DeleteSoft;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -23,10 +22,4 @@ public sealed class RoleDeleteSoftCommand : MediatorBaseCommand, IHandleableRequ
 
     /// <inheritdoc cref="RoleDeleteSoftCommand" />
     public Guid RoleId { get; init; }
-
-
-
- 
-
-
 }

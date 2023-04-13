@@ -1,21 +1,23 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Roles.GetAll
+﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
+namespace Spoon.NuGet.SecureRemotePassword.Application.Roles.GetAll;
+
+/// <summary>
+///     Class ProductCreateQueryResult. This class cannot be inherited.
+/// </summary>
+public sealed class RoleGetAllCommandResult
 {
-    using Domain.Entities;
+    /// <inheritdoc cref="RoleGetAllCommandResult" />
+    public Guid RoleId { get; init; }
 
-    /// <summary>
-    /// Class ProductCreateQueryResult. This class cannot be inherited.
-    /// </summary>
-    public sealed class RoleGetAllCommandResult
-    {
-        public List<RoleGetAllLRolesCommandResult> Roles { get; set; } = new List<RoleGetAllLRolesCommandResult>();
-    }
+    /// <inheritdoc cref="RoleGetAllCommandResult" />
+    public string? Name { get; init; }
 
-    public sealed class RoleGetAllLRolesCommandResult
-    {
-        public Guid RoleId { get; set; }
-        public string Name { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public DateTime? DeletedAt { get; set; }
-    }
+    /// <inheritdoc cref="RoleGetAllCommandResult" />
+    public DateTime CreatedAt { get; init; }
+
+    /// <inheritdoc cref="RoleGetAllCommandResult" />
+    public DateTime UpdatedAt { get; init; }
+
+    /// <inheritdoc cref="RoleGetAllCommandResult" />
+    public DateTime? DeletedAt { get; init; }
 }

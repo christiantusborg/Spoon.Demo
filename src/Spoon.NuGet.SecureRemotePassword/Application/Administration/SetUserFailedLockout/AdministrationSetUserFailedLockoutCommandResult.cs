@@ -5,6 +5,7 @@
     /// </summary>
     public sealed class AdministrationSetUserFailedLockoutCommandResult
     {
+        /// <inheritdoc cref="AdministrationSetUserFailedLockoutCommandResult" />
         public bool Success { get; set; } = true;
     }
 }

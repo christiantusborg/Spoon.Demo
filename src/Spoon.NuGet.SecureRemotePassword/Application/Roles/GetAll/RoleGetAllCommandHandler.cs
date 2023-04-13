@@ -1,5 +1,7 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Roles.GetAll
 {
+    using Core.Application;
+    using Core.Domain;
     using Domain.Entities;
     using Domain.Repositories;
     using EitherCore.Helpers;
@@ -11,7 +13,7 @@
     /// <summary>
     ///     Class ProductCreateQueryHandler. This class cannot be inherited.
     /// </summary>
-    public sealed class RoleGetAllCommandHandler : IRequestHandler<RoleGetAllCommand, Either<RoleGetAllCommandResult>>
+    public sealed class RoleGetAllCommandHandler : IRequestHandler<RoleGetAllCommand, Either<BaseSearchCommandResult<RoleGetAllCommandResult>>>
     {
         private readonly ISecureRemotePasswordRepository _repository;
 
@@ -32,17 +34,18 @@
         ///     of cancellation.
         /// </param>
         /// <returns>Task&lt;Either&lt;ProductCreateQueryResult&gt;&gt;.</returns>
-        public async Task<Either<RoleGetAllCommandResult>> Handle(
+        public async Task<Either<BaseSearchCommandResult<RoleGetAllCommandResult>>> Handle(
             RoleGetAllCommand request,
             CancellationToken cancellationToken)
         {
-            List<Role> existingRoles = await this._repository.Roles.GetAllAsync(new RoleGetAllCommandSpecification(),cancellationToken);
+            var existingRoles = await this._repository.Roles.SearchAsync(new DefaultSearchSpecification<Role>(request.Filters.ToList(), new List<Sorting>(), request.Skip, request.Take, request.IncludeDeleted),cancellationToken);
             
             if(existingRoles.Count == 0)
-                return EitherHelper<RoleGetAllCommandResult>.EntityNotFound(typeof(Role));
+                return EitherHelper<BaseSearchCommandResult<RoleGetAllCommandResult>>.EntityNotFound(typeof(Role));
 
 
-            var roleResult = existingRoles.Select(x => new RoleGetAllLRolesCommandResult
+            var totalRoles = await this._repository.Roles.CountAsync(new DefaultSearchSpecification<Role>(request.Filters.ToList(), new List<Sorting>(), request.Skip, request.Take, request.IncludeDeleted),cancellationToken);
+            var roleResult = existingRoles.Select(x => new RoleGetAllCommandResult
             {
                 RoleId = x.RoleId,
                 Name = x.Name,
@@ -51,12 +54,15 @@
                 DeletedAt = x.DeletedAt,
             }).ToList();
             
-            var result = new RoleGetAllCommandResult
+            
+            
+            var result = new BaseSearchCommandResult<RoleGetAllCommandResult>
             {
-                Roles   = roleResult,
+                Items = roleResult,
+                Total =  totalRoles, 
             };
 
-            return new Either<RoleGetAllCommandResult>(result);
+            return new Either<BaseSearchCommandResult<RoleGetAllCommandResult>>(result);
         }
     }
 }

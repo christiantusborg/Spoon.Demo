@@ -1,4 +1,5 @@
 
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 namespace Spoon.NuGet.SecureRemotePassword.Application.UserClaim.RemoveBulk;
 
 using Spoon.NuGet.EitherCore;
@@ -24,5 +25,5 @@ public sealed class UserClaimRemoveBulkCommand : MediatorBaseCommand, IHandleabl
     /// <inheritdoc cref="UserClaimRemoveBulkCommand" />
     public Guid UserId { get; init; }
     /// <inheritdoc cref="UserClaimRemoveBulkCommand" />
-    public List<Guid> Claims { get; set; }
+    public List<Guid> Claims { get; init; } = new ();
 }

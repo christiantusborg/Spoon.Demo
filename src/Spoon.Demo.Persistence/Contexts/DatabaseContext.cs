@@ -5,7 +5,7 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using NuGet.SecureRemotePassword;
 
-public class DemoContext : DbContext
+public class DatabaseContext : DbContext
 {
     public DbSet<Color> Colors { get; set; }
     public DbSet<Feature> Features { get; set; }

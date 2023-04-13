@@ -1,4 +1,5 @@
 
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 namespace Spoon.NuGet.SecureRemotePassword.Application.Roles.Update;
 
 using Spoon.NuGet.EitherCore;
@@ -21,6 +22,8 @@ public sealed class RoleUpdateCommand : MediatorBaseCommand, IHandleableRequest<
     {
     }
 
-    public Guid RoleId { get; set; }
-    public string Name { get; set; }
+    /// <inheritdoc cref="RoleUpdateCommand" />
+    public Guid RoleId { get; init; }
+    /// <inheritdoc cref="RoleUpdateCommand" />
+    public required string Name { get; init; }
 }

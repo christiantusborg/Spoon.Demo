@@ -5,6 +5,7 @@
     /// </summary>
     public sealed class MeEmailCreateCommandResult
     {
+        /// <inheritdoc cref="MeEmailCreateCommandResult" />
        public Guid EmailId { get; set; }
     }
 }

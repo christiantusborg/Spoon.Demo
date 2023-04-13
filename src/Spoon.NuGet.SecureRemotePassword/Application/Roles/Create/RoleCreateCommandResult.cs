@@ -1,4 +1,5 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Roles.Create
+﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
+namespace Spoon.NuGet.SecureRemotePassword.Application.Roles.Create
 {
     /// <summary>
     /// Represents the result of creating a new role using a <see cref="RoleCreateCommandHandler"/>.

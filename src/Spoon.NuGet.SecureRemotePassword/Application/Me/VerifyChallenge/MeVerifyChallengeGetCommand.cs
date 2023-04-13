@@ -1,9 +1,11 @@
+// ReSharper disable PropertyCanBeMadeInitOnly.Global
+
 namespace Spoon.NuGet.SecureRemotePassword.Application.Me.VerifyChallenge;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
+using Mediator.PipelineBehaviors.Permission;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -21,6 +23,7 @@ public sealed class MeVerifyChallengeGetCommand : MediatorBaseCommand, IHandleab
         : base(typeof(MeVerifyChallengeGetCommand))
     {
     }
+
     /// <inheritdoc cref="MeVerifyChallengeGetCommand" />
     public Guid UserId { get; set; }
 }

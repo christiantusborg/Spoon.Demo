@@ -1,9 +1,10 @@
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 namespace Spoon.NuGet.SecureRemotePassword.Application.Me.Email.GetAll;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
+using Mediator.PipelineBehaviors.Permission;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -12,7 +13,7 @@ using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
 /// <seealso cref="MediatorBaseQuery" />
 [PermissionPipelineBehaviourExclude("No claim required using Secure Remote Password ClientSessionProof")]
 public sealed class MeEmailGetAllCommand : MediatorBaseCommand, IHandleableRequest<MeEmailGetAllCommand,
-    MeEmailGetAllCommandHandler, Either<MeEmailGetAllCommandResult>>
+    MeEmailGetAllCommandHandler, Either<BaseSearchCommandResultExtendedWithUserId<MeEmailGetAllCommandResult>>>
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="MeEmailGetAllCommand" /> class.

@@ -3,7 +3,10 @@
 using Domain.Entities;
 using Spoon.NuGet.Core.Domain;
 
-public class MeEmailGetAllCommandSpecification : Specification<UserEmail>
+/// <summary>
+/// A specification for retrieving all email addresses associated with a specific user.
+/// </summary>
+public sealed class MeEmailGetAllCommandSpecification : Specification<UserEmail>
 {
     /// <inheritdoc />
     public MeEmailGetAllCommandSpecification(Guid userId)
@@ -21,7 +24,6 @@ public class MeEmailGetAllCommandSpecification : Specification<UserEmail>
         this.AddFilters(filters);
 
         this.AddSkip(0);
-
-        this.AddTake(9999);
+        this.AddTake(Int32.MaxValue);
     }
 }

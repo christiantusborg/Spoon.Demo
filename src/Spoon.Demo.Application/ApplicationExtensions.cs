@@ -24,9 +24,6 @@ public static class ApplicationExtensions
     public static IServiceCollection AddApplication(this IServiceCollection app)
     {
         app.AddHealth();
-        app.AddTransient<IWriteRepository, WriteRepository>();
-
-        app.AddTransient<IReadOnlyRepository, ReadOnlyRepository>();
 
         app.AddCore();
 

@@ -6,10 +6,6 @@
     public sealed class UserClaimRemoveBulkCommandResult
     {
         /// <inheritdoc cref="UserClaimRemoveBulkCommandResult" />
-        public Guid UserId { get; internal set; }
-        /// <inheritdoc cref="UserClaimRemoveBulkCommandResult" />
-        public string? Email { get; internal set; }        
-        /// <inheritdoc cref="UserClaimRemoveBulkCommandResult" />
-        public string? ServerSessionProof { get; internal set; }
+        public bool Success { get; set; } = true;   
     }
 }

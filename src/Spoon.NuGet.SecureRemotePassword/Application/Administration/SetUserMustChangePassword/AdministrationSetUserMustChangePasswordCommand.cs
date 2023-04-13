@@ -1,8 +1,8 @@
 namespace Spoon.NuGet.SecureRemotePassword.Application.Administration.SetUserMustChangePassword;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -22,10 +22,7 @@ public sealed class AdministrationSetUserMustChangePasswordCommand : MediatorBas
 
     /// <inheritdoc cref="AdministrationSetUserMustChangePasswordCommand" />
     public Guid UserId { get; init; }
+
     /// <inheritdoc cref="AdministrationSetUserMustChangePasswordCommand" />
-    public bool Value { get; set; }
-
- 
-
-
+    public bool Value { get; init; }
 }

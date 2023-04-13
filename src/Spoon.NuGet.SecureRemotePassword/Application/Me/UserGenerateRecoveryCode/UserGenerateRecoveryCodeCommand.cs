@@ -1,8 +1,9 @@
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 namespace Spoon.NuGet.SecureRemotePassword.Application.Me.UserGenerateRecoveryCode;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -20,5 +21,6 @@ public sealed class UserGenerateRecoveryCodeCommand : MediatorBaseCommand, IHand
     {
     }
 
-    public Guid UserId { get; set; }
+    /// <inheritdoc cref="UserGenerateRecoveryCodeCommand" />
+    public Guid UserId { get; init; }
 }

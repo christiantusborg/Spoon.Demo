@@ -1,8 +1,8 @@
 namespace Spoon.NuGet.SecureRemotePassword.Application.Administration.RemoveUserEmail;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -21,11 +21,8 @@ public sealed class AdministrationRemoveUserEmailCommand : MediatorBaseCommand, 
     }
 
     /// <inheritdoc cref="AdministrationRemoveUserEmailCommand" />
-    public 
-        Guid UserId { get; init; }
+    public Guid UserId { get; init; }
 
     /// <inheritdoc cref="AdministrationRemoveUserEmailCommand" />
     public required Guid EmailId { get; init; }
-
-
 }

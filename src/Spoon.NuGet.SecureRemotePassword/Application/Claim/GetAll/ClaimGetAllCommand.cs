@@ -1,15 +1,16 @@
 namespace Spoon.NuGet.SecureRemotePassword.Application.Claim.GetAll;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
+using Core.Application;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
 ///     Implements the <see cref="MediatorBaseQuery" />.
 /// </summary>
 /// <seealso cref="MediatorBaseQuery" />
-public sealed class ClaimGetAllCommand : MediatorBaseCommand, IHandleableRequest<ClaimGetAllCommand,
+public sealed class ClaimGetAllCommand : MediatorBaseCommandSearch, IHandleableRequest<ClaimGetAllCommand,
     ClaimGetAllCommandHandler, Either<ClaimGetAllCommandUserCommandResult>>
 {
     /// <summary>

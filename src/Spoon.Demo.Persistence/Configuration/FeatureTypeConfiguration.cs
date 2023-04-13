@@ -3,7 +3,7 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
+/*
 public class FeatureTypeConfiguration : IEntityTypeConfiguration<FeatureType>
 {
     public void Configure(EntityTypeBuilder<FeatureType> builder)
@@ -21,3 +21,4 @@ public class FeatureTypeConfiguration : IEntityTypeConfiguration<FeatureType>
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
+*/

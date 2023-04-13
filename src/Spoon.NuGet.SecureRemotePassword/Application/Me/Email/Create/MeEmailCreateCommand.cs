@@ -1,9 +1,9 @@
 namespace Spoon.NuGet.SecureRemotePassword.Application.Me.Email.Create;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
+using Mediator.PipelineBehaviors.Permission;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -23,11 +23,8 @@ public sealed class MeEmailCreateCommand : MediatorBaseCommand, IHandleableReque
     }
 
     /// <inheritdoc cref="MeEmailCreateCommand" />
-    public 
-        Guid UserId { get; init; }
+    public Guid UserId { get; init; }
 
     /// <inheritdoc cref="MeEmailCreateCommand" />
     public required string Email { get; init; }
-
-
 }

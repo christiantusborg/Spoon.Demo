@@ -1,15 +1,12 @@
 ﻿namespace Spoon.Demo.Domain.Entities;
 
-/// <summary>
-/// 
-/// </summary>
-public partial class FeatureType
-{
-    /// <inheritdoc cref="FeatureType" />
-    public int FeatureTypeId { get; set; }
+using NuGet.Core.Domain;
 
-    /// <inheritdoc cref="FeatureType" />
+public class FeatureType : Entity
+{
+    public Guid FeatureTypeId { get; set; }
     public string Name { get; set; }
-    
-    public virtual ICollection<Feature> Features { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime ModifiedAt { get; set; }
+    public DateTime DeletedAt { get; set; }
 }

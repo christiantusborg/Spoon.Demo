@@ -5,5 +5,7 @@
     /// </summary>
     public sealed class MeEmailSetAsPrimaryCommandResult
     {
+        /// <inheritdoc cref="MeEmailSetAsPrimaryCommandResult" />
+        public bool Success { get; set; } = true;   
     }
 }

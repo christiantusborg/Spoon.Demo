@@ -22,8 +22,9 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="writeRepository"></param>
-        /// <param name="mockbleGuidGenerator"></param>
+        /// <param name="mockbleDateTime"></param>
+        /// <param name="repository"></param>
+        /// <param name="secureRemotePasswordService"></param>
         public MeDeleteSoftCommandHandler(IMockbleDateTime mockbleDateTime, ISecureRemotePasswordRepository repository, ISecureRemotePasswordService secureRemotePasswordService)
         {
             this._mockbleDateTime = mockbleDateTime;

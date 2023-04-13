@@ -1,14 +1,16 @@
 namespace Spoon.NuGet.SecureRemotePassword.Application.Me.Email.SetAsPrimaryEmail;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
+using Mediator.PipelineBehaviors.Permission;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
 ///     Implements the <see cref="MediatorBaseQuery" />.
 /// </summary>
 /// <seealso cref="MediatorBaseQuery" />
+[PermissionPipelineBehaviourExclude("No claim required using Secure Remote Password ClientSessionProof")]
 public sealed class MeEmailSetAsPrimaryCommand : MediatorBaseCommand, IHandleableRequest<MeEmailSetAsPrimaryCommand,
     MeEmailSetAsPrimaryCommandHandler, Either<MeEmailSetAsPrimaryCommandResult>>
 {
@@ -18,10 +20,10 @@ public sealed class MeEmailSetAsPrimaryCommand : MediatorBaseCommand, IHandleabl
     public MeEmailSetAsPrimaryCommand()
         : base(typeof(MeEmailSetAsPrimaryCommand))
     {
-    
     }
-    
-    public Guid UserId {internal get; set; }
-    public required Guid EmailId { get; init; }
 
+    /// <inheritdoc cref="MeEmailSetAsPrimaryCommand" />
+    public Guid UserId { internal get; set; }
+    /// <inheritdoc cref="MeEmailSetAsPrimaryCommand" />
+    public required Guid EmailId { get; init; }
 }

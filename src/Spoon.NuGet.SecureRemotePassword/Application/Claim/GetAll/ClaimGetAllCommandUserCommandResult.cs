@@ -1,4 +1,5 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Claim.GetAll
+﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
+namespace Spoon.NuGet.SecureRemotePassword.Application.Claim.GetAll
 {
     using Domain.Entities;
 
@@ -7,6 +8,7 @@
     /// </summary>
     public sealed class ClaimGetAllCommandUserCommandResult
     {
-        public List<Claim> Claims { get; set; }
+        /// <inheritdoc cref="ClaimGetAllCommandUserCommandResult" />
+        public List<Claim> Claims { get; init; } = new List<Claim>();
     }
 }

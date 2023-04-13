@@ -1,4 +1,5 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Role.GetAll
+﻿/*
+namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Role.GetAll
 {
     using MediatR;
     using Microsoft.AspNetCore.Builder;
@@ -21,11 +22,11 @@
         /// <returns></returns>
         public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
         {
-            app.MapGet(ApiRoleEndpoints.DeleteSoft.Endpoint, GetAll)
+            app.MapGet(ApiRoleEndpoints.GetAll.Endpoint, GetAll)
                 .WithName(ApiRoleEndpoints.DeleteSoft.Name)
                 .Produces(204)
                 .Produces<Validationfailures>(406)
-                .WithMetadata(new SwaggerOperationAttribute(ApiRoleEndpoints.DeleteSoft.Summary, ApiRoleEndpoints.DeleteSoft.Description));
+                .WithMetadata(new SwaggerOperationAttribute(ApiRoleEndpoints.GetAll.Summary, ApiRoleEndpoints.GetAll.Description));
 
             return app;
         }
@@ -48,3 +49,4 @@
         }        
     }
 }
+*/

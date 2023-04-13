@@ -6,10 +6,6 @@
     public sealed class UserRoleAddBulkCommandResult
     {
         /// <inheritdoc cref="UserRoleAddBulkCommandResult" />
-        public Guid UserId { get; internal set; }
-        /// <inheritdoc cref="UserRoleAddBulkCommandResult" />
-        public string? Email { get; internal set; }        
-        /// <inheritdoc cref="UserRoleAddBulkCommandResult" />
-        public string? ServerSessionProof { get; internal set; }
+        public bool Success { get; set; } = true;   
     }
 }

@@ -16,7 +16,7 @@ public class Claim : Entity
     /// <summary>
     /// Gets or sets the name of the claim.
     /// </summary>
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
     /// <summary>
     /// Gets or sets the date and time when the claim was created.

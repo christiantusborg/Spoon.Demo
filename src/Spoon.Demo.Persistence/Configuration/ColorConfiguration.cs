@@ -14,10 +14,10 @@ public class ColorConfiguration : IEntityTypeConfiguration<Color>
         builder.Property(c => c.ColorId).ValueGeneratedOnAdd();
 
         builder.Property(c => c.Name).HasMaxLength(50);
-        builder.Property(c => c.Hex).HasMaxLength(7);
+    //    builder.Property(c => c.Hex).HasMaxLength(7);
 
-        builder.HasMany(c => c.Genders)
-            .WithMany(g => g.Colors)
-            .UsingEntity(j => j.ToTable("GenderColor"));
+    //    builder.HasMany(c => c.)
+   //         .WithMany(g => g.Colors)
+   //         .UsingEntity(j => j.ToTable("GenderColor"));
     }
 }

@@ -1,17 +1,10 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Roles.DeletePermanent;
 
-using FluentValidation;
+using Core.Validation;
 
 /// <summary>
 ///     Class ProductCreateQueryValidator. This class cannot be inherited.
 /// </summary>
-public sealed class RoleDeletePermanentCommandValidator : AbstractValidator<RoleDeletePermanentCommand>
+public sealed class RoleDeletePermanentCommandValidator : BaseValidator<RoleDeletePermanentCommand>
 {
-    /// <summary>
-    ///     Initializes a new instance of the <see cref="RoleDeletePermanentCommandValidator" /> class.
-    /// </summary>
-    public RoleDeletePermanentCommandValidator()
-    {
- 
-    }
 }

@@ -1,13 +1,24 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Domain.Entities;
 
 using Core.Domain;
-using Helpers;
 
-public class SecureRemotePasswordByRecoveryCode : Entity
+/// <summary>
+///     Class SecureRemotePasswordByRecoveryCode. This class cannot be inherited.
+/// </summary>
+public sealed class SecureRemotePasswordByRecoveryCode : Entity
 {
+    /// <inheritdoc cref="SecureRemotePasswordByRecoveryCode" />
     public Guid UserId { get; set; }
-    public string VerifierEncrypted { get; set; }
-    public string SaltEncrypted { get; set; }
+
+    /// <inheritdoc cref="SecureRemotePasswordByRecoveryCode" />
+    public required string VerifierEncrypted { get; set; }
+
+    /// <inheritdoc cref="SecureRemotePasswordByRecoveryCode" />
+    public required string SaltEncrypted { get; set; }
+
+    /// <inheritdoc cref="SecureRemotePasswordByRecoveryCode" />
     public DateTime CreatedAt { get; set; }
-    public virtual User User { get; set; }
+
+    /// <inheritdoc cref="SecureRemotePasswordByRecoveryCode" />
+    public User User { get; set; } = null!;
 }

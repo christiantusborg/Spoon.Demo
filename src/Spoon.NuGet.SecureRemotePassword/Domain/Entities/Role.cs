@@ -9,6 +9,6 @@ public class Role : Entity
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
-    public virtual IEnumerable<Claim> Claims { get; set; }
-    public virtual IEnumerable<User> Users { get; set; }
+    public virtual ICollection<Claim> Claims { get; set; }
+    public virtual ICollection<User> Users { get; set; }
 }

@@ -1,12 +1,12 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Roles.Get;
 
 using System.Diagnostics.CodeAnalysis;
+using Core.Application;
+using Domain.Entities;
+using Domain.Repositories;
+using EitherCore;
+using EitherCore.Helpers;
 using MediatR;
-using Spoon.NuGet.Core.Application;
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.EitherCore.Helpers;
-using Spoon.NuGet.SecureRemotePassword.Domain.Entities;
-using Spoon.NuGet.SecureRemotePassword.Domain.Repositories;
 
 /// <summary>
 ///     Class ProductCreateQueryHandler. This class cannot be inherited.

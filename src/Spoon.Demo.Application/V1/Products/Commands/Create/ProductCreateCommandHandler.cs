@@ -12,16 +12,16 @@
     /// </summary>
     public sealed class ProductCreateCommandHandler : IRequestHandler<ProductCreateCommand, Either<ProductCreateCommandResult>>
     {
-        private readonly IWriteRepository _writeRepository;
+        private readonly IRepository _repository;
         private readonly IMockbleGuidGenerator _mockbleGuidGenerator;
 
         /// <summary>
         /// </summary>
         /// <param name="writeRepository"></param>
         /// <param name="mockbleGuidGenerator"></param>
-        public ProductCreateCommandHandler(IWriteRepository writeRepository, IMockbleGuidGenerator mockbleGuidGenerator)
+        public ProductCreateCommandHandler(IRepository writeRepository, IMockbleGuidGenerator mockbleGuidGenerator)
         {
-            this._writeRepository = writeRepository;
+            this._repository = writeRepository;
             this._mockbleGuidGenerator = mockbleGuidGenerator;
         }
 
@@ -41,9 +41,9 @@
             var product = request.Adapt<Product>();
             product.ProductId = this._mockbleGuidGenerator.NewGuid();
 
-            this._writeRepository.Products.Add(product);
+            this._repository.Products.Add(product);
 
-            await this._writeRepository.SaveChanges(cancellationToken);
+            await this._repository.SaveChanges(cancellationToken);
 
             var result = new ProductCreateCommandResult
             {

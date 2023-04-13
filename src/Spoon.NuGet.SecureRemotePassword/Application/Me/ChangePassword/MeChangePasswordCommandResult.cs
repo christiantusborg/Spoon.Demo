@@ -5,6 +5,7 @@
     /// </summary>
     public sealed class MeChangePasswordCommandResult
     {
+        /// <inheritdoc cref="MeChangePasswordCommandResult" />
         public bool Success { get; set; } = true;
     }
 }

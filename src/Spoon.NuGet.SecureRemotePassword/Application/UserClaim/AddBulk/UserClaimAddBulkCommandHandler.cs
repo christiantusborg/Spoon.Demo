@@ -1,41 +1,79 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Application.UserClaim.AddBulk
+﻿namespace Spoon.NuGet.SecureRemotePassword.Application.UserClaim.AddBulk;
+
+using Core.Domain;
+using Domain.Entities;
+using Domain.Repositories;
+using EitherCore;
+using EitherCore.Helpers;
+using MediatR;
+using SharedSpecification;
+
+/// <summary>
+///     Class ProductCreateQueryHandler. This class cannot be inherited.
+/// </summary>
+public sealed class UserClaimAddBulkCommandHandler : IRequestHandler<UserClaimAddBulkCommand, Either<UserClaimAddBulkCommandResult>>
 {
-    using MediatR;
-    using Spoon.NuGet.Core;
-    using Spoon.NuGet.EitherCore;
+    private readonly ISecureRemotePasswordRepository _repository;
 
     /// <summary>
-    ///     Class ProductCreateQueryHandler. This class cannot be inherited.
     /// </summary>
-    public sealed class UserClaimAddBulkCommandHandler : IRequestHandler<UserClaimAddBulkCommand, Either<UserClaimAddBulkCommandResult>>
+    /// <param name="repository"></param>
+    public UserClaimAddBulkCommandHandler(ISecureRemotePasswordRepository repository)
     {
+        this._repository = repository;
+    }
 
-        private readonly IMockbleGuidGenerator _mockbleGuidGenerator;
-
-        /// <summary>
-        /// </summary>
-        /// <param name="writeRepository"></param>
-        /// <param name="mockbleGuidGenerator"></param>
-        public UserClaimAddBulkCommandHandler(IMockbleGuidGenerator mockbleGuidGenerator)
+    /// <summary>
+    ///     Handles the specified request.
+    /// </summary>
+    /// <param name="request">The request.</param>
+    /// <param name="cancellationToken">
+    ///     The cancellation token that can be used by other objects or threads to receive notice
+    ///     of cancellation.
+    /// </param>
+    /// <returns>Task&lt;Either&lt;ProductCreateQueryResult&gt;&gt;.</returns>
+    public async Task<Either<UserClaimAddBulkCommandResult>> Handle(
+        UserClaimAddBulkCommand request,
+        CancellationToken cancellationToken)
+    {
+        var roleFilters = new List<Filter>
         {
-            this._mockbleGuidGenerator = mockbleGuidGenerator;
+            new ()
+            {
+                Operation = Operation.Equals,
+                Value = request.UserId,
+                PropertyName = "UserId",
+            },
+        };
+
+        var existingUser = await this._repository.Users.GetAsync(new GetUserWithClaimsSpecification(roleFilters), cancellationToken);
+
+        if (existingUser is null)
+            return EitherHelper<UserClaimAddBulkCommandResult>.EntityNotFound(typeof(User));
+
+
+        var filters = new List<Filter>
+        {
+            new ()
+            {
+                Operation = Operation.Contains,
+                Value = request.Claims,
+                PropertyName = "ClaimId",
+            },
+        };
+
+        var existingClaims = await this._repository.Claims.SearchAsync(new GetWhereContainsClaimIdContainsSpecification(filters), cancellationToken);
+
+        var newClaims = existingClaims.Except(existingUser.Claims!).ToList();
+
+
+        foreach (var claim in newClaims)
+        {
+            existingUser.Claims!.Add(claim);
         }
 
-        /// <summary>
-        ///     Handles the specified request.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <param name="cancellationToken">
-        ///     The cancellation token that can be used by other objects or threads to receive notice
-        ///     of cancellation.
-        /// </param>
-        /// <returns>Task&lt;Either&lt;ProductCreateQueryResult&gt;&gt;.</returns>
-        public async Task<Either<UserClaimAddBulkCommandResult>> Handle(
-            UserClaimAddBulkCommand request,
-            CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-            return new Either<UserClaimAddBulkCommandResult>(new UserClaimAddBulkCommandResult());
-        }
+        await this._repository.SaveChangesAsync(cancellationToken);
+
+        return new Either<UserClaimAddBulkCommandResult>(new UserClaimAddBulkCommandResult());
     }
 }

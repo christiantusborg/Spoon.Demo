@@ -1,9 +1,11 @@
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable PropertyCanBeMadeInitOnly.Global
 
 namespace Spoon.NuGet.SecureRemotePassword.Application.RolesClaims.AddBulk;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -22,10 +24,8 @@ public sealed class RoleClaimAddBulkCommand : MediatorBaseCommand, IHandleableRe
     }
 
     /// <inheritdoc cref="RoleClaimAddBulkCommand" />
-    public Guid UserId { get; init; }
+    public Guid RoleId { get; set; }
+
     /// <inheritdoc cref="RoleClaimAddBulkCommand" />
-    public List<Guid> Claims { get; set; } = new List<Guid>();
-
-
-
+    public List<Guid> Claims { get; set; } = new ();
 }

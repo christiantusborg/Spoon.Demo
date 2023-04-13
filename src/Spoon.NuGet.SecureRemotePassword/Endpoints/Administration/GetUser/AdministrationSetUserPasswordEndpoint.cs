@@ -1,4 +1,5 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.GetUser;
+﻿/*
+namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.GetUser;
 
 using Application.Administration.GetUser;
 using Core.Presentation;
@@ -28,7 +29,8 @@ public class AdministrationGetUserEndpoint : IEndpointMarker
         app.MapPut(ApiAdministrationEndpoints.GetUser.Endpoint, SetUserPassword)
             .WithName(ApiAdministrationEndpoints.GetUser.Name)
             .Produces(204)
-            .Produces<PermissionFailed<AdministrationSetUserPasswordResult>>(403)
+            .Produces<PermissionFailed<AdministrationGetUserCommand>>(403)
+            .Produces<AdministrationGetUserResponse>(200)
             .Produces<Validationfailures>(406)
             .WithMetadata(new SwaggerOperationAttribute(ApiAdministrationEndpoints.GetUser.Summary, ApiAdministrationEndpoints.GetUser.Description));
 
@@ -54,3 +56,4 @@ public class AdministrationGetUserEndpoint : IEndpointMarker
     }     
 
 }
+*/

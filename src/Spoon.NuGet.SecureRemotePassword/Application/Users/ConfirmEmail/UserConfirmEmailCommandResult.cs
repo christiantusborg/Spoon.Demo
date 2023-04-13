@@ -5,5 +5,7 @@
     /// </summary>
     public sealed class UserConfirmEmailCommandResult
     {
+        /// <inheritdoc cref="UserConfirmEmailCommandResult" />
+        public bool Success { get; set; } = true;  
     }
 }

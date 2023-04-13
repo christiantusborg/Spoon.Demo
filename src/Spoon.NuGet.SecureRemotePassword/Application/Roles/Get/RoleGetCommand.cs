@@ -1,9 +1,8 @@
-
 namespace Spoon.NuGet.SecureRemotePassword.Application.Roles.Get;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -23,8 +22,4 @@ public sealed class RoleGetCommand : MediatorBaseCommand, IHandleableRequest<Rol
 
     /// <inheritdoc cref="RoleGetCommand" />
     public Guid RoleId { get; init; }
-
- 
-
-
 }

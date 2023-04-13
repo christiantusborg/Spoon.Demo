@@ -1,4 +1,5 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Me.VerifyChallenge
+﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
+namespace Spoon.NuGet.SecureRemotePassword.Application.Me.VerifyChallenge
 {
     using global::SecureRemotePassword;
 
@@ -10,7 +11,10 @@
         /// <inheritdoc cref="MeVerifyChallengeGetCommandResult" />
         public Guid UserId { get; set; }
 
+        /// <inheritdoc cref="MeVerifyChallengeGetCommandResult" />
         public SrpEphemeral? Challenge { get; set; }
-        public string Salt { get; set; }
+        
+        /// <inheritdoc cref="MeVerifyChallengeGetCommandResult" />
+        public required string Salt { get; set; }
     }
 }

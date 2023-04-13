@@ -19,8 +19,8 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="writeRepository"></param>
-        /// <param name="mockbleGuidGenerator"></param>
+        /// <param name="repository"></param>
+        /// <param name="mockbleDateTime"></param>
         public RoleUpdateCommandHandler(ISecureRemotePasswordRepository repository, IMockbleDateTime mockbleDateTime)
         {
             this._repository = repository;
@@ -52,8 +52,6 @@
 
             // Save changes to the repository.
             await this._repository.SaveChangesAsync(cancellationToken);
-
-
 
             // Return an Either instance with the RoleCreateCommandResult.
             return new Either<RoleUpdateCommandResult>(new RoleUpdateCommandResult());

@@ -2,7 +2,6 @@ using System.Text;
 using App.Metrics;
 using App.Metrics.Counter;
 using Asp.Versioning;
-using Carter;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;

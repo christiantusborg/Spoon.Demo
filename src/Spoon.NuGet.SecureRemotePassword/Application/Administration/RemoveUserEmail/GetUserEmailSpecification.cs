@@ -3,7 +3,9 @@
     using Spoon.NuGet.Core.Domain;
     using Spoon.NuGet.SecureRemotePassword.Domain.Entities;
 
-    /// <inheritdoc />
+    /// <summary>
+    ///   Class ProductCreateQueryValidator. This class cannot be inherited.
+    /// </summary>
     public class GetUserEmailSpecification : Specification<UserEmail>
     {
         /// <inheritdoc />

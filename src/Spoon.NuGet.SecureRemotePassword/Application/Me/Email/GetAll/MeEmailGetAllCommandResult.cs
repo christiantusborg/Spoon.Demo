@@ -1,20 +1,16 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Me.Email.GetAll
+﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Me.Email.GetAll;
+
+/// <summary>
+///     Class ProductCreateQueryResult. This class cannot be inherited.
+/// </summary>
+public sealed class MeEmailGetAllCommandResult
 {
-    /// <summary>
-    /// Class ProductCreateQueryResult. This class cannot be inherited.
-    /// </summary>
-    public sealed class MeEmailGetAllCommandResult
-    {
-        /// <inheritdoc cref="MeEmailGetAllCommandResult" />
-        public Guid UserId { get; internal set; }
+    /// <inheritdoc cref="MeEmailGetAllCommandResult" />
+    public Guid EmailId { get; set; }
 
-        public List<MeEmailGetAllOneEmailCommandResult> Emails { get; set; }
-    }
+    /// <inheritdoc cref="MeEmailGetAllCommandResult" />
+    public string? Email { get; set; }
 
-    public sealed class MeEmailGetAllOneEmailCommandResult
-    {
-        public Guid EmailId { get; set; }
-        public string Email { get; set; }
-        public bool IsPrimary { get; set; }
-    }
+    /// <inheritdoc cref="MeEmailGetAllCommandResult" />
+    public bool IsPrimary { get; set; }
 }

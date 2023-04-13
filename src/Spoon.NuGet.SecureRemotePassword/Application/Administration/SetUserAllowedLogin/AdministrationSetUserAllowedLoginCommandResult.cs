@@ -5,6 +5,7 @@
     /// </summary>
     public sealed class AdministrationSetUserAllowedLoginCommandResult
     {
+        /// <inheritdoc cref="AdministrationSetUserAllowedLoginCommandResult" />
         public bool Success { get; set; } = true;
     }
 }

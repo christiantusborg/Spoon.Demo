@@ -1,16 +1,14 @@
 ﻿namespace Spoon.Demo.Domain.Entities;
 
-/// <summary>
-/// 
-/// </summary>
-public partial class Supplier
+using NuGet.Core.Domain;
+
+public class Supplier : Entity
 {
-    /// <inheritdoc cref="Supplier" />
     public Guid SupplierId { get; set; }
-
-    /// <inheritdoc cref="Supplier" />
-    public string Name { get; set; } = null!;
-
-    /// <inheritdoc cref="Supplier" />
-    public virtual ICollection<Product> Products { get; } = new List<Product>();
+    public string Name { get; set; }
+    public int Discount { get; set; }
+    public int ProfitMargin { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime ModifiedAt { get; set; }
+    public DateTime DeletedAt { get; set; }
 }

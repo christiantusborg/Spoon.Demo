@@ -1,6 +1,7 @@
 
 namespace Spoon.NuGet.SecureRemotePassword.Application.Roles.GetAll;
 
+using Core.Application;
 using Spoon.NuGet.EitherCore;
 using Spoon.NuGet.Mediator;
 using Spoon.NuGet.Mediator.Interfaces;
@@ -10,8 +11,8 @@ using Spoon.NuGet.Mediator.Interfaces;
 ///     Implements the <see cref="MediatorBaseQuery" />.
 /// </summary>
 /// <seealso cref="MediatorBaseQuery" />
-public sealed class RoleGetAllCommand : MediatorBaseCommand, IHandleableRequest<RoleGetAllCommand,
-    RoleGetAllCommandHandler, Either<RoleGetAllCommandResult>>
+public sealed class RoleGetAllCommand : MediatorBaseCommandSearch, IHandleableRequest<RoleGetAllCommand,
+    RoleGetAllCommandHandler, Either<BaseSearchCommandResult<RoleGetAllCommandResult>>>
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="RoleGetAllCommand" /> class.

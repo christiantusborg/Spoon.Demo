@@ -1,9 +1,8 @@
-
 namespace Spoon.NuGet.SecureRemotePassword.Application.UserClaim.AddBulk;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -23,7 +22,7 @@ public sealed class UserClaimAddBulkCommand : MediatorBaseCommand, IHandleableRe
 
     /// <inheritdoc cref="UserClaimAddBulkCommand" />
     public Guid UserId { get; init; }
-    
+
     /// <inheritdoc cref="UserClaimAddBulkCommand" />
-    public List<Guid> Claims { get; init; }
+    public List<Guid> Claims { get; init; } = new ();
 }

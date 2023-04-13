@@ -1,4 +1,5 @@
-﻿namespace Spoon.Demo.Presentation.Api.Contracts.Products.Requests;
+﻿/*
+namespace Spoon.Demo.Presentation.Api.Contracts.Products.Requests;
 
 using System.ComponentModel;
 using System.Reflection;
@@ -106,3 +107,4 @@ public class ProductSearchRequest : ApiBaseQueryWithSearchAndPagination
         return string.Empty;
     }
 }
+*/

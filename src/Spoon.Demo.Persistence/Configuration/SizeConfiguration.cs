@@ -3,7 +3,7 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
+/*
 public class SizeConfiguration : IEntityTypeConfiguration<Size>
 {
     public void Configure(EntityTypeBuilder<Size> builder)
@@ -17,3 +17,4 @@ public class SizeConfiguration : IEntityTypeConfiguration<Size>
             .UsingEntity(j => j.ToTable("GenderSize"));
     }
 }
+*/

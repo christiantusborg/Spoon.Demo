@@ -1,5 +1,6 @@
 namespace Spoon.NuGet.SecureRemotePassword.Application.Me.Email.Delete;
 
+using Mediator.PipelineBehaviors.Permission;
 using Spoon.NuGet.EitherCore;
 using Spoon.NuGet.Mediator;
 using Spoon.NuGet.Mediator.Interfaces;
@@ -9,6 +10,7 @@ using Spoon.NuGet.Mediator.Interfaces;
 ///     Implements the <see cref="MediatorBaseQuery" />.
 /// </summary>
 /// <seealso cref="MediatorBaseQuery" />
+[PermissionPipelineBehaviourExclude("No claim required using Secure Remote Password ClientSessionProof")]
 public sealed class MeEmailDeleteCommand : MediatorBaseCommand, IHandleableRequest<MeEmailDeleteCommand,
     MeEmailDeleteCommandHandler, Either<MeEmailDeleteCommandResult>>
 {
@@ -21,7 +23,10 @@ public sealed class MeEmailDeleteCommand : MediatorBaseCommand, IHandleableReque
     
     }
     
+    /// <inheritdoc cref="MeEmailDeleteCommand" />
     public Guid UserId {internal get; set; }
+    /// <inheritdoc cref="MeEmailDeleteCommand" />
     public required Guid EmailId { get; init; }
 
+    
 }

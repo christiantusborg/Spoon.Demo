@@ -1,15 +1,15 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Roles.Create;
 
 using System.Diagnostics.CodeAnalysis;
+using Core;
+using Domain.Entities;
+using Domain.Repositories;
+using EitherCore;
+using EitherCore.Helpers;
 using MediatR;
-using Spoon.NuGet.Core;
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.EitherCore.Helpers;
-using Spoon.NuGet.SecureRemotePassword.Domain.Entities;
-using Spoon.NuGet.SecureRemotePassword.Domain.Repositories;
 
 /// <summary>
-/// Command handler for creating a new role in the system.
+///     Command handler for creating a new role in the system.
 /// </summary>
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 public sealed class RoleCreateCommandHandler : IRequestHandler<RoleCreateCommand, Either<RoleCreateCommandResult>>
@@ -19,7 +19,7 @@ public sealed class RoleCreateCommandHandler : IRequestHandler<RoleCreateCommand
     private readonly ISecureRemotePasswordRepository _repository;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="RoleCreateCommandHandler"/> class.
+    ///     Initializes a new instance of the <see cref="RoleCreateCommandHandler" /> class.
     /// </summary>
     /// <param name="mockbleGuidGenerator">A mockable GUID generator.</param>
     /// <param name="mockbleDateTime">A mockable date and time service.</param>

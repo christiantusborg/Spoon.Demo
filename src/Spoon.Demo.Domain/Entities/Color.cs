@@ -1,18 +1,12 @@
 ﻿namespace Spoon.Demo.Domain.Entities;
 
-/// <summary>
-/// 
-/// </summary>
-public partial class Color
+using NuGet.Core.Domain;
+
+public class Color  : Entity
 {
-    /// <inheritdoc cref="Color" />
-    public int ColorId { get; set; }
-
-    /// <inheritdoc cref="Color" />
-    public string? Name { get; set; }
-
-    /// <inheritdoc cref="Color" />
-    public string? Hex { get; set; }
-    
-    public virtual ICollection<Gender> Genders { get; set;}
+    public Guid ColorId { get; set; }
+    public string Name { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime ModifiedAt { get; set; }
+    public DateTime DeletedAt { get; set; }
 }

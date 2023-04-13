@@ -23,6 +23,7 @@ public sealed class UserRoleAddBulkCommand : MediatorBaseCommand, IHandleableReq
 
     /// <inheritdoc cref="UserRoleAddBulkCommand" />
     public Guid UserId { get; init; }
+
     /// <inheritdoc cref="UserRoleAddBulkCommand" />
-    public List<Guid> Claims { get; set; }
+    public List<Guid> Roles { get; set; } = new List<Guid>();
 }

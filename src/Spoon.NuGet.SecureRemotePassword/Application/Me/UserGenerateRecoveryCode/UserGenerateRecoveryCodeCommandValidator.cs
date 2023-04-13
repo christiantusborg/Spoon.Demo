@@ -1,16 +1,10 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Me.UserGenerateRecoveryCode;
 
-using FluentValidation;
+using Core.Validation;
 
 /// <summary>
 ///     Class ProductCreateQueryValidator. This class cannot be inherited.
 /// </summary>
-public sealed class UserGenerateRecoveryCodeCommandValidator : AbstractValidator<UserGenerateRecoveryCodeCommand>
+public sealed class UserGenerateRecoveryCodeCommandValidator : BaseValidator<UserGenerateRecoveryCodeCommand>
 {
-    /// <summary>
-    ///     Initializes a new instance of the <see cref="UserGenerateRecoveryCodeCommandValidator" /> class.
-    /// </summary>
-    public UserGenerateRecoveryCodeCommandValidator()
-    {
-    }
 }

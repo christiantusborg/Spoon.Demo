@@ -1,9 +1,9 @@
 namespace Spoon.NuGet.SecureRemotePassword.Application.Users.ConfirmEmail;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
+using Mediator.PipelineBehaviors.Permission;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -23,7 +23,8 @@ public sealed class UserConfirmEmailCommand : MediatorBaseCommand, IHandleableRe
     }
 
     /// <inheritdoc cref="UserConfirmEmailCommand" />
-    public Guid EmailId { get; init; }    
+    public Guid EmailId { get; init; }
+
     /// <inheritdoc cref="UserConfirmEmailCommand" />
     public string? ConfirmCode { get; init; }
 }
