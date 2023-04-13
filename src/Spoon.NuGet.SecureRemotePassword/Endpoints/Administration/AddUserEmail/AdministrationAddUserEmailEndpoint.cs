@@ -1,5 +1,7 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.AddUserEmail;
+﻿/*
+namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.AddUserEmail;
 
+using Contracts.Administration.AddUserEmail;
 using Core.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -29,7 +31,8 @@ public class AdministrationAddUserEmailEndpoint  : IEndpointMarker
         app.MapPut(ApiAdministrationEndpoints.AddUserEmail.Endpoint,AddUserEmail)
             .WithName(ApiAdministrationEndpoints.AddUserEmail.Name)
             .Produces(201)
-            .Produces<PermissionFailed<AdministrationAddUserEmailResult>>(403)
+            .Produces<PermissionFailed<AdministrationAddUserEmailCommand>>(403)
+            .Produces<AdministrationAddUserEmailCommandResponse>(200)
             .Produces<Validationfailures>(406)
             .WithMetadata(new SwaggerOperationAttribute(ApiAdministrationEndpoints.AddUserEmail.Summary, ApiAdministrationEndpoints.AddUserEmail.Description));
 
@@ -56,3 +59,4 @@ public class AdministrationAddUserEmailEndpoint  : IEndpointMarker
         return result;
     }
 }
+*/

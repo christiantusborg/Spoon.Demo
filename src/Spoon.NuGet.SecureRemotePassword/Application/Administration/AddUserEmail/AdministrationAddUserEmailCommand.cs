@@ -1,5 +1,7 @@
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 namespace Spoon.NuGet.SecureRemotePassword.Application.Administration.AddUserEmail;
 
+using Core.Validation;
 using EitherCore;
 using Mediator;
 using Mediator.Interfaces;
@@ -26,5 +28,6 @@ public sealed class AdministrationAddUserEmailCommand : MediatorBaseCommand, IHa
     /// <summary>
     /// Gets or sets the email address to be added for the user.
     /// </summary>
+    [Validate(ValidateEnum.Email)]
     public required string Email { get; init; }
 }
