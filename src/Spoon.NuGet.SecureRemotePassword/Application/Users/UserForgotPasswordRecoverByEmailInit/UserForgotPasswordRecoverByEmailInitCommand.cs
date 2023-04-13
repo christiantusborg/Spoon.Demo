@@ -10,7 +10,7 @@ using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
 ///     Implements the <see cref="MediatorBaseQuery" />.
 /// </summary>
 /// <seealso cref="MediatorBaseQuery" />
-[PermissionPipelineBehaviourExclude("No claim required, we send a email with a EmailProof")]
+[PermissionPipelineBehaviourExclude("No claim required, we send a email with a link to recover password.")]
 public sealed class UserForgotPasswordRecoverByEmailInitCommand : MediatorBaseCommand, IHandleableRequest<UserForgotPasswordRecoverByEmailInitCommand,
     UserForgotPasswordRecoverByEmailInitCommandHandler, Either<UserForgotPasswordRecoverByEmailInitCommandResult>>
 {

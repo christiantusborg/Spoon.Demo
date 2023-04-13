@@ -11,10 +11,10 @@ public sealed class SecureRemotePasswordByRecoveryEmail : Entity
     public Guid UserId { get; set; }
 
     /// <inheritdoc cref="SecureRemotePasswordByRecoveryEmail" />
-    public required string EmailAddressHash { get; set; }
+    public required string EmailAddressHashed { get; set; }
 
     /// <inheritdoc cref="SecureRemotePasswordByRecoveryEmail" />
-    public required string RecoveryTokenHash { get; set; }
+    public required string RecoveryTokenHashed { get; set; }
 
     /// <inheritdoc cref="SecureRemotePasswordByRecoveryEmail" />
     public DateTime CreatedAt { get; set; }

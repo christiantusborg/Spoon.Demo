@@ -38,7 +38,7 @@ public sealed class User : Entity
     public DateTime? DeletedAt { get; set; }
 
     /// <inheritdoc cref="User" />
-    public ICollection<UserEmail>? UserEmails { get; set; }
+    public ICollection<UserEmail> UserEmails { get; set; } = new List<UserEmail>();
 
     /// <inheritdoc cref="User" />
     public ICollection<Role> Roles { get; set; } = new List<Role>();

@@ -1,41 +1,85 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Users.UserForgotPasswordRecoverByEmailInit
+﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Users.UserForgotPasswordRecoverByEmailInit;
+
+using Core;
+using Domain.Entities;
+using Domain.Repositories;
+using EitherCore;
+using EitherCore.Helpers;
+using Helpers;
+using MediatR;
+using Services;
+using SharedSpecification;
+
+/// <summary>
+///     Class ProductCreateQueryHandler. This class cannot be inherited.
+/// </summary>
+public sealed class UserForgotPasswordRecoverByEmailInitCommandHandler : IRequestHandler<UserForgotPasswordRecoverByEmailInitCommand, Either<UserForgotPasswordRecoverByEmailInitCommandResult>>
 {
-    using MediatR;
-    using Spoon.NuGet.Core;
-    using Spoon.NuGet.EitherCore;
+    private readonly ISecureRemotePasswordRepository _repository;
+    private readonly IMockbleDateTime _mockbleDateTime;
+    private readonly IHashService _hashService;
+    private readonly IRandomStringService _randomStringService;
+
 
     /// <summary>
-    ///     Class ProductCreateQueryHandler. This class cannot be inherited.
     /// </summary>
-    public sealed class UserForgotPasswordRecoverByEmailInitCommandHandler : IRequestHandler<UserForgotPasswordRecoverByEmailInitCommand, Either<UserForgotPasswordRecoverByEmailInitCommandResult>>
+    /// <param name="mockbleDateTime"></param>
+    /// <param name="repository"></param>
+    /// <param name="hashService"></param>
+    /// <param name="randomStringService"></param>
+    public UserForgotPasswordRecoverByEmailInitCommandHandler(ISecureRemotePasswordRepository repository,
+        IMockbleDateTime mockbleDateTime,
+        IHashService hashService,
+        IRandomStringService randomStringService)
     {
+        this._repository = repository;
+        this._mockbleDateTime = mockbleDateTime;
+        this._hashService = hashService;
+        this._randomStringService = randomStringService;
+    }
 
-        private readonly IMockbleGuidGenerator _mockbleGuidGenerator;
+    /// <summary>
+    ///     Handles the specified request.
+    /// </summary>
+    /// <param name="request">The request.</param>
+    /// <param name="cancellationToken">
+    ///     The cancellation token that can be used by other objects or threads to receive notice
+    ///     of cancellation.
+    /// </param>
+    /// <returns>Task&lt;Either&lt;ProductCreateQueryResult&gt;&gt;.</returns>
+    public async Task<Either<UserForgotPasswordRecoverByEmailInitCommandResult>> Handle(
+        UserForgotPasswordRecoverByEmailInitCommand request,
+        CancellationToken cancellationToken)
+    {
+        var emailHashed = this._hashService.Hash(request.Email);
+        var userEmail = await this._repository.UserEmails.GetAsync(new GetEmailByHashSpecification(emailHashed), cancellationToken);
 
-        /// <summary>
-        /// </summary>
-        /// <param name="writeRepository"></param>
-        /// <param name="mockbleGuidGenerator"></param>
-        public UserForgotPasswordRecoverByEmailInitCommandHandler(IMockbleGuidGenerator mockbleGuidGenerator)
+        if (userEmail == null)
+            return EitherHelper<UserForgotPasswordRecoverByEmailInitCommandResult>.EntityNotFound(typeof(UserEmail));
+
+        var recoveryString = this._randomStringService.CreateRandomString(11, CharacterType.Number | CharacterType.UpperCaseLetter);
+
+        var recoveryStringHashed = this._hashService.Hash(recoveryString);
+
+        var emailRecovery = new SecureRemotePasswordByRecoveryEmail
         {
-            this._mockbleGuidGenerator = mockbleGuidGenerator;
-        }
+            UserId = userEmail.UserId,
+            CreatedAt = this._mockbleDateTime.UtcNow,
+            EmailAddressHashed = emailHashed,
+            RecoveryTokenHashed = recoveryStringHashed,
+        };
 
-        /// <summary>
-        ///     Handles the specified request.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <param name="cancellationToken">
-        ///     The cancellation token that can be used by other objects or threads to receive notice
-        ///     of cancellation.
-        /// </param>
-        /// <returns>Task&lt;Either&lt;ProductCreateQueryResult&gt;&gt;.</returns>
-        public async Task<Either<UserForgotPasswordRecoverByEmailInitCommandResult>> Handle(
-            UserForgotPasswordRecoverByEmailInitCommand request,
-            CancellationToken cancellationToken)
+        this._repository.SecureRemotePasswordByRecoveryEmails.Add(emailRecovery);
+
+        await this._repository.SaveChangesAsync(cancellationToken);
+
+        var result = new UserForgotPasswordRecoverByEmailInitCommandResult
         {
-            throw new NotImplementedException();
-            return new Either<UserForgotPasswordRecoverByEmailInitCommandResult>(new UserForgotPasswordRecoverByEmailInitCommandResult());
-        }
+            EmailId = userEmail.EmailId,
+            Email = request.Email,
+            RecoveryString = recoveryString,
+        };
+
+        return new Either<UserForgotPasswordRecoverByEmailInitCommandResult>(result);
     }
 }
