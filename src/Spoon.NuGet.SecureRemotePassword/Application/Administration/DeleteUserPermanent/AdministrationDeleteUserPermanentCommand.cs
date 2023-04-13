@@ -1,8 +1,8 @@
 namespace Spoon.NuGet.SecureRemotePassword.Application.Administration.DeleteUserPermanent;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -23,5 +23,6 @@ public sealed class AdministrationDeleteUserPermanentCommand : MediatorBaseComma
     /// <inheritdoc cref="AdministrationDeleteUserPermanentCommand" />
     public Guid UserId { get; init; }
 
+    /// <inheritdoc cref="AdministrationDeleteUserPermanentCommand" />
     public Guid CurrentUserId { get; set; }
 }
