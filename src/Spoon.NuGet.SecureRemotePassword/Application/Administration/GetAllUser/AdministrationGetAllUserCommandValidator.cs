@@ -7,5 +7,4 @@ using FluentValidation;
 /// </summary>
 public sealed class AdministrationGetAllUserCommandValidator : AbstractValidator<AdministrationGetAllUserCommand>
 {
-
 }
