@@ -1,9 +1,9 @@
-
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 namespace Spoon.NuGet.SecureRemotePassword.Application.Administration.CreateUser;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
+using EitherCore;
+using Mediator;
+using Mediator.Interfaces;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
@@ -22,13 +22,14 @@ public sealed class AdministrationCreateUserCommand : MediatorBaseCommand, IHand
     }
 
     /// <inheritdoc cref="AdministrationCreateUserCommand" />
+    public required string UsernameHash { get; init; }
+
+    /// <inheritdoc cref="AdministrationCreateUserCommand" />
     public required string Email { get; init; }
+
     /// <inheritdoc cref="AdministrationCreateUserCommand" />
     public required string Verifier { get; init; }
+
     /// <inheritdoc cref="AdministrationCreateUserCommand" />
     public required string Salt { get; init; }
-
- 
-
-
 }

@@ -1,4 +1,5 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Administration.CreateUser
+﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
+namespace Spoon.NuGet.SecureRemotePassword.Application.Administration.CreateUser
 {
     /// <summary>
     /// Class ProductCreateQueryResult. This class cannot be inherited.
@@ -8,7 +9,10 @@
         /// <inheritdoc cref="AdministrationCreateUserCommandResult" />
         public Guid UserId { get; internal set; }
 
+        /// <inheritdoc cref="AdministrationCreateUserCommandResult" />
         public Guid RecoveryToken { get; set; }
-        public string EmailAddressHash { get; set; }
+        
+        /// <inheritdoc cref="AdministrationCreateUserCommandResult" />
+        public required string EmailAddressHash { get; set; }
     }
 }
