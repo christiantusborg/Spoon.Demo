@@ -38,9 +38,11 @@
         {
             var command = new AdministrationCreateUserCommand
             {
-                Email = request.Email,
+                
+                UsernameHash = request.UsernameHash,
                 Salt = request.Salt,
                 Verifier = request.Verifier,
+                Email = request.Email,
             };
             return command;
         }
