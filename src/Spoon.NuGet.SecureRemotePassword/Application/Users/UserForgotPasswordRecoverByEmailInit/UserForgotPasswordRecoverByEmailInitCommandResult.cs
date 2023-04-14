@@ -7,9 +7,11 @@ namespace Spoon.NuGet.SecureRemotePassword.Application.Users.UserForgotPasswordR
 public sealed class UserForgotPasswordRecoverByEmailInitCommandResult
 {
     /// <inheritdoc cref="UserForgotPasswordRecoverByEmailInitCommandResult" />
-    public Guid EmailId { get; set; }
+    public Guid UserId { get; set; }
+
     /// <inheritdoc cref="UserForgotPasswordRecoverByEmailInitCommandResult" />
     public required string Email { get; set; }
+
     /// <inheritdoc cref="UserForgotPasswordRecoverByEmailInitCommandResult" />
     public required string RecoveryString { get; set; }
 }

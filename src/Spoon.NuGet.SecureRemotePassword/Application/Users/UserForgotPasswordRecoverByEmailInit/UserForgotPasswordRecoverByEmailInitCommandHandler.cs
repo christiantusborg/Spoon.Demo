@@ -1,6 +1,7 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Users.UserForgotPasswordRecoverByEmailInit;
 
 using Core;
+using Core.Application;
 using Domain.Entities;
 using Domain.Repositories;
 using EitherCore;
@@ -65,9 +66,15 @@ public sealed class UserForgotPasswordRecoverByEmailInitCommandHandler : IReques
         {
             UserId = userEmail.UserId,
             CreatedAt = this._mockbleDateTime.UtcNow,
-            EmailAddressHashed = emailHashed,
             RecoveryTokenHashed = recoveryStringHashed,
         };
+        
+        var existingEmailRecovery = await this._repository.SecureRemotePasswordByRecoveryEmails.GetAsync(new DefaultGetSpecification<SecureRemotePasswordByRecoveryEmail>(userEmail.UserId), cancellationToken);
+        
+            if (existingEmailRecovery != null) {
+                this._repository.SecureRemotePasswordByRecoveryEmails.Remove(existingEmailRecovery);
+                await this._repository.SaveChangesAsync(cancellationToken);
+            }
 
         this._repository.SecureRemotePasswordByRecoveryEmails.Add(emailRecovery);
 
@@ -75,7 +82,7 @@ public sealed class UserForgotPasswordRecoverByEmailInitCommandHandler : IReques
 
         var result = new UserForgotPasswordRecoverByEmailInitCommandResult
         {
-            EmailId = userEmail.EmailId,
+            UserId = userEmail.UserId,
             Email = request.Email,
             RecoveryString = recoveryString,
         };

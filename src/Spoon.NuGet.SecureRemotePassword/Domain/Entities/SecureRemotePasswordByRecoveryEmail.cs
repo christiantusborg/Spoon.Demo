@@ -11,9 +11,6 @@ public sealed class SecureRemotePasswordByRecoveryEmail : Entity
     public Guid UserId { get; set; }
 
     /// <inheritdoc cref="SecureRemotePasswordByRecoveryEmail" />
-    public required string EmailAddressHashed { get; set; }
-
-    /// <inheritdoc cref="SecureRemotePasswordByRecoveryEmail" />
     public required string RecoveryTokenHashed { get; set; }
 
     /// <inheritdoc cref="SecureRemotePasswordByRecoveryEmail" />

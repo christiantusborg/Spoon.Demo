@@ -114,8 +114,7 @@ public sealed class AdministrationCreateUserCommandHandler : IRequestHandler<Adm
         var byRecoveryEmail = new SecureRemotePasswordByRecoveryEmail
         {
             UserId = userId,
-            EmailAddressHash = emailAddressHash,
-            RecoveryTokenHash = recoveryTokenHash,
+            RecoveryTokenHashed = recoveryTokenHash,
             CreatedAt = this._mockbleDateTime.UtcNow,
         };
 
