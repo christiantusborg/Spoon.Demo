@@ -1,6 +1,7 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Administration.CreateUser;
 
 using Core;
+using Core.Application;
 using Domain.Entities;
 using Domain.Repositories;
 using EitherCore;
@@ -121,6 +122,24 @@ public sealed class AdministrationCreateUserCommandHandler : IRequestHandler<Adm
         this._repository.SecureRemotePasswordByRecoveryEmails.Add(byRecoveryEmail);
         await this._repository.SaveChangesAsync(cancellationToken);
 
+        var existingUserSecureRemotePasswordLogins = await this._repository.SecureRemotePasswordLogins.GetAsync(new DefaultGetSpecification<SecureRemotePasswordLogin>(userId), cancellationToken);
+        
+        if (existingUserSecureRemotePasswordLogins != null)
+            return EitherHelper<AdministrationCreateUserCommandResult>.EntityAlreadyExists(typeof(SecureRemotePasswordLogin));
+       
+        var verifierEncrypted = this._encryptionService.Encrypt(request.Verifier);
+        var saltEncrypted = this._encryptionService.Encrypt(request.Salt);
+        
+        var newSecureRemotePasswordLogin = new SecureRemotePasswordLogin
+        {
+          UserId = userId,
+          SaltEncrypted = saltEncrypted,
+          VerifierEncrypted = verifierEncrypted,
+          UpdatedAt = this._mockbleDateTime.UtcNow,
+        }; 
+
+        this._repository.SecureRemotePasswordLogins.Add(newSecureRemotePasswordLogin);
+        await this._repository.SaveChangesAsync(cancellationToken);
 
         return new Either<AdministrationCreateUserCommandResult>(new AdministrationCreateUserCommandResult
             {
@@ -129,5 +148,7 @@ public sealed class AdministrationCreateUserCommandHandler : IRequestHandler<Adm
                 EmailAddressHash = emailAddressHash,
             }
         );
+        
+       
     }
 }
