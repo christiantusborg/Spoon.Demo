@@ -1,41 +1,61 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Users.UserForgotPasswordRecoverByRecoveryCodeSet
+﻿namespace Spoon.NuGet.SecureRemotePassword.Application.Users.UserForgotPasswordRecoverByRecoveryCodeSet;
+
+using Core;
+using Core.Application;
+using Domain.Entities;
+using Domain.Repositories;
+using EitherCore;
+using EitherCore.Helpers;
+using Helpers;
+using MediatR;
+
+/// <summary>
+///     Class ProductCreateQueryHandler. This class cannot be inherited.
+/// </summary>
+public sealed class UserForgotPasswordRecoverByRecoveryCodeSetCommandHandler : IRequestHandler<UserForgotPasswordRecoverByRecoveryCodeSetCommand,
+    Either<UserForgotPasswordRecoverByRecoverySetChallengeGetCommandResult>>
 {
-    using MediatR;
-    using Spoon.NuGet.Core;
-    using Spoon.NuGet.EitherCore;
+    private readonly ISecureRemotePasswordRepository _repository;
+    private readonly IEncryptionService _encryptionService;
+    private readonly IMockbleDateTime _mockbleDateTime;
 
     /// <summary>
-    ///     Class ProductCreateQueryHandler. This class cannot be inherited.
     /// </summary>
-    public sealed class UserForgotPasswordRecoverByRecoveryCodeSetCommandHandler : IRequestHandler<UserForgotPasswordRecoverByRecoveryCodeSetCommand, Either<UserForgotPasswordRecoverByRecoverySetChallengeGetCommandResult>>
+    /// <param name="repository"></param>
+    /// <param name="encryptionService"></param>
+    /// <param name="mockbleDateTime"></param>
+    public UserForgotPasswordRecoverByRecoveryCodeSetCommandHandler(ISecureRemotePasswordRepository repository, IEncryptionService encryptionService, IMockbleDateTime mockbleDateTime)
     {
+        this._repository = repository;
+        this._encryptionService = encryptionService;
+        this._mockbleDateTime = mockbleDateTime;
+    }
 
-        private readonly IMockbleGuidGenerator _mockbleGuidGenerator;
+    /// <summary>
+    ///     Handles the specified request.
+    /// </summary>
+    /// <param name="request">The request.</param>
+    /// <param name="cancellationToken">
+    ///     The cancellation token that can be used by other objects or threads to receive notice
+    ///     of cancellation.
+    /// </param>
+    /// <returns>Task&lt;Either&lt;ProductCreateQueryResult&gt;&gt;.</returns>
+    public async Task<Either<UserForgotPasswordRecoverByRecoverySetChallengeGetCommandResult>> Handle(
+        UserForgotPasswordRecoverByRecoveryCodeSetCommand request,
+        CancellationToken cancellationToken)
+    {
+        var existingUserSecureRemotePasswordLogins = await this._repository.SecureRemotePasswordLogins.GetAsync(new DefaultGetSpecification<SecureRemotePasswordLogin>(request.UserId), cancellationToken);
 
-        /// <summary>
-        /// </summary>
-        /// <param name="writeRepository"></param>
-        /// <param name="mockbleGuidGenerator"></param>
-        public UserForgotPasswordRecoverByRecoveryCodeSetCommandHandler(IMockbleGuidGenerator mockbleGuidGenerator)
-        {
-            this._mockbleGuidGenerator = mockbleGuidGenerator;
-        }
+        if (existingUserSecureRemotePasswordLogins == null)
+            return EitherHelper<UserForgotPasswordRecoverByRecoverySetChallengeGetCommandResult>.EntityNotFound(typeof(SecureRemotePasswordLogin));
 
-        /// <summary>
-        ///     Handles the specified request.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <param name="cancellationToken">
-        ///     The cancellation token that can be used by other objects or threads to receive notice
-        ///     of cancellation.
-        /// </param>
-        /// <returns>Task&lt;Either&lt;ProductCreateQueryResult&gt;&gt;.</returns>
-        public async Task<Either<UserForgotPasswordRecoverByRecoverySetChallengeGetCommandResult>> Handle(
-            UserForgotPasswordRecoverByRecoveryCodeSetCommand request,
-            CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-            return new Either<UserForgotPasswordRecoverByRecoverySetChallengeGetCommandResult>(new UserForgotPasswordRecoverByRecoverySetChallengeGetCommandResult());
-        }
+        var verifierEncrypted = this._encryptionService.Encrypt(request.Verifier);
+        var saltEncrypted = this._encryptionService.Encrypt(request.Salt);
+
+        existingUserSecureRemotePasswordLogins.SaltEncrypted = saltEncrypted;
+        existingUserSecureRemotePasswordLogins.VerifierEncrypted = verifierEncrypted;
+        existingUserSecureRemotePasswordLogins.UpdatedAt = this._mockbleDateTime.UtcNow;
+
+        return new Either<UserForgotPasswordRecoverByRecoverySetChallengeGetCommandResult>(new UserForgotPasswordRecoverByRecoverySetChallengeGetCommandResult());
     }
 }
