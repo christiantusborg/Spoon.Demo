@@ -23,5 +23,5 @@ public sealed class UserForgotPasswordRecoverByRecoveryCodeChallengeGetCommand :
     }
 
     /// <inheritdoc cref="UserForgotPasswordRecoverByRecoveryCodeChallengeGetCommand" />
-    public required string Email { get; init; }
+    public required string UsernameHashed { get; init; }
 }
