@@ -17,7 +17,7 @@ public class TwoFactorAuthenticationTOTPConfiguration : IEntityTypeConfiguration
         builder.Property(e => e.UpdatedAt).IsRequired();
 
         builder.HasOne(x => x.User)
-            .WithMany(x => x.TwoFactorAuthenticationTotPs)
+            .WithMany(x => x.TwoFactorAuthenticationTotp)
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.NoAction);  
     }

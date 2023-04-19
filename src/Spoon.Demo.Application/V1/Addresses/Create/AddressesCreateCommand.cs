@@ -1,10 +1,8 @@
-
 namespace Spoon.Demo.Application.V1.Addresses.Create;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
-
+using NuGet.Core.Application;
+using NuGet.Core.Application.Interfaces;
+using NuGet.Core.EitherCore;
 
 //AddressesCreate
 /// <summary>
@@ -25,12 +23,16 @@ public sealed class AddressesCreateCommand : MediatorBaseCommand, IHandleableReq
 
     /// <inheritdoc cref="AddressesCreateCommand" />
     public required string AddressOne { get; init; }
+
     /// <inheritdoc cref="AddressesCreateCommand" />
     public required string AddressTwo { get; init; }
+
     /// <inheritdoc cref="AddressesCreateCommand" />
     public required string Zip { get; init; }
+
     /// <inheritdoc cref="AddressesCreateCommand" />
     public required string City { get; init; }
+
     /// <inheritdoc cref="AddressesCreateCommand" />
     public required string Country { get; init; }
 

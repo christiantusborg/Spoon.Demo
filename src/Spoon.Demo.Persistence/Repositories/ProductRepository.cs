@@ -9,14 +9,14 @@ using NuGet.Core.Domain;
 /// <summary>
 /// Class ProductRepository.
 /// </summary>
-/// <seealso cref="IProductRepository" />
-public class ProductRepository : RootRepository<Product>, IProductRepository
+/// <seealso cref="IRepositoryRepository" />
+public class RepositoryRepository : RootRepository<Product>, IRepositoryRepository
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ProductRepository"/> class.
+    /// Initializes a new instance of the <see cref="RepositoryRepository"/> class.
     /// </summary>
     /// <param name="dbContext">The database context.</param>
-    public ProductRepository(DbContext dbContext)
+    public RepositoryRepository(DbContext dbContext)
         : base(dbContext)
     {
     }

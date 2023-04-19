@@ -2,5 +2,5 @@
 
 public class UserRoleRemoveBulkCommandRequest
 {
-    public List<Guid> Claims { get; set; }   
+    public List<Guid> Roles { get; set; }   
 }

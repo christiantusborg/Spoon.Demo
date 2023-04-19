@@ -1,16 +1,12 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.RemoveUserEmail;
 
+using Application.Commands.Administration.RemoveUserEmail;
+using Contracts;
 using Core.Presentation;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Spoon.NuGet.EitherCore.Extensions;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Application.Administration.RemoveUserEmail;
-using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Swashbuckle.AspNetCore.Annotations;
 
 //public static class GetChallengeAuthentication
@@ -24,7 +20,7 @@ public class AdministrationRemoveUserEmailEndpoint : IEndpointMarker
     /// <returns></returns>
     public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
-        app.MapPut(ApiAdministrationEndpoints.RemoveUserEmail.Endpoint,RemoveUserEmail)
+        app.MapPut(ApiAdministrationEndpoints.RemoveUserEmail.Endpoint, RemoveUserEmail)
             .WithName(ApiAdministrationEndpoints.RemoveUserEmail.Name)
             .Produces(204)
             .Produces<PermissionFailed<AdministrationRemoveUserEmailRequest>>(403)
@@ -44,7 +40,7 @@ public class AdministrationRemoveUserEmailEndpoint : IEndpointMarker
 
         return command;
     }
-    
+
     private static async Task<IResult> RemoveUserEmail([FromRoute] Guid userId, [FromBody] AdministrationRemoveUserEmailRequest request, ISender sender, CancellationToken cancellationToken)
     {
         var command = MapToCommand(request);

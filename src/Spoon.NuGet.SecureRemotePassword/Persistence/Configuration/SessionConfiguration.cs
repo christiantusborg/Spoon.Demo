@@ -14,11 +14,11 @@ public class SessionConfiguration : IEntityTypeConfiguration<Session>
         // Set other properties
         builder.Property(s => s.SessionId)
             .IsRequired();
-        builder.Property(s => s.RefreshTokenHash)
+        builder.Property(s => s.RefreshTokenHashed)
             .IsRequired();
-        builder.Property(s => s.IpAddressHash)
+        builder.Property(s => s.IpAddressEncrypted)
             .IsRequired();
-        builder.Property(s => s.UserAgentHash)
+        builder.Property(s => s.UserAgentEncrypted)
             .IsRequired();
         builder.Property(s => s.CreatedAt)
             .IsRequired();
@@ -33,8 +33,8 @@ public class SessionConfiguration : IEntityTypeConfiguration<Session>
             .OnDelete(DeleteBehavior.NoAction);
         
         builder.HasIndex(s => s.SessionId);
-        builder.HasIndex(s => s.RefreshTokenHash);
-        builder.HasIndex(s => s.IpAddressHash);
+        builder.HasIndex(s => s.RefreshTokenHashed);
+        builder.HasIndex(s => s.UserAgentEncrypted);
         
         // Set the table name
         builder.ToTable("Sessions");

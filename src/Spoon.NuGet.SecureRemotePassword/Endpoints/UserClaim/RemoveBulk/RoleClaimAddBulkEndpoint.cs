@@ -1,16 +1,11 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.UserClaim.RemoveBulk;
 
-using Core.Presentation;
-using MediatR;
+using Application.Commands.UserClaim.RemoveBulk;
+using Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Spoon.NuGet.EitherCore.Extensions;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Application.UserClaim.RemoveBulk;
-using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Swashbuckle.AspNetCore.Annotations;
 
 //public static class GetChallengeAuthentication
@@ -24,7 +19,7 @@ public class UserClaimRemoveBulkEndpoint // : IEndpointMarker
     /// <returns></returns>
     public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
-        app.MapPut(ApiUserClaimEndpoints.RemoveBulk.Endpoint,RemoveBulk)
+        app.MapPut(ApiUserClaimEndpoints.RemoveBulk.Endpoint, this.RemoveBulk)
             .WithName(ApiUserClaimEndpoints.RemoveBulk.Name)
             .Produces(201)
             .Produces<PermissionFailed<AdministrationRemoveUserEmailResult>>(403)
@@ -34,7 +29,7 @@ public class UserClaimRemoveBulkEndpoint // : IEndpointMarker
         return app;
     }
 
-    private UserClaimRemoveBulkCommand MapToCommand( UserClaimRemoveBulkCommandRequest request, Guid userId)
+    private UserClaimRemoveBulkCommand MapToCommand(UserClaimRemoveBulkCommandRequest request, Guid userId)
     {
         var command = new UserClaimRemoveBulkCommand
         {
@@ -47,7 +42,7 @@ public class UserClaimRemoveBulkEndpoint // : IEndpointMarker
 
     private async Task<IResult> RemoveBulk([FromRoute] Guid userId, [FromBody] UserClaimRemoveBulkCommandRequest request, ISender sender, CancellationToken cancellationToken)
     {
-        var command = MapToCommand(request,userId);
+        var command = this.MapToCommand(request, userId);
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

@@ -15,7 +15,7 @@ public class UserAllowedIpAccessConfiguration : IEntityTypeConfiguration<UserAll
         builder.Property(uaia => uaia.CreatedAt).IsRequired();
 
         builder.HasMany(uaia => uaia.Users)
-            .WithMany(u => u.UserAllowedIpAccesss)
+            .WithMany(u => u.UserAllowedIpAccess)
             .UsingEntity<Dictionary<Guid, Guid>>(
                 "UserAllowedIpAccessUser",
                 ua => ua.HasOne<User>().WithMany().HasForeignKey("UserId").OnDelete(DeleteBehavior.NoAction),

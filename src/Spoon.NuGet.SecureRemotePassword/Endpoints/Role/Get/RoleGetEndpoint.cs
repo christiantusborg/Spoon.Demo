@@ -1,51 +1,46 @@
-﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Role.Get
-{
-    using Application.Roles.Get;
-    using Core.Presentation;
-    using MediatR;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Routing;
-    using Spoon.NuGet.EitherCore.Extensions;
-    using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-    using Swashbuckle.AspNetCore.Annotations;
+﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Role.Get;
 
-    //public static class GetChallengeAuthentication
+using Application.Commands.Roles.Get;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Swashbuckle.AspNetCore.Annotations;
+
+//public static class GetChallengeAuthentication
+/// <summary>
+/// </summary>
+public class RoleGetEndpoint //: IEndpointMarker
+{
     /// <summary>
     /// </summary>
-    public class RoleGetEndpoint //: IEndpointMarker
+    /// <param name="app"></param>
+    /// <returns></returns>
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
-        /// <summary>
-        /// </summary>
-        /// <param name="app"></param>
-        /// <returns></returns>
-        public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
-        {
-            app.MapGet(ApiRoleEndpoints.DeleteSoft.Endpoint, Get)
-                .WithName(ApiRoleEndpoints.DeleteSoft.Name)
-                .Produces(204)
-                .Produces<Validationfailures>(406)
-                .WithMetadata(new SwaggerOperationAttribute(ApiRoleEndpoints.DeleteSoft.Summary, ApiRoleEndpoints.DeleteSoft.Description));
+        app.MapGet(ApiRoleEndpoints.DeleteSoft.Endpoint, Get)
+            .WithName(ApiRoleEndpoints.DeleteSoft.Name)
+            .Produces(204)
+            .Produces<Validationfailures>(406)
+            .WithMetadata(new SwaggerOperationAttribute(ApiRoleEndpoints.DeleteSoft.Summary, ApiRoleEndpoints.DeleteSoft.Description));
 
-            return app;
-        }
+        return app;
+    }
 
-        private static RoleGetCommand MapToCommand(Guid roleId)
+    private static RoleGetCommand MapToCommand(Guid roleId)
+    {
+        var command = new RoleGetCommand
         {
-            var command = new RoleGetCommand
-            {
-                RoleId = roleId,
-            };
-            return command;
-        }
-        
-        private static async Task<IResult> Get(Guid ruleId, ISender sender, CancellationToken cancellationToken)
-        {
-            var command = MapToCommand(ruleId);
-            var commandResult = await sender.Send(command, cancellationToken);
+            RoleId = roleId,
+        };
+        return command;
+    }
 
-            var result = commandResult.ToNoContent();
-            return result;
-        }        
+    private static async Task<IResult> Get(Guid ruleId, ISender sender, CancellationToken cancellationToken)
+    {
+        var command = MapToCommand(ruleId);
+        var commandResult = await sender.Send(command, cancellationToken);
+
+        var result = commandResult.ToNoContent();
+        return result;
     }
 }

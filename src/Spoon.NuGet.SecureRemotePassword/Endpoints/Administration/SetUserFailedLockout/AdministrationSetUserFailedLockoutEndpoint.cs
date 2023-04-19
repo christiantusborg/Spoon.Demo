@@ -1,22 +1,18 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.SetUserFailedLockout;
 
-using MediatR;
+using Application.Commands.Administration.SetUserFailedLockout;
+using Contracts;
+using Core.Presentation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Spoon.NuGet.Core.Presentation;
-using Spoon.NuGet.EitherCore.Extensions;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Application.Administration.SetUserFailedLockout;
-using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Swashbuckle.AspNetCore.Annotations;
 
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public class AdministrationSetUserFailedLockoutEndpoint  : IEndpointMarker
+public class AdministrationSetUserFailedLockoutEndpoint : IEndpointMarker
 {
     /// <summary>
     /// </summary>
@@ -24,7 +20,7 @@ public class AdministrationSetUserFailedLockoutEndpoint  : IEndpointMarker
     /// <returns></returns>
     public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
-        app.MapGet(ApiAdministrationEndpoints.SetUserFailedLockout.Endpoint,SetUserFailedLockout)
+        app.MapGet(ApiAdministrationEndpoints.SetUserFailedLockout.Endpoint, SetUserFailedLockout)
             .WithName(ApiAdministrationEndpoints.SetUserFailedLockout.Name)
             .Produces(204)
             .Produces<PermissionFailed<AdministrationSetUserFailedLockoutResult>>(403)
@@ -44,7 +40,7 @@ public class AdministrationSetUserFailedLockoutEndpoint  : IEndpointMarker
 
         return command;
     }
-    
+
     private static async Task<IResult> SetUserFailedLockout([FromRoute] Guid userId, [FromRoute] bool value, ISender sender, CancellationToken cancellationToken)
     {
         var command = MapToCommand(userId, value);
@@ -52,5 +48,5 @@ public class AdministrationSetUserFailedLockoutEndpoint  : IEndpointMarker
 
         var result = commandResult.ToNoContent();
         return result;
-    } 
+    }
 }

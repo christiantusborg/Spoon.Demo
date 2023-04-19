@@ -1,58 +1,57 @@
-﻿namespace Spoon.Demo.Application.V1.Addresses.DeleteSoft
+﻿namespace Spoon.Demo.Application.V1.Addresses.DeleteSoft;
+
+using MediatR;
+using NuGet.Core;
+using NuGet.Core.Application;
+using NuGet.Core.EitherCore;
+using NuGet.Core.EitherCore.Enums;
+using NuGet.Core.EitherCore.Helpers;
+using NuGet.SecureRemotePassword.Domain.Entities;
+using NuGet.SecureRemotePassword.Domain.Repositories;
+
+/// <summary>
+///     Class ProductCreateQueryHandler. This class cannot be inherited.
+/// </summary>
+public sealed class AddressesDeleteUserSoftCommandHandler : IRequestHandler<AddressesDeleteUserSoftCommand, Either<AddressesDeleteUserSoftCommandResult>>
 {
-    using MediatR;
-    using Spoon.NuGet.Core;
-    using Spoon.NuGet.Core.Application;
-    using Spoon.NuGet.EitherCore;
-    using Spoon.NuGet.EitherCore.Enums;
-    using Spoon.NuGet.EitherCore.Helpers;
-    using Spoon.NuGet.SecureRemotePassword.Domain.Entities;
-    using Spoon.NuGet.SecureRemotePassword.Domain.Repositories;
+    private readonly ISecureRemotePasswordRepository _repository;
+    private readonly IMockbleDateTime _mockbleDateTime;
+
 
     /// <summary>
-    ///     Class ProductCreateQueryHandler. This class cannot be inherited.
     /// </summary>
-    public sealed class AddressesDeleteUserSoftCommandHandler : IRequestHandler<AddressesDeleteUserSoftCommand, Either<AddressesDeleteUserSoftCommandResult>>
+    /// <param name="repository"></param>
+    /// <param name="mockbleDateTime"></param>
+    public AddressesDeleteUserSoftCommandHandler(ISecureRemotePasswordRepository repository, IMockbleDateTime mockbleDateTime)
     {
-        private readonly ISecureRemotePasswordRepository _repository;
-        private readonly IMockbleDateTime _mockbleDateTime;
+        this._repository = repository;
+        this._mockbleDateTime = mockbleDateTime;
+    }
 
+    /// <summary>
+    ///     Handles the specified request.
+    /// </summary>
+    /// <param name="request">The request.</param>
+    /// <param name="cancellationToken">
+    ///     The cancellation token that can be used by other objects or threads to receive notice
+    ///     of cancellation.
+    /// </param>
+    /// <returns>Task&lt;Either&lt;ProductCreateQueryResult&gt;&gt;.</returns>
+    public async Task<Either<AddressesDeleteUserSoftCommandResult>> Handle(
+        AddressesDeleteUserSoftCommand request,
+        CancellationToken cancellationToken)
+    {
+        var existingUser = await this._repository.Users.GetAsync(new DefaultGetSpecification<User>(request.UserId), cancellationToken);
+        if (existingUser == null)
+            return EitherHelper<AddressesDeleteUserSoftCommandResult>.EntityNotFound(typeof(User));
 
-        /// <summary>
-        /// </summary>
-        /// <param name="writeRepository"></param>
-        /// <param name="mockbleGuidGenerator"></param>
-        public AddressesDeleteUserSoftCommandHandler(ISecureRemotePasswordRepository repository, IMockbleDateTime mockbleDateTime)
-        {
-            this._repository = repository;
-            this._mockbleDateTime = mockbleDateTime;
-        }
+        if (request.UserId == request.CurrentUserId)
+            return EitherHelper<AddressesDeleteUserSoftCommandResult>.Create("BadPermissions_CannotDeleteYourself", BaseHttpStatusCodes.Status403Forbidden);
 
-        /// <summary>
-        ///     Handles the specified request.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <param name="cancellationToken">
-        ///     The cancellation token that can be used by other objects or threads to receive notice
-        ///     of cancellation.
-        /// </param>
-        /// <returns>Task&lt;Either&lt;ProductCreateQueryResult&gt;&gt;.</returns>
-        public async Task<Either<AddressesDeleteUserSoftCommandResult>> Handle(
-            AddressesDeleteUserSoftCommand request,
-            CancellationToken cancellationToken)
-        {
-            var existingUser = await this._repository.Users.GetAsync(new DefaultGetSpecification<User>(request.UserId), cancellationToken);
-            if (existingUser == null)
-                return EitherHelper<AddressesDeleteUserSoftCommandResult>.EntityNotFound(typeof(User)); 
-            
-            if(request.UserId == request.CurrentUserId)
-                return EitherHelper<AddressesDeleteUserSoftCommandResult>.Create("BadPermissions_CannotDeleteYourself",BaseHttpStatusCodes.Status403Forbidden);
-            
-            existingUser.DeletedAt = this._mockbleDateTime.UtcNow;
-            
-            await this._repository.SaveChangesAsync(cancellationToken);
-            
-            return new Either<AddressesDeleteUserSoftCommandResult>(new AddressesDeleteUserSoftCommandResult());
-        }
+        existingUser.DeletedAt = this._mockbleDateTime.UtcNow;
+
+        await this._repository.SaveChangesAsync(cancellationToken);
+
+        return new Either<AddressesDeleteUserSoftCommandResult>(new AddressesDeleteUserSoftCommandResult());
     }
 }

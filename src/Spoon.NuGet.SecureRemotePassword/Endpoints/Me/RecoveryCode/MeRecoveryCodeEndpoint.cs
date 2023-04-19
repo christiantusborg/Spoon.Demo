@@ -3,14 +3,10 @@
 
 namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Me.RecoveryCode;
 
-using Application.Me.UserGenerateRecoveryCode;
+using Application.Commands.Me.UserGenerateRecoveryCode;
 using Contracts;
 using Core.Presentation;
-using EitherCore.Extensions;
 using EndpointFilters;
-using Mediator.PipelineBehaviors.Permission;
-using Mediator.PipelineBehaviors.Validation;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

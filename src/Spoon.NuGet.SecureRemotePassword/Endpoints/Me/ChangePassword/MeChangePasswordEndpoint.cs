@@ -4,17 +4,14 @@
 namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Me.ChangePassword;
 
 using System.Security.Claims;
+using Application.Commands.Me.ChangePassword;
+using Contracts;
 using Core.Presentation;
-using MediatR;
+using EndpointFilters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Spoon.NuGet.EitherCore.Extensions;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Application.Me.ChangePassword;
-using Spoon.NuGet.SecureRemotePassword.Contracts;
-using Spoon.NuGet.SecureRemotePassword.EndpointFilters;
 using Swashbuckle.AspNetCore.Annotations;
 using ClaimsPrincipalExtensions = Extensions.ClaimsPrincipalExtensions;
 
@@ -22,14 +19,14 @@ using ClaimsPrincipalExtensions = Extensions.ClaimsPrincipalExtensions;
 /// <summary>
 ///     Spoon.NuGet.SecureRemotePassword.Api
 /// </summary>
-public  class MeChangePasswordEndpoint  : IEndpointMarker
+public class MeChangePasswordEndpoint : IEndpointMarker
 {
     /// <summary>
     ///     Map User ChangePassword endpoint
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public IEndpointRouteBuilder Map( IEndpointRouteBuilder app)
+    public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
         app.MapPost(ApiMeEndpoints.ChangePassword.Create.Endpoint, ChangePasswordAsync)
             .WithName(ApiMeEndpoints.ChangePassword.Create.Name)
@@ -47,7 +44,7 @@ public  class MeChangePasswordEndpoint  : IEndpointMarker
         return app;
     }
 
-    private static MeChangePasswordCommand MapToCommand( MeChangePasswordRequest request, Guid userId)
+    private static MeChangePasswordCommand MapToCommand(MeChangePasswordRequest request, Guid userId)
     {
         var command = new MeChangePasswordCommand
         {
@@ -60,7 +57,7 @@ public  class MeChangePasswordEndpoint  : IEndpointMarker
 
     internal static async Task<IResult> ChangePasswordAsync([FromBody] MeChangePasswordRequest request, ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
     {
-        var command = MapToCommand(request,ClaimsPrincipalExtensions.GetUserId(claimsPrincipal));
+        var command = MapToCommand(request, ClaimsPrincipalExtensions.GetUserId(claimsPrincipal));
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

@@ -1,22 +1,18 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.SetUserMustChangePassword;
 
+using Application.Commands.Administration.SetUserMustChangePassword;
+using Contracts;
 using Core.Presentation;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Spoon.NuGet.EitherCore.Extensions;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Application.Administration.SetUserMustChangePassword;
-using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Swashbuckle.AspNetCore.Annotations;
 
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public class AdministrationSetUserMustChangePasswordEndpoint  : IEndpointMarker
+public class AdministrationSetUserMustChangePasswordEndpoint : IEndpointMarker
 {
     /// <summary>
     /// </summary>
@@ -33,7 +29,7 @@ public class AdministrationSetUserMustChangePasswordEndpoint  : IEndpointMarker
 
         return app;
     }
-    
+
     private static AdministrationSetUserMustChangePasswordCommand MapToCommand(Guid userId, bool value)
     {
         var command = new AdministrationSetUserMustChangePasswordCommand
@@ -44,13 +40,13 @@ public class AdministrationSetUserMustChangePasswordEndpoint  : IEndpointMarker
 
         return command;
     }
-    
-    private static async Task<IResult> SetUserMustChangePassword([FromRoute] Guid userId,[FromRoute] bool value, ISender sender, CancellationToken cancellationToken)
+
+    private static async Task<IResult> SetUserMustChangePassword([FromRoute] Guid userId, [FromRoute] bool value, ISender sender, CancellationToken cancellationToken)
     {
         var command = MapToCommand(userId, value);
-        var commandResult =await sender.Send(command, cancellationToken);
+        var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();
         return result;
-    } 
+    }
 }

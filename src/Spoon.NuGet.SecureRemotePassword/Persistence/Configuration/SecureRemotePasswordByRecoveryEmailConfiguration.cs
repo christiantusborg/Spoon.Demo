@@ -11,11 +11,7 @@ public class SecureRemotePasswordByRecoveryEmailConfiguration : IEntityTypeConfi
         // Set the primary key
         builder.HasKey(p => p.UserId);
             
-        builder.Property(s => s.EmailAddressHash)
-            .IsRequired()
-            .HasMaxLength(255);
-        
-        builder.Property(s => s.RecoveryTokenHash)
+        builder.Property(s => s.RecoveryTokenHashed)
             .IsRequired()
             .HasMaxLength(255);
             

@@ -1,22 +1,18 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.SetUserPassword;
 
-using MediatR;
+using Application.Commands.Administration.SetUserPassword;
+using Contracts;
+using Core.Presentation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Spoon.NuGet.Core.Presentation;
-using Spoon.NuGet.EitherCore.Extensions;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Application.Administration.SetUserPassword;
-using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Swashbuckle.AspNetCore.Annotations;
 
 //public static class GetChallengeAuthentication
 /// <summary>
 /// </summary>
-public class AdministrationSetUserPasswordEndpoint  : IEndpointMarker
+public class AdministrationSetUserPasswordEndpoint : IEndpointMarker
 {
     /// <summary>
     /// </summary>
@@ -33,6 +29,7 @@ public class AdministrationSetUserPasswordEndpoint  : IEndpointMarker
 
         return app;
     }
+
     private static AdministrationSetUserPasswordCommand MapToCommand(AdministrationSetUserPasswordRequest request)
     {
         var command = new AdministrationSetUserPasswordCommand
@@ -44,14 +41,13 @@ public class AdministrationSetUserPasswordEndpoint  : IEndpointMarker
 
         return command;
     }
-    
-    private static async Task<IResult> SetUserPassword([FromRoute] Guid userId,[FromBody] AdministrationSetUserPasswordRequest request, ISender sender, CancellationToken cancellationToken)
+
+    private static async Task<IResult> SetUserPassword([FromRoute] Guid userId, [FromBody] AdministrationSetUserPasswordRequest request, ISender sender, CancellationToken cancellationToken)
     {
         var command = MapToCommand(request);
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();
         return result;
-    }     
-
+    }
 }

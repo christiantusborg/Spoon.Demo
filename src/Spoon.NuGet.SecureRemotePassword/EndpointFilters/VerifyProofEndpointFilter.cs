@@ -1,7 +1,6 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.EndpointFilters;
 
 using Extensions;
-using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 

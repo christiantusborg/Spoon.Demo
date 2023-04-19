@@ -1,16 +1,11 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.UserRole.RemoveBulk;
 
-using Core.Presentation;
-using MediatR;
+using Application.Commands.UserRole.RemoveBulk;
+using Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Spoon.NuGet.EitherCore.Extensions;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Application.UserRole.RemoveBulk;
-using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Swashbuckle.AspNetCore.Annotations;
 
 //public static class GetChallengeAuthentication
@@ -24,7 +19,7 @@ public class UserRoleRemoveBulkEndpoint // : IEndpointMarker
     /// <returns></returns>
     public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
-        app.MapPut(ApiUserRoleEndpoints.RemoveBulk.Endpoint,RemoveBulk)
+        app.MapPut(ApiUserRoleEndpoints.RemoveBulk.Endpoint, this.RemoveBulk)
             .WithName(ApiUserRoleEndpoints.RemoveBulk.Name)
             .Produces(201)
             .Produces<PermissionFailed<AdministrationRemoveUserEmailResult>>(403)
@@ -39,7 +34,7 @@ public class UserRoleRemoveBulkEndpoint // : IEndpointMarker
         var command = new UserRoleRemoveBulkCommand
         {
             UserId = userId,
-            Claims = request.Claims,
+            Roles = request.Roles,
         };
 
         return command;
@@ -47,7 +42,7 @@ public class UserRoleRemoveBulkEndpoint // : IEndpointMarker
 
     private async Task<IResult> RemoveBulk([FromRoute] Guid userId, [FromBody] UserRoleRemoveBulkCommandRequest request, ISender sender, CancellationToken cancellationToken)
     {
-        var command = MapToCommand(request,userId);
+        var command = MapToCommand(request, userId);
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

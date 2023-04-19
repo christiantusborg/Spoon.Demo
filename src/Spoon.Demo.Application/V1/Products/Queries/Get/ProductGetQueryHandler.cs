@@ -1,49 +1,47 @@
-﻿namespace Spoon.Demo.Application.V1.Products.Queries.Get
+﻿namespace Spoon.Demo.Application.V1.Products.Queries.Get;
+
+using Domain.Entities;
+using Domain.Repositories;
+using MediatR;
+using NuGet.Core.Application;
+using NuGet.Core.EitherCore;
+using NuGet.Core.EitherCore.Helpers;
+
+/// <summary>
+///     Class ProductGetQueryHandler. This class cannot be inherited.
+/// </summary>
+public sealed class ProductGetQueryHandler : IRequestHandler<ProductGetQuery, Either<ProductGetQueryResult>>
 {
-    using Domain.Entities;
-    using Domain.Repositories;
-    using Mapster;
-    using MediatR;
-    using NuGet.Core.Application;
-    using NuGet.EitherCore;
-    using NuGet.EitherCore.Helpers;
+    private readonly IRepositoryRepository _readOnlyRepository;
 
     /// <summary>
-    ///     Class ProductGetQueryHandler. This class cannot be inherited.
     /// </summary>
-    public sealed class ProductGetQueryHandler : IRequestHandler<ProductGetQuery, Either<ProductGetQueryResult>>
+    /// <param name="readOnlyRepository"></param>
+    public ProductGetQueryHandler(IRepositoryRepository readOnlyRepository)
     {
-        private readonly IReadOnlyRepository _readOnlyRepository;
+        this._readOnlyRepository = readOnlyRepository;
+    }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="readOnlyRepository"></param>
-        public ProductGetQueryHandler(IReadOnlyRepository readOnlyRepository)
+    /// <summary>
+    ///     Handles the specified request.
+    /// </summary>
+    /// <param name="request">The request.</param>
+    /// <param name="cancellationToken">
+    ///     The cancellation token that can be used by other objects or threads to receive notice
+    ///     of cancellation.
+    /// </param>
+    /// <returns>Task&lt;Either&lt;ProductGetQueryResult&gt;&gt;.</returns>
+    public async Task<Either<ProductGetQueryResult>> Handle(ProductGetQuery request, CancellationToken cancellationToken)
+    {
+        var product = await this._readOnlyRepository.Products.GetAsync(new DefaultGetSpecification<Product>(request.ProductId), cancellationToken);
+
+        if (product is null)
         {
-            this._readOnlyRepository = readOnlyRepository;
+            return EitherHelper<ProductGetQueryResult>.EntityNotFound(typeof(ProductGetQuery));
         }
 
-        /// <summary>
-        ///     Handles the specified request.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <param name="cancellationToken">
-        ///     The cancellation token that can be used by other objects or threads to receive notice
-        ///     of cancellation.
-        /// </param>
-        /// <returns>Task&lt;Either&lt;ProductGetQueryResult&gt;&gt;.</returns>
-        public async Task<Either<ProductGetQueryResult>> Handle(ProductGetQuery request, CancellationToken cancellationToken)
-        {
-            var product = await this._readOnlyRepository.Products.GetAsync(new DefaultGetSpecification<Product>(request.ProductId), cancellationToken);
+        var result = product.Adapt<ProductGetQueryResult>();
 
-            if (product is null)
-            {
-                return EitherHelper<ProductGetQueryResult>.EntityNotFound(typeof(ProductGetQuery));
-            }
-
-            var result = product.Adapt<ProductGetQueryResult>();
-
-            return new Either<ProductGetQueryResult>(result);
-        }
+        return new Either<ProductGetQueryResult>(result);
     }
 }

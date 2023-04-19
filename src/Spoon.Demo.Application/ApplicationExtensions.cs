@@ -1,23 +1,17 @@
 ﻿namespace Spoon.Demo.Application;
 
-using Domain.Repositories;
-using Health;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using NuGet.Core;
-using NuGet.Mediator.PipelineBehaviors.AuditLog;
-using NuGet.Mediator.PipelineBehaviors.Permission;
-using NuGet.Mediator.PipelineBehaviors.Validation;
-using Persistence.Repositories;
+using NuGet.Core.Application.Mediator.PipelineBehaviors.AuditLog;
+using NuGet.Core.Application.Mediator.PipelineBehaviors.Permission;
+using NuGet.Core.Application.Mediator.PipelineBehaviors.Validation;
 
 /// <summary>
-/// 
 /// </summary>
 public static class ApplicationExtensions
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
@@ -36,7 +30,7 @@ public static class ApplicationExtensions
         app.AddPermissionPipelineBehaviourClaimManagerAlwaysTrueDefault();
 
         app.AddValidationPipelineBehaviour();
-        
+
         return app;
     }
 }

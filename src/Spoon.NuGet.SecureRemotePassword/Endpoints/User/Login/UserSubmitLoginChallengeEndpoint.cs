@@ -1,35 +1,31 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.Login;
 
-using Application.Users.UserSubmitLoginChallenge;
-using Core.Presentation;
-using MediatR;
+using Application.Commands.Users.UserSubmitLoginChallenge;
+using Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Spoon.NuGet.EitherCore.Extensions;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Swashbuckle.AspNetCore.Annotations;
 
 //public static class GetChallengeAuthentication
 /// <summary>
-/// 
 /// </summary>
 public class UserSubmitLoginChallengeEndpoint // : IEndpointMarker
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
     public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
-        app.MapPost(ApiUserEndpoints.SubmitLoginChallenge.Endpoint,  async ([FromBody] UserSubmitLoginChallengeRequest request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPost(ApiUserEndpoints.SubmitLoginChallenge.Endpoint, async ([FromBody] UserSubmitLoginChallengeRequest request, HttpContext context  , ISender sender, CancellationToken cancellationToken) =>
             {
-                var command = MapToCommand(request);
+                
 
+                string? ipAddress = context?.Connection?.RemoteIpAddress?.ToString();
+                string? userAgent = context?.Request.Headers["User-Agent"].ToString();
+                var command = this.MapToCommand(request,ipAddress,userAgent);
                 var commandResult = await sender.Send(command, cancellationToken);
                 var result = commandResult.ToResult(typeof(UserGetLoginChallengeResult));
 
@@ -42,13 +38,14 @@ public class UserSubmitLoginChallengeEndpoint // : IEndpointMarker
             .WithMetadata(new SwaggerOperationAttribute(ApiUserEndpoints.SubmitLoginChallenge.Summary, ApiUserEndpoints.SubmitLoginChallenge.Description));
         return app;
     }
-    
-    private UserSubmitLoginChallengeCommand MapToCommand(UserSubmitLoginChallengeRequest request)
+
+    private UserSubmitLoginChallengeCommand MapToCommand(UserSubmitLoginChallengeRequest request, string? ipAddress, string? userAgent)
     {
         var command = new UserSubmitLoginChallengeCommand
         {
             UserId = request.UserId,
-            ClientSessionProof = request.ClientSessionProof
+            IpAddress = ipAddress ?? string.Empty,
+            UserAgent = userAgent ?? string.Empty,
         };
         return command;
     }

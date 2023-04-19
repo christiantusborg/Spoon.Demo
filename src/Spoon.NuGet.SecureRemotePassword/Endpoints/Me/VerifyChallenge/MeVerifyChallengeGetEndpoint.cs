@@ -4,18 +4,13 @@
 namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Me.VerifyChallenge;
 
 using System.Security.Claims;
-using Application.Me.VerifyChallenge;
+using Application.Commands.Me.VerifyChallenge;
 using Core.Presentation;
-using EitherCore.Extensions;
 using EndpointFilters;
-using Mediator.PipelineBehaviors.Permission;
-using Mediator.PipelineBehaviors.Validation;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Swashbuckle.AspNetCore.Annotations;
-using ClaimsPrincipalExtensions = Extensions.ClaimsPrincipalExtensions;
 
 //public static class GetChallengeAuthentication
 /// <summary>

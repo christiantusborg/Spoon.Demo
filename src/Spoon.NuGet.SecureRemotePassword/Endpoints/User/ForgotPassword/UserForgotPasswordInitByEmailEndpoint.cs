@@ -1,18 +1,12 @@
 ﻿// ReSharper disable HeapView.ObjectAllocation
 // ReSharper disable MemberCanBePrivate.Global
+
 namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.ForgotPassword;
 
-using Application.Users.UserForgotPasswordRecoverByEmailInit;
-using Core.Presentation;
-using MediatR;
+using Application.Commands.Users.UserForgotPasswordRecoverByEmailInit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Spoon.NuGet.EitherCore.Extensions;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Swashbuckle.AspNetCore.Annotations;
 
 //public static class GetChallengeAuthentication
@@ -28,7 +22,7 @@ public class UserForgotPasswordInitByEmailEndpoint //: IEndpointMarker
     /// <returns></returns>
     public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
-        app.MapGet(ApiUserEndpoints.ForgotPassword.InitByEmail.Endpoint,ForgotPasswordInitByEmail)
+        app.MapGet(ApiUserEndpoints.ForgotPassword.InitByEmail.Endpoint, ForgotPasswordInitByEmail)
             .WithName(nameof(ApiUserEndpoints.ForgotPassword.InitByEmail.Name))
             .WithTags(ApiUserEndpoints.ForgotPassword.ForgotPasswordTag)
             .Produces(204)
@@ -46,7 +40,7 @@ public class UserForgotPasswordInitByEmailEndpoint //: IEndpointMarker
         };
         return command;
     }
-    
+
     internal static async Task<IResult> ForgotPasswordInitByEmail(string email, ISender sender, CancellationToken cancellationToken)
     {
         var command = MapToCommand(email);

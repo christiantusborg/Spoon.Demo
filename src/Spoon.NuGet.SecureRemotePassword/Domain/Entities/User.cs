@@ -59,7 +59,7 @@ public sealed class User : Entity
     public ICollection<Session>? Sessions { get; set; }
 
     /// <inheritdoc cref="User" />
-    public TwoFactorAuthenticationTotp? TwoFactorAuthenticationTotp { get; set; }
+    public ICollection<TwoFactorAuthenticationTotp>? TwoFactorAuthenticationTotp { get; set; }
 
     /// <inheritdoc cref="User" />
     public ICollection<UserAllowedIpAccess> UserAllowedIpAccess { get; set; } = new List<UserAllowedIpAccess>();

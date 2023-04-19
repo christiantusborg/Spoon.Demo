@@ -2,14 +2,9 @@
 
 namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.ForgotPassword;
 
-using Application.Users.UserForgotPasswordRecoverByRecoveryCodeSet;
+using Application.Commands.Users.UserForgotPasswordRecoverByRecoveryCodeSet;
 using Contracts;
-using Core.Presentation;
-using EitherCore.Extensions;
 using EndpointFilters;
-using Mediator.PipelineBehaviors.Permission;
-using Mediator.PipelineBehaviors.Validation;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -28,7 +23,7 @@ public class UserForgotPasswordSetByEmailEndpoint // : IEndpointMarker
     /// <returns></returns>
     public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
-        app.MapPost(ApiUserEndpoints.ForgotPassword.SetByEmail.Endpoint, UserForgotPasswordSetRecoverByEmail)
+        app.MapPost(ApiUserEndpoints.ForgotPassword.SetByEmail.Endpoint, this.UserForgotPasswordSetRecoverByEmail)
             .WithName(nameof(ApiUserEndpoints.ForgotPassword.SetByEmail.Name))
             .Produces(204)
             .Produces(404)
@@ -44,8 +39,7 @@ public class UserForgotPasswordSetByEmailEndpoint // : IEndpointMarker
     {
         var command = new UserForgotPasswordRecoverByRecoveryCodeSetCommand
         {
-            UserId = request.UserId,
-            Proof = request.Proof,
+            UsernameHashed = request.UsernameHashed,
             Salt = request.Salt,
             Verifier = request.Verifier,
         };
@@ -54,7 +48,7 @@ public class UserForgotPasswordSetByEmailEndpoint // : IEndpointMarker
 
     internal async Task<IResult> UserForgotPasswordSetRecoverByEmail(UserForgotPasswordSetByEmailRequest request, ISender sender, CancellationToken cancellationToken)
     {
-        var command = MapToCommand(request);
+        var command = this.MapToCommand(request);
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

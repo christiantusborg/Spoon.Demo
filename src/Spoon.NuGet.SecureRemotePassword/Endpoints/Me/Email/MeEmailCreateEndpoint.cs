@@ -4,18 +4,14 @@
 namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Me.Email;
 
 using System.Security.Claims;
-using Application.Me.Email.Create;
+using Application.Commands.Me.Email.Create;
+using Contracts;
 using Core.Presentation;
-using MediatR;
+using EndpointFilters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Spoon.NuGet.EitherCore.Extensions;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Contracts;
-using Spoon.NuGet.SecureRemotePassword.EndpointFilters;
 using Swashbuckle.AspNetCore.Annotations;
 using User;
 using ClaimsPrincipalExtensions = Extensions.ClaimsPrincipalExtensions;
@@ -58,8 +54,12 @@ public class MeEmailCreateEndpoint : IEndpointMarker
         };
         return command;
     }
-   
-    internal static async Task<IResult> MeEmailCreateAsync([FromBody] MeEmailCreateRequest request,[FromHeader(Name = "verifyProof")] string verifyProof, ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
+
+    internal static async Task<IResult> MeEmailCreateAsync([FromBody] MeEmailCreateRequest request,
+        [FromHeader(Name = "verifyProof")] string verifyProof,
+        ClaimsPrincipal claimsPrincipal,
+        ISender sender,
+        CancellationToken cancellationToken)
     {
         var command = MapToCommand(request, ClaimsPrincipalExtensions.GetUserId(claimsPrincipal));
         var commandResult = await sender.Send(command, cancellationToken);

@@ -4,20 +4,14 @@
 namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Me.Email;
 
 using System.Security.Claims;
-using Application.Me.Email.Delete;
-using Contracts;
+using Application.Commands.Me.Email.Delete;
 using Core.Presentation;
-using EitherCore.Extensions;
 using EndpointFilters;
-using Mediator.PipelineBehaviors.Permission;
-using Mediator.PipelineBehaviors.Validation;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Swashbuckle.AspNetCore.Annotations;
-using ClaimsPrincipalExtensions = Extensions.ClaimsPrincipalExtensions;
 
 //public static class GetChallengeAuthentication
 /// <summary>
@@ -57,7 +51,11 @@ public class MeEmailDeleteEndpoint : IEndpointMarker
         return command;
     }
 
-    internal static async Task<IResult> MeEmailDeleteAsync(Guid emailId,[FromHeader(Name = "verifyProof")] string verifyProof,  ClaimsPrincipal claimsPrincipal, ISender sender, CancellationToken cancellationToken)
+    internal static async Task<IResult> MeEmailDeleteAsync(Guid emailId,
+        [FromHeader(Name = "verifyProof")] string verifyProof,
+        ClaimsPrincipal claimsPrincipal,
+        ISender sender,
+        CancellationToken cancellationToken)
     {
         var command = MapToCommand(emailId, ClaimsPrincipalExtensions.GetUserId(claimsPrincipal));
 

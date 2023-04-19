@@ -6,7 +6,7 @@ using global::SecureRemotePassword;
 
 public class SecureRemotePasswordService : ISecureRemotePasswordService
 {
-    public bool IsAdministator(User user)
+    public bool IsAdministrator(User user)
     {
         throw new NotImplementedException();
     }

@@ -1,12 +1,7 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.UserClaim.AddBulk;
 
-using Application.UserClaim.AddBulk;
+using Application.Commands.UserClaim.AddBulk;
 using Contracts;
-using Core.Presentation;
-using EitherCore.Extensions;
-using Mediator.PipelineBehaviors.Permission;
-using Mediator.PipelineBehaviors.Validation;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +19,7 @@ public class UserClaimAddBulkEndpoint //: IEndpointMarker
     /// <returns></returns>
     public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
-        app.MapPut(ApiUserClaimEndpoints.AddBulk.Endpoint, AddBulk)
+        app.MapPut(ApiUserClaimEndpoints.AddBulk.Endpoint, this.AddBulk)
             .WithName(ApiUserClaimEndpoints.AddBulk.Name)
             .Produces(201)
             .Produces<PermissionFailed<AdministrationAddUserEmailResult>>(403)
@@ -39,8 +34,7 @@ public class UserClaimAddBulkEndpoint //: IEndpointMarker
         var command = new UserClaimAddBulkCommand
         {
             UserId = userId,
-            Claims = request.Claims
-         
+            Claims = request.Claims,
         };
 
         return command;
@@ -48,7 +42,7 @@ public class UserClaimAddBulkEndpoint //: IEndpointMarker
 
     private async Task<IResult> AddBulk([FromRoute] Guid userId, [FromBody] UserClaimAddBulkCommandRequest request, ISender sender, CancellationToken cancellationToken)
     {
-        var command = MapToCommand(request,userId);
+        var command = this.MapToCommand(request, userId);
         var commandResult = await sender.Send(command, cancellationToken);
 
         var result = commandResult.ToNoContent();

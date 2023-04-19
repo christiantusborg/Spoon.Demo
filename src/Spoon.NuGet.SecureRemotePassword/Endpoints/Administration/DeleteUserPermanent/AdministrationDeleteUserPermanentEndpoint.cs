@@ -1,13 +1,9 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Administration.DeleteUserPermanent;
 
 using System.Security.Claims;
-using Application.Administration.DeleteUserPermanent;
+using Application.Commands.Administration.DeleteUserPermanent;
 using Contracts;
 using Core.Presentation;
-using EitherCore.Extensions;
-using Mediator.PipelineBehaviors.Permission;
-using Mediator.PipelineBehaviors.Validation;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +32,7 @@ public class AdministrationDeleteUserPermanentEndpoint : IEndpointMarker
         return app;
     }
 
-    private static AdministrationDeleteUserPermanentCommand MapToCommand(Guid userId,Guid currentUserId)
+    private static AdministrationDeleteUserPermanentCommand MapToCommand(Guid userId, Guid currentUserId)
     {
         var command = new AdministrationDeleteUserPermanentCommand
         {

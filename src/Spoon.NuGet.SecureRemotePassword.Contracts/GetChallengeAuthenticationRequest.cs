@@ -2,5 +2,5 @@
 
 public class UserGetLoginChallengeRequest
 {
-  public required string Username { get; set; }
+  public required string UsernameHashed { get; set; }
 }

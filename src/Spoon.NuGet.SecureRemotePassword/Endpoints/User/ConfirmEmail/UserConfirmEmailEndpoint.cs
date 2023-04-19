@@ -3,17 +3,12 @@
 
 namespace Spoon.NuGet.SecureRemotePassword.Endpoints.User.ConfirmEmail;
 
-using Application.Users.ConfirmEmail;
-using Core.Presentation;
-using EitherCore.Extensions;
-using MediatR;
+using Application.Commands.Users.ConfirmEmail;
+using Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Contracts;
 using Swashbuckle.AspNetCore.Annotations;
 
 //public static class GetChallengeAuthentication
@@ -29,7 +24,7 @@ public class UserConfirmEmailEndpoint // : IEndpointMarker
     /// <returns></returns>
     public IEndpointRouteBuilder Map(IEndpointRouteBuilder app)
     {
-        app.MapPost(ApiUserEndpoints.Email.Confirm.Endpoint, ConfirmEmail)
+        app.MapPost(ApiUserEndpoints.Email.Confirm.Endpoint, this.ConfirmEmail)
             .WithName(nameof(ApiUserEndpoints.Email.Confirm.Name))
             .WithTags(ApiUserEndpoints.Email.EmailTag)
             .Produces(204)
@@ -53,7 +48,7 @@ public class UserConfirmEmailEndpoint // : IEndpointMarker
 
     internal async Task<IResult> ConfirmEmail([FromBody] UserConfirmEmailRequest request, ISender sender, CancellationToken cancellationToken)
     {
-        var command = MapToCommand(request);
+        var command = this.MapToCommand(request);
 
         var commandResult = await sender.Send(command, cancellationToken);
 

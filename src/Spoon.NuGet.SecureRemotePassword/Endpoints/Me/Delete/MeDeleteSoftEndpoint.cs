@@ -4,18 +4,14 @@
 namespace Spoon.NuGet.SecureRemotePassword.Endpoints.Me.Delete;
 
 using System.Security.Claims;
+using Application.Commands.Me.Delete.Soft;
+using Contracts;
 using Core.Presentation;
-using MediatR;
+using EndpointFilters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Spoon.NuGet.EitherCore.Extensions;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
-using Spoon.NuGet.SecureRemotePassword.Application.Me.Delete.Soft;
-using Spoon.NuGet.SecureRemotePassword.Contracts;
-using Spoon.NuGet.SecureRemotePassword.EndpointFilters;
 using Swashbuckle.AspNetCore.Annotations;
 using ClaimsPrincipalExtensions = Extensions.ClaimsPrincipalExtensions;
 

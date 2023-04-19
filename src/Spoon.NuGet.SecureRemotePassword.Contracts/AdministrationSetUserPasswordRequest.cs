@@ -2,10 +2,10 @@
 
 public class AdministrationSetUserPasswordRequest
 {
-    /// <inheritdoc cref="AdministrationSetPasswordCommand" />
+    /// <inheritdoc cref="AdministrationSetUserPasswordRequest" />
     public Guid UserId { get; init; }
-    /// <inheritdoc cref="AdministrationSetPasswordCommand" />
+    /// <inheritdoc cref="AdministrationSetUserPasswordRequest" />
     public required string Verifier { get; init; }
-    /// <inheritdoc cref="AdministrationSetPasswordCommand" />
+    /// <inheritdoc cref="AdministrationSetUserPasswordRequest" />
     public required string Salt { get; init; }
 }

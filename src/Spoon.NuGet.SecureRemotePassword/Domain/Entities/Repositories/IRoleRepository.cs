@@ -1,9 +1,7 @@
 ﻿namespace Spoon.NuGet.SecureRemotePassword.Domain.Entities.Repositories;
 
-using Spoon.NuGet.Core.Domain;
-using Spoon.NuGet.SecureRemotePassword.Domain.Entities;
+using Core.Domain;
 
 public interface IRoleRepository : IRootRepository<Role>
 {
-    
 }

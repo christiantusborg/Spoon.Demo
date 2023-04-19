@@ -2,5 +2,5 @@
 
 public class UserRoleAddBulkCommandRequest
 {
-    public List<Guid> Claims { get; set; }
+    public List<Guid> Roles { get; set; }
 }

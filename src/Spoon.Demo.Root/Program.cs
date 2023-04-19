@@ -1,31 +1,16 @@
-using System.Text;
 using App.Metrics;
 using App.Metrics.Counter;
 using Asp.Versioning;
-using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Spoon.Demo.Application;
-using Spoon.Demo.Application.Health;
 using Spoon.Demo.Application.V1.Products.Commands.Create;
-using Spoon.Demo.Application.V1.Products.Queries.Get;
-using Spoon.Demo.Domain.Repositories;
-using Spoon.Demo.Persistence.Repositories;
 using Spoon.Demo.Presentation.Api;
-using Spoon.Demo.Presentation.Api.Endpoints;
 using Spoon.Demo.Presentation.Api.Endpoints.V1.Products.Extensions;
-
 using Spoon.Demo.Presentation.Api.Swagger;
-using Spoon.NuGet.Core;
 using Spoon.NuGet.Core.Presentation;
-using Spoon.NuGet.Mediator.PipelineBehaviors.AuditLog;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
 using Spoon.NuGet.SecureRemotePassword;
-using Spoon.NuGet.SecureRemotePassword.Endpoints.Me;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -201,66 +186,69 @@ app.Run();
 
 //Server: mysql.epro-network.org
 
-/// <summary>
-/// </summary>
-public class ValidationFilter2 : IEndpointFilter
+namespace Spoon.Demo.Root
 {
     /// <summary>
-    ///     The metrics.
     /// </summary>
-    private readonly IMetrics _metrics;
-
-    /// <summary>
-    ///     The configuration.
-    /// </summary>
-    private readonly IConfiguration _configuration;
-
-    /// <summary>
-    /// </summary>
-    /// <param name="metrics">The metrics.</param>
-    /// <param name="configuration">The configuration.</param>
-    public ValidationFilter2(IMetrics metrics, IConfiguration configuration)
+    public class ValidationFilter2 : IEndpointFilter
     {
-        this._metrics = metrics;
-        this._configuration = configuration;
-    }
+        /// <summary>
+        ///     The metrics.
+        /// </summary>
+        private readonly IMetrics _metrics;
 
+        /// <summary>
+        ///     The configuration.
+        /// </summary>
+        private readonly IConfiguration _configuration;
 
-    /// <summary>
-    /// </summary>
-    /// <param name="context"></param>
-    /// <param name="next"></param>
-    /// <returns></returns>
-    public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
-    {
-
-        var endpointName = "";
-        
-        var endpointFeature = context.HttpContext.Features.Get<IEndpointFeature>();
-        if (endpointFeature?.Endpoint is RouteEndpoint re &&  re.RoutePattern.RawText is not null)
+        /// <summary>
+        /// </summary>
+        /// <param name="metrics">The metrics.</param>
+        /// <param name="configuration">The configuration.</param>
+        public ValidationFilter2(IMetrics metrics, IConfiguration configuration)
         {
-            var displayNameReplace = re.RoutePattern.RawText
-                .Replace("{", "")
-                .Replace("/", "_")
-                .Replace(":", "_")
-                .Replace("}", "")
-                .ToLower();
-            
-            if (displayNameReplace[0] == '_')
-            {
-                endpointName = displayNameReplace[1..];
-            }
+            this._metrics = metrics;
+            this._configuration = configuration;
         }
 
-        var customersCounter = new CounterOptions
+
+        /// <summary>
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
+        public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
         {
-            Name = "CounterOptions",
-            Context = "IActionFilter",
-            Tags = new MetricTags(new[] { "EndpointName" }, new[] { endpointName }),
-            MeasurementUnit = App.Metrics.Unit.Calls,
-        };
+
+            var endpointName = "";
         
-        // Otherwise invoke the next filter in the pipeline
-        return await next.Invoke(context);
+            var endpointFeature = context.HttpContext.Features.Get<IEndpointFeature>();
+            if (endpointFeature?.Endpoint is RouteEndpoint re &&  re.RoutePattern.RawText is not null)
+            {
+                var displayNameReplace = re.RoutePattern.RawText
+                    .Replace("{", "")
+                    .Replace("/", "_")
+                    .Replace(":", "_")
+                    .Replace("}", "")
+                    .ToLower();
+            
+                if (displayNameReplace[0] == '_')
+                {
+                    endpointName = displayNameReplace[1..];
+                }
+            }
+
+            var customersCounter = new CounterOptions
+            {
+                Name = "CounterOptions",
+                Context = "IActionFilter",
+                Tags = new MetricTags(new[] { "EndpointName" }, new[] { endpointName }),
+                MeasurementUnit = App.Metrics.Unit.Calls,
+            };
+        
+            // Otherwise invoke the next filter in the pipeline
+            return await next.Invoke(context);
+        }
     }
 }

@@ -1,19 +1,19 @@
 namespace Spoon.Demo.Application.V1.Products.Queries.Get;
 
-using NuGet.EitherCore;
-using NuGet.Mediator;
-using NuGet.Mediator.Interfaces;
+using NuGet.Core.Application;
+using NuGet.Core.Application.Interfaces;
+using NuGet.Core.EitherCore;
 
 /// <summary>
-/// Class ProductGetQuery. This class cannot be inherited.
-/// Implements the <see cref="MediatorBaseQuery" />.
+///     Class ProductGetQuery. This class cannot be inherited.
+///     Implements the <see cref="MediatorBaseQuery" />.
 /// </summary>
 /// <seealso cref="MediatorBaseQuery" />
-public sealed class ProductGetQuery : MediatorBaseQuery, IHandleableRequest<ProductGetQuery,
+public sealed class ProductGetQuery : MediatorBaseCommand, IHandleableRequest<ProductGetQuery,
     ProductGetQueryHandler, Either<ProductGetQueryResult>>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ProductGetQuery"/> class.
+    ///     Initializes a new instance of the <see cref="ProductGetQuery" /> class.
     /// </summary>
     public ProductGetQuery()
         : base(typeof(ProductGetQuery))
@@ -21,13 +21,12 @@ public sealed class ProductGetQuery : MediatorBaseQuery, IHandleableRequest<Prod
     }
 
     /// <summary>
-    /// Gets or sets the product identifier.
+    ///     Gets or sets the product identifier.
     /// </summary>
     /// <value>The product identifier.</value>
     public Guid ProductId { get; set; }
-    
+
     /// <summary>
-    /// 
     /// </summary>
-    public string? Name  { get; set; }
+    public string? Name { get; set; }
 }

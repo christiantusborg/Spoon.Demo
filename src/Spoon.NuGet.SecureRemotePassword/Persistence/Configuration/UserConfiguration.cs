@@ -81,12 +81,12 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Cascade);
         
-        builder.HasMany(u => u.TwoFactorAuthenticationTOTPs)
+        builder.HasMany(u => u.TwoFactorAuthenticationTotp)
             .WithOne(t => t.User)
             .HasForeignKey(t => t.UserId)
             .OnDelete(DeleteBehavior.Cascade);
         
-        builder.HasMany(u => u.UserAllowedIpAccesss)
+        builder.HasMany(u => u.UserAllowedIpAccess)
             .WithMany(uaia => uaia.Users)
             .UsingEntity<Dictionary<string, object>>(
                 "UserAllowedIpAccessUser",

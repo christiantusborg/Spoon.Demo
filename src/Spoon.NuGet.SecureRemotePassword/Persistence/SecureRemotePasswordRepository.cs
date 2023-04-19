@@ -19,11 +19,11 @@ public class SecureRemotePasswordRepository : ISecureRemotePasswordRepository
         SecureRemotePasswordByRecoveryCodes = new SecureRemotePasswordByRecoveryCodeRepository(context);
         SecureRemotePasswordByRecoveryEmails = new SecureRemotePasswordByRecoveryEmailRepository(context);
         SecureRemotePasswordLogins = new SecureRemotePasswordLoginRepository(context);
-        Sessions = new SessionRepository(context);
         TwoFactorAuthenticationTOTPs = new TwoFactorAuthenticationTotpRepository(context);
         UserAllowedIpAccesses = new UserAllowedIpAccessRepository(context);
         UserLoginHistories = new UserLoginHistoryRepository(context);
         Users = new UserRepository(context);
+        Sessions = new SessionRepository(context);
     }
 
     public IClaimRepository Claims { get; }

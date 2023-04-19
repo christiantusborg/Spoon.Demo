@@ -1,14 +1,14 @@
 namespace Spoon.Demo.Application.V1.Addresses.DeleteSoft;
 
-using Spoon.NuGet.EitherCore;
-using Spoon.NuGet.Mediator;
-using Spoon.NuGet.Mediator.Interfaces;
+using NuGet.Core.Application;
+using NuGet.Core.Application.Interfaces;
+using NuGet.Core.EitherCore;
 
 /// <summary>
 ///     Class ProductCreateQuery. This class cannot be inherited.
-///     Implements the <see cref="MediatorBaseQuery" />.
+///     Implements the <see cref="MediatorBaseCommand" />.
 /// </summary>
-/// <seealso cref="MediatorBaseQuery" />
+/// <seealso cref="MediatorBaseCommand" />
 public sealed class AddressesDeleteUserSoftCommand : MediatorBaseCommand, IHandleableRequest<AddressesDeleteUserSoftCommand,
     AddressesDeleteUserSoftCommandHandler, Either<AddressesDeleteUserSoftCommandResult>>
 {
