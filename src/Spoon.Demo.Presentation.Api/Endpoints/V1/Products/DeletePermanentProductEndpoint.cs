@@ -7,23 +7,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.AspNetCore.Routing;
-using Spoon.NuGet.EitherCore.Extensions;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
 using Swashbuckle.AspNetCore.Annotations;
 
 /// <summary>
-/// 
 /// </summary>
 public static class DeletePermanentProductEndpoint
 {
     /// <summary>
-    /// 
     /// </summary>
     public const string Name = "DeletePermanentProduct";
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
@@ -39,7 +33,7 @@ public static class DeletePermanentProductEndpoint
                 return contentResult;
             })
             .WithName(Name)
-            .Produces<ProductDeleteResult>(StatusCodes.Status200OK)
+            .Produces<ProductDeleteResult>()
             .Produces<PermissionFailed<ProductDeleteResult>>(403)
             .Produces<Validationfailures>(406)
             .WithApiVersionSet(ApiVersioning.VersionSet!)

@@ -71,7 +71,7 @@ public sealed class AdministrationAddUserEmailCommandHandler : IRequestHandler<A
             return EitherHelper<AdministrationAddUserEmailCommandResult>.EntityAlreadyExists(typeof(UserEmail));
 
         // Generate a new ID and encrypt the email address
-        var emailId = this._mockbleGuidGenerator.NewGuid();
+        var emailId = this._mockbleGuidGenerator.NewId();
         var emailAddressEncrypted = this._encryptionService.Encrypt(request.Email);
 
         // Create a new UserEmail object with the provided information

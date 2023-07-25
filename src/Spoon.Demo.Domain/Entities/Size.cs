@@ -9,4 +9,5 @@ public class Size : Entity
     public DateTime CreatedAt { get; set; }
     public DateTime ModifiedAt { get; set; }
     public DateTime DeletedAt { get; set; }
+    public virtual ICollection<Gender> Genders { get; set; }
 }

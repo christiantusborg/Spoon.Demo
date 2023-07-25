@@ -9,4 +9,8 @@ public class Gender : Entity
     public DateTime CreatedAt { get; set; }
     public DateTime ModifiedAt { get; set; }
     public DateTime DeletedAt { get; set; }
+    
+    public ICollection<Color> Colors { get; set; }
+    public ICollection<Size> Sizes { get; set; }
+    public ICollection<Product> Products { get; set; }
 }

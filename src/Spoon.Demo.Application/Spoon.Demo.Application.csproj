@@ -4,11 +4,29 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Spoon.Demo.Domain\Spoon.Demo.Domain.csproj" />
       <ProjectReference Include="..\Spoon.Demo.Persistence\Spoon.Demo.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="V1\Administrator\Categories\Delete" />
+      <Folder Include="V1\Me" />
+      <Folder Include="V1\Shop" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+      <PackageReference Include="Spoon.NuGet.Core" Version="1.1.27" />
+      <PackageReference Include="Swashbuckle.AspNetCore.Filters.Abstractions" Version="7.0.6" />
+        <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>         
     </ItemGroup>
 
 </Project>

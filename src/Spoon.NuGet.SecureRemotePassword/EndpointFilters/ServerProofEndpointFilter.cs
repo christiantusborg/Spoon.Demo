@@ -23,7 +23,7 @@ public class ServerProofEndpointFilter : IEndpointFilter
         
         }
         
-        context.HttpContext.Response.Headers.Add("ServerProof","9a65ceac-59c3-4be6-a4b4-84482212979e");
+        context.HttpContext.Response.Headers.Add("x-server-poof","9a65ceac-59c3-4be6-a4b4-84482212979e");
 
         var result = await next.Invoke(context);
         return result;

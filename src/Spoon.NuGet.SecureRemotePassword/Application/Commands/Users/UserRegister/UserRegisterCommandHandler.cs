@@ -62,7 +62,7 @@ public sealed class UserRegisterCommandHandler : IRequestHandler<UserRegisterCom
             return EitherHelper<UserRegisterCommandResult>.EntityAlreadyExists(typeof(User));
 
 
-        var userId = this._mockbleGuidGenerator.NewGuid();
+        var userId = this._mockbleGuidGenerator.NewId();
 
         var user = new User
         {
@@ -81,7 +81,7 @@ public sealed class UserRegisterCommandHandler : IRequestHandler<UserRegisterCom
         this._repository.Users.Add(user);
         await this._repository.SaveChangesAsync(cancellationToken);
 
-        var emailId = this._mockbleGuidGenerator.NewGuid();
+        var emailId = this._mockbleGuidGenerator.NewId();
         var emailAddressEncrypted = this._encryptionService.Encrypt(request.Email);
 
         var email = new UserEmail
@@ -101,7 +101,7 @@ public sealed class UserRegisterCommandHandler : IRequestHandler<UserRegisterCom
         this._repository.UserEmails.Add(email);
         await this._repository.SaveChangesAsync(cancellationToken);
 
-        var recoveryToken = this._mockbleGuidGenerator.NewGuid();
+        var recoveryToken = this._mockbleGuidGenerator.NewId();
         var recoveryTokenHash = this._hashService.Hash(recoveryToken.ToString());
 
         var byRecoveryEmail = new SecureRemotePasswordByRecoveryEmail

@@ -1,7 +1,6 @@
 ﻿namespace Spoon.Demo.Application;
 
 using Health;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -16,8 +15,8 @@ public static class HealthExtensions
     /// <returns></returns>
     public static IServiceCollection AddHealth(this IServiceCollection app)
     {
-        app.AddHealthChecks()
-            .AddCheck<DatabaseHealthCheck>(DatabaseHealthCheck.Name);
+    //    app.AddHealthChecks()
+      //      .AddCheck<DatabaseHealthCheck>(DatabaseHealthCheck.Name);
         
         return app;
     }

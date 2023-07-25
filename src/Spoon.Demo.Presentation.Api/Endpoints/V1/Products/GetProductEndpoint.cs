@@ -8,24 +8,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using Spoon.Demo.Application.V1.Products.Queries.Get;
-using Spoon.NuGet.EitherCore.Extensions;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Permission;
-using Spoon.NuGet.Mediator.PipelineBehaviors.Validation;
 using Swashbuckle.AspNetCore.Annotations;
 
 /// <summary>
-/// 
 /// </summary>
 public static class GetProductEndpoint
 {
     /// <summary>
-    /// 
     /// </summary>
     public const string Name = "GetProduct";
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>

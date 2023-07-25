@@ -81,7 +81,7 @@ public sealed class UserSubmitLoginChallengeCommandHandler : IRequestHandler<Use
 
         var refreshTokenVerifierHash = this._hashService.Hash(nextRefreshToken);
 
-        var sessionId = this._mockbleGuidGenerator.NewGuid();
+        var sessionId = this._mockbleGuidGenerator.NewId();
 
         var session = new Session
         {

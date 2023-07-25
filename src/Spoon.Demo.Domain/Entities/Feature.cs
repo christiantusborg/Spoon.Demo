@@ -4,11 +4,15 @@ using NuGet.Core.Domain;
 
 public class Feature : Entity
 {
-    public Guid FeatureId { get; set; }
-    public string Name { get; set; }
-    public string Value { get; set; }
-    public Guid FeatureTypeId { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime ModifiedAt { get; set; }
-    public DateTime DeletedAt { get; set; }
+    public required Guid FeatureId { get; set; }
+    public required string Name { get; set; }
+    public required string Value { get; set; }
+    public required DateTime CreatedAt { get; set; }
+    public required DateTime ModifiedAt { get; set; }
+    public DateTime? DeletedAt { get; set; }
+    public required Guid ProductId { get; set; }
+    public ICollection<Product> Products { get; set; }
+    public required Guid FeatureTypeId { get; set; }
+    public FeatureType FeatureType { get; set; }
+    
 }

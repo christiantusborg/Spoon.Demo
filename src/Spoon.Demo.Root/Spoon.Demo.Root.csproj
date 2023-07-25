@@ -21,8 +21,8 @@
         <PackageReference Include="App.Metrics.Formatters.Prometheus" Version="4.3.0" />
         <PackageReference Include="Asp.Versioning.Http" Version="7.0.0" />
         <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="7.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.4" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
         <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -36,7 +36,6 @@
       <ProjectReference Include="..\Spoon.Demo.Application\Spoon.Demo.Application.csproj" />
       <ProjectReference Include="..\Spoon.Demo.Domain\Spoon.Demo.Domain.csproj" />
       <ProjectReference Include="..\Spoon.Demo.Persistence\Spoon.Demo.Persistence.csproj" />
-      <ProjectReference Include="..\Spoon.Demo.Presentation.Api\Spoon.Demo.Presentation.Api.csproj" />
       <ProjectReference Include="..\Spoon.NuGet.SecureRemotePassword\Spoon.NuGet.SecureRemotePassword.csproj" />
     </ItemGroup>
 

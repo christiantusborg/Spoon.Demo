@@ -41,7 +41,7 @@ public sealed class RoleCreateCommandHandler : IRequestHandler<RoleCreateCommand
             return EitherHelper<RoleCreateCommandResult>.EntityAlreadyExists(typeof(Role));
 
         // Generate a new GUID for the role.
-        var roleId = this._mockbleGuidGenerator.NewGuid();
+        var roleId = this._mockbleGuidGenerator.NewId();
 
         // Create a new Role object with the specified name, generated GUID, and current date and time for the CreatedAt and UpdatedAt properties.
         var role = new Role

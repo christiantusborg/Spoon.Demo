@@ -63,7 +63,7 @@ public sealed class MeEmailCreateCommandHandler : IRequestHandler<MeEmailCreateC
         if (emailExists != null)
             return EitherHelper<MeEmailCreateCommandResult>.EntityAlreadyExists(typeof(UserEmail));
 
-        var emailId = this._mockbleGuidGenerator.NewGuid();
+        var emailId = this._mockbleGuidGenerator.NewId();
         var emailAddressEncrypted = this._encryptionService.Encrypt(request.Email);
 
         var userEmail = new UserEmail

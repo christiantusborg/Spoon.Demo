@@ -9,4 +9,3 @@ using NuGet.Core.Domain;
 public interface IAddressesRepository : IRootRepository<Address>
 {
 }
-

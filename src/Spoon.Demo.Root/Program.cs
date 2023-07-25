@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Spoon.Demo.Application;
-using Spoon.Demo.Application.V1.Products.Commands.Create;
-using Spoon.Demo.Presentation.Api;
-using Spoon.Demo.Presentation.Api.Endpoints.V1.Products.Extensions;
-using Spoon.Demo.Presentation.Api.Swagger;
+using Spoon.Demo.Domain.Repositories;
+using Spoon.Demo.Persistence.Repositories;
+using Spoon.Demo.Root.Swagger;
+using Spoon.NuGet.Core;
+using Spoon.NuGet.Core.Application.Mediator.PipelineBehaviors.Validation;
 using Spoon.NuGet.Core.Presentation;
 using Spoon.NuGet.SecureRemotePassword;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -57,7 +58,7 @@ builder.Services.AddAuthorization(x =>
 //builder.Services.AddScoped<ApiKeyAuthFilter>();
 
 
-
+/*
 builder.Services.AddApiVersioning(x =>
 {
     x.DefaultApiVersion = new ApiVersion(1.0);
@@ -65,14 +66,16 @@ builder.Services.AddApiVersioning(x =>
     x.ReportApiVersions = true;
     x.ApiVersionReader = new MediaTypeApiVersionReader("api-version");
 }).AddApiExplorer();
-
+*/
+/*
 builder.Services.AddOutputCache(x =>
 {
     x.AddBasePolicy(c => c.Cache());
-    x.AddCacheOptionsProducts();
+    //x.AddCacheOptionsProducts();
 });
+*/
 
-
+/*
 builder.Host
     .ConfigureMetricsWithDefaults(
         builder =>
@@ -81,14 +84,15 @@ builder.Host
             //builder.Report.ToTextFile(@"C:\metrics.txt", TimeSpan.FromSeconds(20));
         })
     .UseMetricsEndpoints();
-
+*/
 
 builder.Services.AddEndpointsApiExplorer();
 
 //AddOutputCache
 
 
-builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+//builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
 builder.Services.AddSwaggerGen(x =>
 {
     x.OperationFilter<SwaggerDefaultValues>();
@@ -107,13 +111,15 @@ builder.Services
 
         {
            // cfg.RegisterServicesFromAssembly(typeof(IAssemblyMarkerSecureRemotePassword).Assembly);
-            cfg.RegisterServicesFromAssembly(typeof(ProductCreateCommand).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(IApplicationAssemblyMarker).Assembly);
         }
         );
 
 
 //builder.Services.AddValidationPipelineBehaviour();
-
+builder.Services.AddMockble();
+//builder.Services.AddValidationPipelineBehaviour();
+builder.Services.AddTransient<IApplicationRepository, ApplicationRepository>();
 
 builder.Services.AddDbContext<DbContext>(optionsBuilder =>
     {
@@ -133,28 +139,31 @@ builder.Services.AddDbContext<ReadOnlyContext>(optionsBuilder =>
 
 builder.Services.AddApplication();
 
-builder.Services.AddMetrics();
+//builder.Services.AddMetrics();
     
-builder.Services.AddMetricsEndpoints();
-builder.Services.AddMemoryCache();
+//builder.Services.AddMetricsEndpoints();
+//builder.Services.AddMemoryCache();
 
 
 //.AddEndpointFilter<ValidationFilter>();
 
 var app = builder.Build();
-app.UseMetricsAllEndpoints();
+//app.UseMetricsAllEndpoints();
 
-app.CreateApiVersionSet();
+//app.CreateApiVersionSet();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(x =>
     {
+        /*
         foreach (var description in app.DescribeApiVersions())
         {
-            x.SwaggerEndpoint( $"/swagger/{description.GroupName}/swagger.json",
-                description.GroupName);
+            //x.SwaggerEndpoint( $"/swagger/{description.GroupName}/swagger.json",
+           //     description.GroupName);
+           //x.SwaggerEndpoint( $"/swagger/swagger.json");
         }
+        */
     });
 }
 
@@ -164,11 +173,12 @@ app.UseHttpsRedirection();
 
 //app.UseAuthentication();
 //app.UseAuthorization();
-app.UseOutputCache();
+//app.UseOutputCache();
 
 //app.MapMeEndpoints();
 //app.MapUserEndpoints();
-app.MapEndpoints(typeof(IAssemblyMarkerSecureRemotePassword));
+//app.MapEndpoints(typeof(IAssemblyMarkerSecureRemotePassword));
+app.MapEndpoints(typeof(IApplicationAssemblyMarker));
 
 //app.UseOutputCache();
 //EndpointFiltersMetricCounter
@@ -244,7 +254,7 @@ namespace Spoon.Demo.Root
                 Name = "CounterOptions",
                 Context = "IActionFilter",
                 Tags = new MetricTags(new[] { "EndpointName" }, new[] { endpointName }),
-                MeasurementUnit = App.Metrics.Unit.Calls,
+                MeasurementUnit = Unit.Calls,
             };
         
             // Otherwise invoke the next filter in the pipeline

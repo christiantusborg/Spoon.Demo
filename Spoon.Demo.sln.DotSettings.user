@@ -1,4 +1,24 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\chris\.nuget\packages\srp\1.0.7\lib\netstandard2.0\srp.dll" /&gt;&#xD;
-&lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>
+&lt;/AssemblyExplorer&gt;</s:String>
+	
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=cbad5542_002D22c0_002D44ec_002Da50c_002D0e7073f15898/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetCommandValidator_ShouldExist #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="D:\Git\Spoon.Demo\tests\TestProject1Spoon.Demo.Application.Tests" Presentation="&amp;lt;Tests&amp;gt;\&amp;lt;TestProject1Spoon.Demo.Application.Tests&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=de032ad0_002D2bb1_002D4b2a_002Da7e8_002Dcd2f97e870ec/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetCommandValidator_ShouldExist" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::73E798F3-2DD7-4B94-9670-A4BF41634EAF::net7.0::TestProject1Spoon.Demo.Application.Tests.ColorExistenceTests.GetCommandValidator_ShouldExist&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ffd86dbd_002D15d1_002D46fb_002D8364_002D69e9faaa0864/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;Tests&amp;gt;\&amp;lt;TestProject1Spoon.Demo.Application.Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="D:\Git\Spoon.Demo\tests\TestProject1Spoon.Demo.Application.Tests" Presentation="&amp;lt;Tests&amp;gt;\&amp;lt;TestProject1Spoon.Demo.Application.Tests&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=8787158c_002Db5b7_002D4146_002D9cc9_002Dc324102aa9ae_0023Spoon_002EDemo_002EPresentation_002EApi_002EContracts/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=8dcd3b75_002Dab3c_002D4b68_002D92a3_002D06a17c213c61_0023Spoon_002EDemo_002ETests_002EIntegration/@EntryIndexedValue">True</s:Boolean>
+	
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=a3500dd8_002Df95a_002D423e_002D90b8_002Df449f9388710_0023Spoon_002EDemo_002EPresentation_002EApi_002ESdk/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=e22d79e9_002D2cb4_002D4348_002D8e8a_002Df8c34268c1e2_0023Spoon_002EDemo_002EPresentation_002EApi_002ESdk_002EConsumer/@EntryIndexedValue">True</s:Boolean>
+	
+	</wpf:ResourceDictionary>

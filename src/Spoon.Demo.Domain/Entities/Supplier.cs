@@ -11,4 +11,5 @@ public class Supplier : Entity
     public DateTime CreatedAt { get; set; }
     public DateTime ModifiedAt { get; set; }
     public DateTime DeletedAt { get; set; }
+    public virtual ICollection<Product> Products { get; set; }
 }

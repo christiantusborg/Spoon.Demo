@@ -6,6 +6,6 @@ using NuGet.Core.Domain;
 /// <summary>
 /// Interface IProductRepository.
 /// </summary>
-public interface IRepositoryRepository : IRootRepository<Product>
+public interface IProductRepository : IRootRepository<Product>
 {
 }

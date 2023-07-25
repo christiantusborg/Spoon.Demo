@@ -1,12 +1,25 @@
 ﻿namespace Spoon.Demo.Domain.Repositories;
 
-public class IApplicationRepository
+public interface IApplicationRepository
 {
     public IAddressesRepository Addresses { get; }
-    public IRepositoryRepository Products { get; }
+    public ICategoryRepository Categories { get; }
+    public IColorRepository Colors { get; }
+    public IContactRepository Contacts { get; }
+    public ICustomerRepository Customers { get; }
+    public ICustomerTypeRepository CustomerTypes { get; }
+    public IFeatureRepository Features { get; }
+    public IFeatureTypeRepository FeatureTypes { get; }
+    public IGenderRepository Gender { get; }
+    public INoteRepository Notes { get; }
+    public IOrderItemRepository OrderItems { get; }
+    public IOrderRepository Orders { get; }
+    public IProductRepository Products { get; }
+    public IProductImageRepository ProductImages { get; }
+    public ISizeRepository Sizes { get; }
+    public ISupplierRepository Suppliers { get; }
 
-    public async Task SaveChangesAsync(CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+
+    public Task SaveChangesAsync(CancellationToken cancellationToken);
+
 }

@@ -9,8 +9,8 @@ using NuGet.Core.Domain;
 /// <summary>
 /// Class ProductRepository.
 /// </summary>
-/// <seealso cref="IRepositoryRepository" />
-public class RepositoryRepository : RootRepository<Product>, IRepositoryRepository
+/// <seealso cref="IProductRepository" />
+public class RepositoryRepository : RootRepository<Product>, IProductRepository
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="RepositoryRepository"/> class.

@@ -4,11 +4,14 @@ using NuGet.Core.Domain;
 
 public class Customer  : Entity
 {
-    public Guid CustomerId { get; set; }
-    public string Name { get; set; }
-    public string VatNumber { get; set; }
-    public Guid CustomerTypeId { get; set; }
-    public string CreatedAt { get; set; }
-    public string ModifiedAt { get; set; }
-    public string DeletedAt { get; set; }
+    public required Guid CustomerId { get; set; }
+    public required string Name { get; set; }
+    public required string VatNumber { get; set; }
+    public required Guid CustomerTypeId { get; set; }
+    public required DateTime CreatedAt { get; set; }
+    public required DateTime ModifiedAt { get; set; }
+    public DateTime? DeletedAt { get; set; }
+    public ICollection<Order> Orders { get; set; }
+    public CustomerType CustomerType { get; set; }
+    
 }
